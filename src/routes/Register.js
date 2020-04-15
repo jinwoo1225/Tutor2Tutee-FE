@@ -21,6 +21,7 @@ function Register() {
 
     return(
         <>
+            <h1>This is Register Page</h1>
             <form onSubmit={onSubmit}>
                 <span>이메일</span>
                 <input type='text' value={email} placeholder="email@email.com" onChange={onChangeEmail} />
