@@ -15,7 +15,10 @@ function Card({classes}) {
                     ClassTeacher : {_class.teacher}<br/>
                     ClassDescription : {_class.description}<br/>
                     ClassCurMax : {_class.current} / {_class.maximum}</p>
-                    <Link to={`class/${_class.classID}`}><button>Go</button></Link>
+                    <Link to={{
+                        pathname:`class/${_class.classID}`,
+                        _class : _class,
+                    }}><button>Go</button></Link>
                 </div>
                 )
             })}
