@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-function Class({match:{params:{id}}, location:{_class}}){
+function Class({match:{params:{id}}, classState}){
+    const _class = classState.filter(_class => parseInt(id) === _class.classID)[0]
     return(
     <>
         <h1>this is class : {_class.title}</h1>
@@ -9,6 +11,9 @@ function Class({match:{params:{id}}, location:{_class}}){
     </>
     )
 }
+function mapStateToProps(state){
+    return {classState : state.class};
+}
 
-export default (Class);
 
+export default connect(mapStateToProps, null) (Class);
