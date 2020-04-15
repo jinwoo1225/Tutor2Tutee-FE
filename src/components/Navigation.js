@@ -26,7 +26,7 @@ function Navigation({loginState, dlogout}){
             <Link to={'/about'}><button>About</button></Link>
             <Link to={'/login'}><button>loginPage</button></Link>
             <Link to={'/register'}><button>registerPage</button></Link>
-            <Link to={'/about'}><button>About</button></Link>
+            <Link to={'/makeclass'}><button>MakeClass</button></Link>
 
             
         </>

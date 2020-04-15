@@ -6,6 +6,7 @@ import About from '../routes/About';
 import Class from '../routes/Class';
 import Login from '../routes/Login';
 import Register from '../routes/Register';
+import MakeClass from '../routes/MakeClass';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path='/class/:id'component={Class}/>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
+      <Route path='/makeclass' component={MakeClass}/>
     </Router>
   );
 }
