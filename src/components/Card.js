@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 function Card({classes}) {
-    console.log(classes);
     return(
         <span>
             <h1>This is CardView</h1>
