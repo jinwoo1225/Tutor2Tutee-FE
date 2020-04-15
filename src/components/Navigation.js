@@ -3,16 +3,13 @@ import { Link } from 'react-router-dom';
 import {login, logout} from '../store'
 import { connect } from 'react-redux';
 
-function Navigation({loginState, props, dlogin, dlogout}){
+function Navigation({loginState, dlogout}){
     const [classID, setClassID] = useState("");
-    const [userID, setUserID] = useState("");
+    
 
     const onChangeClassID = e => {setClassID(e.target.value);}
-    const onChangeUserID = e => {setUserID(e.target.value)};
-
-    const onClickLogin = () => {dlogin(userID)};
-    const onClickLogout = () => {dlogout()};
     
+    const onClickLogout = () => {dlogout()};
 
     return(<>
             <h3>This is Navigation Bar </h3>
@@ -22,18 +19,16 @@ function Navigation({loginState, props, dlogin, dlogout}){
                 <input type='text' value={classID} placeholder="Class ID" onChange={onChangeClassID}/>
                 <Link to={`/class/${classID}`}><button>Class</button></Link>
             </form>
-            <form>
-                {/* 로그인 */}
-                <input type='text' value={userID} placeholder="User ID" onChange={onChangeUserID}/>
-                <button onClick={onClickLogin}>Login</button>
-            </form>
+            
+            <button onClick={onClickLogout}>Logout</button>
 
             <Link to={'/'}><button>Home</button></Link>
             <Link to={'/about'}><button>About</button></Link>
+            <Link to={'/login'}><button>loginPage</button></Link>
+            <Link to={'/register'}><button>registerPage</button></Link>
+            <Link to={'/about'}><button>About</button></Link>
 
             
-            
-            <button onClick={onClickLogout}>Logout</button>
         </>
     )
 }
