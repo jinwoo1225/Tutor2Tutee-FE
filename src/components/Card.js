@@ -8,14 +8,14 @@ function Card({classes}) {
             <h1>This is CardView</h1>
             {classes.map(_class => {
                 return(
-                <div key={_class.classID}>
-                    <p>ClassID : {_class.classID}<br/>
-                    ClassTitle : {_class.title}<br/>
-                    ClassTeacher : {_class.teacher}<br/>
-                    ClassDescription : {_class.description}<br/>
-                    ClassCurMax : {_class.current} / {_class.maximum}</p>
+                <div key={_class._id}>
+                    <p>ClassID : {_class._id}<br/>
+                    ClassTitle : {_class.className}<br/>
+                    ClassTeacher : {_class.tutor}<br/>
+                    {/* ClassDescription : {_class.description}<br/> */}
+                    ClassCurMax : {_class.tutees.length} / I don't know</p>
                     <Link to={{
-                        pathname:`class/${_class.classID}`,
+                        pathname:`class/${_class._id}`,
                         _class : _class,
                     }}><button>Go</button></Link>
                 </div>
