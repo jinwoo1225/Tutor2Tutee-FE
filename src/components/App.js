@@ -7,9 +7,22 @@ import Class from '../routes/Class';
 import Login from '../routes/Login';
 import Register from '../routes/Register';
 import MakeClass from '../routes/MakeClass';
+import Axios from 'axios';
 
 
 function App() {
+  Axios.get("http://tutor2tutee.ddns.net:3000/class/all")
+        .then(response=>{
+            console.log(response)
+            console.log(response.data)
+            console.log(response.data)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+        .then(()=>{
+            console.log("hello");
+        })
   return (
     <Router>
       <Navigation />
