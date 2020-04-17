@@ -21,7 +21,6 @@ const loginInfo = createSlice({
             }
         },
         addClass: (state, action) => {
-            console.log(action.type)
             return{
                 id : state.id,
                 class : action.payload
