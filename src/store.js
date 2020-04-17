@@ -21,6 +21,7 @@ const loginInfo = createSlice({
             }
         },
         addClass: (state, action) => {
+            console.log(action.type)
             return{
                 id : state.id,
                 class : action.payload
@@ -33,6 +34,6 @@ const store = configureStore({reducer: loginInfo.reducer})
 
 store.subscribe(()=>console.log(store.getState()))
 
-export const {login, logout} = loginInfo.actions;
+export const {login, logout, addClass} = loginInfo.actions;
 
 export default store;
