@@ -10,13 +10,14 @@ import Register from '../routes/Register';
 import MakeClass from '../routes/MakeClass';
 import { addClass } from '../store';
 import Axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App({dispatchClass}) {
   Axios.get("http://tutor2tutee.ddns.net:3000/class/all")
         .then( async response=>{
             console.log(response.data)  
-            await dispatchClass(response.data)        
+            dispatchClass(response.data)        
         })
         .catch(error=>{
             console.log(error)
