@@ -1,12 +1,12 @@
 import React from 'react';
-import Card from '../components/Card'
+import CardComp from '../components/CardComp';
+import { Container } from 'react-bootstrap';
 
 function Home(){
     return(
-        <>
-            <h1>This is Home Page</h1>
-            <Card />
-        </>
+        <Container className='pt-3'>
+            <CardComp />
+        </Container>
     )
 }
 
