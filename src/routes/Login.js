@@ -15,6 +15,7 @@ function Login({dlogin, dlogout}) {
             userID,
             userPW
         })
+        dlogin(userID)
     }
     return(
     <>
