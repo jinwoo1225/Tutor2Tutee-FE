@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {login, logout} from '../store'
 import { connect } from 'react-redux';
+import Axios from 'axios';
 
 function Login({dlogin, dlogout}) {
     const [userID, setUserID] = useState("");
@@ -9,12 +10,20 @@ function Login({dlogin, dlogout}) {
     const onChangePasswd = e => {setPassword(e.target.value)};
 
     const onClickLogin = () => {dlogin(userID)};
+    const CheckAuth = () => {Axios.get("http://tutor2tutee.ddns.net:3000/auth/isAuthenticated").then(response=>console.log(response))};
 
     const onSubmit = e => {
-        console.log({
-            userID,
-            userPW
+        Axios.post('http://tutor2tutee.ddns.net:3000/auth/login',{
+            username:userID,
+            password:userPW,
         })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        
         dlogin(userID)
     }
     return(
@@ -26,6 +35,7 @@ function Login({dlogin, dlogout}) {
             <input type='text' value={userPW} placeholder="User Password" onChange={onChangePasswd}/>
             <button onClick={onClickLogin}>Login</button>
         </form>
+        <button onClick={CheckAuth}>CheckAuth</button>
     </>
     )
 }
