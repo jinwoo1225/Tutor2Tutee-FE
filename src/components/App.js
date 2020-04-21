@@ -8,7 +8,7 @@ import Class from '../routes/Class';
 import Login from '../routes/Login';
 import Register from '../routes/Register';
 import MakeClass from '../routes/MakeClass';
-import { addClass, logout } from '../store';
+import { addClass } from '../store';
 import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
