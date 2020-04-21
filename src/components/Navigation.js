@@ -25,8 +25,8 @@ function Navigation({loginState, dlogout}){
             <Nav.Link as='p' onClick={dlogout}>Logout</Nav.Link>
           </>
           :<>
-            <Link to="/register"><Nav.Link as="p">Register</Nav.Link></Link>
-            <Link to="/login"><Nav.Link as="p">Login</Nav.Link></Link>
+            <Link to="/user/register"><Nav.Link as="p">Register</Nav.Link></Link>
+            <Link to="/user/login"><Nav.Link as="p">Login</Nav.Link></Link>
           </>
         }
       </Nav>

@@ -25,8 +25,8 @@ function App({dispatchClass}) {
       <Route path='/' exact component={Home}/>
       <Route path='/about' component={About}/>
       <Route path='/class/id/:id' exact component={Class}/>
-      <Route path='/login' component={Login}/>
-      <Route path='/register' component={Register}/>
+      <Route path='/user/login' component={Login}/>
+      <Route path='/user/register' component={Register}/>
       <Route path='/class/new' exact component={MakeClass}/>
     </Router>
   );
