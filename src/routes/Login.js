@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {login, logout} from '../store'
+import { login, logout } from '../store'
 import { connect } from 'react-redux';
 import Axios from 'axios';
 
@@ -9,10 +9,8 @@ function Login({dlogin, dlogout}) {
     const onChangeUserID = e => {setUserID(e.target.value)};
     const onChangePasswd = e => {setPassword(e.target.value)};
 
-    const onClickLogin = () => {dlogin(userID)};
-    const CheckAuth = () => {Axios.get("http://tutor2tutee.ddns.net:3000/auth/isAuthenticated").then(response=>console.log(response))};
-
-    const onSubmit = e => {
+    const onClickLogin = () => {
+        dlogin(userID)
         Axios.post('http://tutor2tutee.ddns.net:3000/auth/login',{
             username:userID,
             password:userPW,
@@ -23,13 +21,12 @@ function Login({dlogin, dlogout}) {
         .catch(error => {
             console.log(error)
         })
-        
-        dlogin(userID)
-    }
+    };
+    const CheckAuth = () => {Axios.get("http://tutor2tutee.ddns.net:3000/auth/isAuthenticated").then(response=>console.log(response))};
     return(
     <>
         <h1>This is Login page</h1>
-        <form onSubmit={onSubmit}>
+        <form>
             {/* 로그인 */}
             <input type='text' value={userID} placeholder="User ID" onChange={onChangeUserID}/>
             <input type='text' value={userPW} placeholder="User Password" onChange={onChangePasswd}/>

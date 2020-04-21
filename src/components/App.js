@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Navigation from '../components/Navigation'
 import Home from '../routes/Home'
@@ -15,10 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App({dispatchClass}) {
   updateClass({dispatchClass})
-  // setInterval(() => {
-  //   updateClass(dispatchClass)
-   
-  // }, 10000);
   return (
     <Router>
       <Navigation />
