@@ -14,7 +14,7 @@ function CardComp({classes}) {
                                     <Card.Title>{_class.className}</Card.Title>
                                     <Card.Text>{_class.tutor}</Card.Text>
                                     <Link to={{
-                                        pathname:`class/${_class._id}`,
+                                        pathname:`class/id/${_class._id}`,
                                         _class,
                                     }}><Button>수강하기!!</Button></Link>
                                 </Card.Body>

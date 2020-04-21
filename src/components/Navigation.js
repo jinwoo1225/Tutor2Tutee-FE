@@ -18,11 +18,17 @@ function Navigation({loginState, dlogout}){
         <Link to="/about"><Nav.Link as="p">About</Nav.Link></Link>
       </Nav>
       <Nav className="mt-3">
-      <Link to="/register"><Nav.Link as="p">Register</Nav.Link></Link>
         {loginState.id !== ""
-        ?<><Nav.Link>Hello, {loginState.id}</Nav.Link>
-        <Nav.Link as='p' onClick={dlogout}>Logout</Nav.Link></>
-        :<Link to="/login"><Nav.Link as="p">Login</Nav.Link></Link>}
+          ?<>
+            <Link to="/class/new"><Nav.Link as="p">NewClass</Nav.Link></Link>
+            <Nav.Link>Hello, {loginState.id}</Nav.Link>
+            <Nav.Link as='p' onClick={dlogout}>Logout</Nav.Link>
+          </>
+          :<>
+            <Link to="/register"><Nav.Link as="p">Register</Nav.Link></Link>
+            <Link to="/login"><Nav.Link as="p">Login</Nav.Link></Link>
+          </>
+        }
       </Nav>
     </Navbar.Collapse>
   </Navbar>

@@ -17,17 +17,17 @@ function App({dispatchClass}) {
   updateClass({dispatchClass})
   // setInterval(() => {
   //   updateClass(dispatchClass)
-  
+   
   // }, 10000);
   return (
     <Router>
       <Navigation />
       <Route path='/' exact component={Home}/>
       <Route path='/about' component={About}/>
-      <Route path='/class/:id'component={Class}/>
+      <Route path='/class/id/:id' exact component={Class}/>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
-      <Route path='/makeclass' component={MakeClass}/>
+      <Route path='/class/new' exact component={MakeClass}/>
     </Router>
   );
 }
