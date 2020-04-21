@@ -8,7 +8,7 @@ function CardComp({classes}) {
         <Row>
                 {classes.map(_class => {
                     return(
-                        <Col className='col-md-3 my-md-3' key={_class._id}>
+                        <Col className='col-md-3 my-3' key={_class._id}>
                             <Card >
                                 <Card.Body >
                                     <Card.Title>{_class.className}</Card.Title>
