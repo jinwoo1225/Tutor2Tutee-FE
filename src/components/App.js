@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Navigation from '../components/Navigation'
 import Home from '../routes/Home'

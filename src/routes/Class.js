@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import {Container} from 'react-bootstrap'
+import ShowClass from '../components/ShowClass.js'
 
-function Class({match:{params:{id}}, classState}){
+function Class(props){
+    const {match:{params:{id}}, classState, history} = props 
     const _class = classState.filter(_class => id === _class._id)[0]
+    console.log(history)
     return(
-    <>
-        <h1>this is class : {_class.className}</h1>
-        {/* <h3>{_class.description}</h3> */}
-        <h5>Class Tutor : {_class.tutor}</h5>
-    </>
+    <Container>
+        <ShowClass _class={_class} history={history}/>
+    </Container>
     )
 }
 function mapStateToProps(state){
