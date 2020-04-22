@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import jQuery from 'jquery'
-import { login } from "../store"
+import { login, updateUser } from "../store"
 import { connect } from 'react-redux';
 import { URL } from './App'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-function LoginForm({state, dlogin, history}) {
+function LoginForm({dispatchUser, history}) {
     const [userID, setUserID] = useState("");
     const [userPW, setPassword] = useState("");
 
@@ -20,7 +22,7 @@ function LoginForm({state, dlogin, history}) {
             success: (res)=>{
                 if(res === 'success'){
                     console.log('로그인 성공')
-                    dlogin(userID)
+                    checkAuth();
                     history.push("/")
                 }else{
                     alert("로그인 실패")
@@ -31,6 +33,19 @@ function LoginForm({state, dlogin, history}) {
             }
         })
     };
+
+    const checkAuth = () => {
+        axios.get(URL + 'auth/isAuthenticated')
+        .then(response => {
+            console.log(response.data)
+            dispatchUser(response.data)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    
+            
 
     return(
         <Form className="mt-md-3">
@@ -45,7 +60,8 @@ function LoginForm({state, dlogin, history}) {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="비밀번호 저장" />
             </Form.Group>
-            <Button onClick={onClickLogin}>Submit</Button>
+            <Button className="my-md-3" onClick={onClickLogin}>로그인</Button>
+            <p> 아이디가 없으신가요?<span role="img" aria-label="sweat">😅</span> : <Link to='/user/register'><Button className="btn-light">회원가입</Button></Link></p>
             </Form>
     )
 }
@@ -53,12 +69,7 @@ function LoginForm({state, dlogin, history}) {
 function mapDispatchToProps(dispatch){
     return {
         dlogin: data=>dispatch(login(data)),
-    }
-}
-
-function mapStateToProps(state){
-    return {
-        loginState: state,
+        dispatchUser : data=>dispatch(updateUser(data))
     }
 }
 

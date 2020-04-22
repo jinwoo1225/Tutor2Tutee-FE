@@ -8,9 +8,12 @@ function Home({loginState}){
     return(
         <Container className='pt-3'>
             <>{
-                loginState.id === ""
+                loginState.user.nickname === ""
                 ?<>로그인을 하시면 서비스를 이용할수있어요!<Link to="/user/login"><Button className="ml-3">로그인하러가기</Button></Link></>
-                :<>지금 수강중인 강의 : ...<br/>지금 가르치는 강의 : ...</>
+                :<>
+                <h4>안녕하세요! {loginState.user.nickname}</h4>
+                지금 수강중인 강의 : ...<br/>지금 가르치는 강의 : ...
+                </>
             }</>
             <CardComp />
         </Container>

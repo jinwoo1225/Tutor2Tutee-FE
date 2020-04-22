@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 
 function Navigation({loginState, dlogout}){
-    console.log(loginState.id)
+    console.log(loginState.user.nickname)
     return(
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Link to='/'><Navbar.Brand >Tutor 2 Tutee</Navbar.Brand></Link>
@@ -18,10 +18,10 @@ function Navigation({loginState, dlogout}){
         <Link to="/about"><Nav.Link as="p">About</Nav.Link></Link>
       </Nav>
       <Nav className="mt-3">
-        {loginState.id !== ""
+        {loginState.user.nickname !== ""
           ?<>
             <Link to="/class/new"><Nav.Link as="p">NewClass</Nav.Link></Link>
-            <Nav.Link>Hello, {loginState.id}</Nav.Link>
+            <Link to="/user"><Nav.Link as='p'>Hello, {loginState.user.nickname}</Nav.Link></Link>
             <Nav.Link as='p' onClick={dlogout}>Logout</Nav.Link>
           </>
           :<>
