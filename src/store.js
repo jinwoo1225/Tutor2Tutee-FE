@@ -9,11 +9,9 @@ const loginInfo = createSlice({
             classesAsTutee: [],
             classesAsTutor: [],
             nickname: "",
-            password: "",
             point: 0,
             username: "",
             webmail: "",
-            __v: 0,
             _id: ""
         },
         class: [],
