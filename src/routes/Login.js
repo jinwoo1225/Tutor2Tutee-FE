@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import { login, logout } from '../store'
 import { connect } from 'react-redux';
 import Axios from 'axios';
+import jquery from 'jquery'
+
+import {URL} from '../components/App'
 
 function Login({dlogin, dlogout}) {
     const [userID, setUserID] = useState("");
@@ -10,18 +13,41 @@ function Login({dlogin, dlogout}) {
     const onChangePasswd = e => {setPassword(e.target.value)};
 
     const onClickLogin = () => {
-        dlogin(userID)
-        Axios.post('http://tutor2tutee.ddns.net:3000/auth/login',{
-            username:userID,
-            password:userPW,
+        dlogin(userID);
+        // failed to use axios to post
+        // will be change Soon
+        // Axios.post("http://tutor2tutee.ddns.net:3000/auth/login",{
+        //     data:data
+        // })
+        // .then(response => {
+        //     console.log(response)
+        // })
+        // .catch(error => {
+        //     console.log(error)
+        // })
+        
+        jquery.ajax({
+            type: "POST",
+            url: URL + "auth/login",
+            data :"username=" + userID + "&password=" + userPW,
+            dataType: "text",
+            success: (res)=>{
+                if(res === 'success'){
+                    //로그인 성공
+                    console.log('로그인 성공')
+                }else{
+                    //로그인 실패
+                    alert('로그인 실패');
+                }
+            },
+            error: (xhr, status, responseTxt)=>{
+                console.log(xhr);
+            }
         })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(error => {
-            console.log(error)
-        })
+
     };
+
+    
     const CheckAuth = () => {Axios.get("http://tutor2tutee.ddns.net:3000/auth/isAuthenticated").then(response=>console.log(response))};
     return(
     <>
