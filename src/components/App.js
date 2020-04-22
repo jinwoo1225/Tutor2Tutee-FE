@@ -12,6 +12,7 @@ import { addClass } from '../store';
 import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const URL = "http://tutor2tutee.ddns.net:3000/";
 
 function App({dispatchClass}) {
   updateClass({dispatchClass})
@@ -29,7 +30,7 @@ function App({dispatchClass}) {
 }
 
 export function updateClass({dispatchClass}){
-  Axios.get("http://tutor2tutee.ddns.net:3000/class/all")
+  Axios.get(URL + "class/all")
           .then( async response=>{
               console.log(response.data)  
               dispatchClass(response.data)        
