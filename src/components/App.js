@@ -30,7 +30,7 @@ function App({dispatchClass}) {
 }
 
 export function updateClass({dispatchClass}){
-  Axios.get(URL + "class/all")
+  Axios.get(URL + "class/name/all")
           .then( async response=>{
               console.log(response.data)  
               dispatchClass(response.data)        
