@@ -25,7 +25,9 @@ function ClassForm({history}){
     const submitToDB = () => {
         const data = "classType=" + classTypesRaw[select] + "&category=" + category 
             + "&studyAbout=" + studyAbout + "&className=" + classname + "&price=" + price;
+            
         console.log(data)
+
         jQuery.ajax({
             type: "POST",
             url: URL + "class",

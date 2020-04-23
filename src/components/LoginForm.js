@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import jQuery from 'jquery'
 import { login, updateUser } from "../store"
+import { checkAuth } from './App'
 import { connect } from 'react-redux';
 import { URL } from './App'
 import { Link } from 'react-router-dom'
@@ -22,7 +23,7 @@ function LoginForm({dispatchUser, history}) {
             success: (res)=>{
                 if(res === 'success'){
                     console.log('로그인 성공')
-                    checkAuth();
+                    checkAuth({dispatchUser});
                     history.push("/")
                 }else{
                     alert("로그인 실패")
@@ -34,18 +35,7 @@ function LoginForm({dispatchUser, history}) {
         })
     };
 
-    const checkAuth = () => {
-        axios.get(URL + 'auth/isAuthenticated')
-        .then(response => {
-            console.log(response.data)
-            dispatchUser(response.data)
-        }).catch(error => {
-            console.log(error)
-        })
-    }
 
-    
-            
 
     return(
         <Form className="mt-md-3">
@@ -55,7 +45,7 @@ function LoginForm({dispatchUser, history}) {
             </Form.Group>
             <Form.Group>
                 <Form.Label>비밀번호</Form.Label>
-                <Form.Control type="current-password" placeholder="비밀번호" onChange={e =>{setPassword(e.target.value)}}/>
+                <Form.Control type="password" placeholder="비밀번호" onChange={e =>{setPassword(e.target.value)}}/>
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="비밀번호 저장" />
