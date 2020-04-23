@@ -20,6 +20,7 @@ function App({dispatchClass, dispatchUser, dlogout}) {
   //초기 시작되면 구동되는 코드
   checkClass({dispatchClass});
   checkAuth({dispatchUser, dlogout});
+  
   return (
     <Router>
       <Navigation />
@@ -38,9 +39,13 @@ function App({dispatchClass, dispatchUser, dlogout}) {
 export const checkAuth = ({dispatchUser, dlogout}) => {
   Axios.get(URL + 'auth/isAuthenticated')
   .then( response => {
-    response.data === 'fail'
-    ? dlogout()
-    : dispatchUser(response.data)
+    if(response.data === 'fail'){
+      dlogout() 
+      return false
+    } else {
+      dispatchUser(response.data)
+      return true; 
+    }
   })
   .catch( error => {
     console.log(error);
@@ -51,8 +56,8 @@ export const checkAuth = ({dispatchUser, dlogout}) => {
 //받아온 Class를 업데이트하는 function
 export function checkClass({dispatchClass}){
   Axios.get(URL + "class/name/all")
-          .then( async response=>{
-              await dispatchClass(response.data)        
+          .then( response => {
+              dispatchClass(response.data)        
           })
           .catch(error=>{
               console.log(error)

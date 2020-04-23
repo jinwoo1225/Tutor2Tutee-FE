@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import Axios from 'axios';
+import jQuery from 'jquery'
 
 function Register() {
     const [webmail, setEmail] = useState('')
@@ -11,31 +11,6 @@ function Register() {
     const onChangePassword = e => { setPassword(e.target.value) };
     const onChangeNickname = e => { setNickname(e.target.value) };
     const onChangeUsername = e => { setUsername(e.target.value) };
-
-    // const onSubmit = () =>{
-    //     console.log(
-    //         {
-    //             username,
-    //             webmail,
-    //             password,
-    //             nickname,
-    //         }
-    //     )
-    //     Axios.post('http://tutor2tutee.ddns.net:3000/user/register',{
-    //         username,
-    //         password, 
-    //         nickname, 
-    //         webmail
-    //     })
-    //     .then( response => {
-    //         console.log(response)
-    //     })
-    //     .catch( error => {
-    //         console.log(error)
-    //     })
-    // }
-
-    
 
     return(
         <>
