@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav} from 'react-bootstrap'
-import { logout } from '../store'
+import { logout, updateUser } from '../store'
 import { connect } from 'react-redux';
+import { checkAuth } from '../components/App'
 
 
 
-function Navigation({loginState, dlogout}){
+function Navigation({loginState, dlogout, dispatchUser}){
     return(
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Link to='/'><Navbar.Brand >Tutor 2 Tutee</Navbar.Brand></Link>
@@ -28,6 +29,7 @@ function Navigation({loginState, dlogout}){
             <Link to="/user/login"><Nav.Link as="p">Login</Nav.Link></Link>
           </>
         }
+        <Nav.Link as="p" onClick={() => {checkAuth({dispatchUser, dlogout})}}>CheckAuth</Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
@@ -41,7 +43,8 @@ function mapStateToProps(state, ownProps){
 
 function mapDispatchToProps(dispatch){
     return {
-        dlogout: ()=>dispatch(logout())
+        dlogout: ()=>dispatch(logout()),
+        dispatchUser: data=>dispatch(updateUser(data)),
     }
 }
 
