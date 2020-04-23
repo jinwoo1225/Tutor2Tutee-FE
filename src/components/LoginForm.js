@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
-import { Form, Button } from 'react-bootstrap';
 import jQuery from 'jquery'
-import { login, updateUser } from "../store"
-import { checkAuth } from './App'
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { URL } from './App'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { Link } from 'react-router-dom';
+import { login, updateUser } from "../store"
+import { URL, checkAuth } from './App';
 
 function LoginForm({dispatchUser, history}) {
     const [userID, setUserID] = useState("");
     const [userPW, setPassword] = useState("");
 
     const onClickLogin = () => {
-        console.log(userID, userPW)
+        //ajax로 날릴 데이터
         const data = 'username=' + userID + '&password=' + userPW;
+
         jQuery.ajax({
             type: "POST",
             url: URL + "auth/login",
@@ -25,17 +24,11 @@ function LoginForm({dispatchUser, history}) {
                     console.log('로그인 성공')
                     checkAuth({dispatchUser});
                     history.push("/")
-                }else{
-                    alert("로그인 실패")
-                }
+                }else{alert("로그인 실패")}
             },
-            error: (xhr, status, responseTxt)=>{
-                console.log(xhr);
-            }
+            error: ( xhr, status, responseTxt )=>{ console.log(xhr ); }
         })
     };
-
-
 
     return(
         <Form className="mt-md-3">
