@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, InputGroup, FormControl, Form, FormGroup, Button } from 'react-bootstrap'
-import jQuery from 'jquery'
+import { Container, Row, InputGroup, Form, Button } from 'react-bootstrap'
 import { URL } from '../components/App'
+import Axios from 'axios';
 
 function Register({history}) {
     const [webmail, setEmail] = useState('')
@@ -10,24 +10,18 @@ function Register({history}) {
     const [username, setUsername] = useState('')
 
     const onSubmit = () => {
-        const data = 'username=' + username + '&password=' + password + '&nickname=' + nickname + '&webamil=' + webmail + '@hknu.ac.kr';
-        jQuery.ajax({
-            type: "POST",
-            url: URL + "user/register",
-            data : data,
-            dataType: "text",
-            success: (res)=>{
-                if(res === 'Create Successfully'){
-                    alert('등록에 성공했어요!! 홈화면으로 돌아갑니다!')
-                    history.push('/');
-                }else{
-                    alert('등록에 실패했어요.. 잘못된게 있나 확인해주세요!');
-                }
-                console.log(res);
-            },
-            error: (xhr, status, responseTxt)=>{
-                console.log(xhr);
+        const data = 'username=' + username + '&password=' + password + '&nickname=' + nickname + '&webmail=' + webmail + '@hknu.ac.kr';
+        Axios.post(URL + 'user/register', data)
+        .then(response => {
+            if(response.data === "Create Successfully"){
+                alert('등록에 성공했어요!! 홈화면으로 돌아갑니다!')
+                history.push('/');
+            }else{
+                alert('등록에 실패했어요.. 잘못된게 있나 확인해주세요!');
             }
+        })
+        .catch(error => {
+            console.log(error)
         })
     }
 
