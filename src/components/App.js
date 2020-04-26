@@ -21,14 +21,6 @@ function App({ dispatchUser, dlogout, dispatchClass }) {
   checkAuth({ dispatchUser, dlogout });
   // 모든 클래스를 불러오는 함수
   checkClass({ dispatchClass });
-  // 그 함수를 정기적으로 실행시키는 코드
-  const checkClassTimeout = () => {
-    setTimeout(() => {
-      checkClass({ dispatchClass });
-      checkClassTimeout();
-    }, 3000);
-  };
-  checkClassTimeout();
   return (
     <Router>
       <Navigation />

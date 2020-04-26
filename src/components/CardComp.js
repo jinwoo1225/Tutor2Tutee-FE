@@ -1,31 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import CardShow from "./CardShow";
 
 function CardComp({ classes }) {
   return (
-    <Row>
-      {classes.map((_class) => {
-        return (
-          <Col className="col-md-3 my-3" key={_class._id}>
-            <Card>
-              <Card.Body>
-                <Card.Title>{_class.className}</Card.Title>
-                <Card.Text>{_class.tutor}</Card.Text>
-                <Link
-                  to={{
-                    pathname: `class/id/${_class._id}`,
-                    _class,
-                  }}
-                >
-                  <Button>수강하기!!</Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        );
-      })}
+    <Row className="text-center">
+      {classes.length === 0 ? (
+        // eslint-disable-next-line jsx-a11y/accessible-emoji
+        <h1 className="col-12 mt-3">로딩중입니다! 잠시만 기다려주세요!😁</h1>
+      ) : (
+        classes.map((_class) => {
+          return <CardShow key={_class._id} _class={_class} />;
+        })
+      )}
     </Row>
   );
 }
