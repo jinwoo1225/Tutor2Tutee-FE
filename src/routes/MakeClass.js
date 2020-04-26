@@ -25,7 +25,7 @@ function MakeClass({history}){
     const [endTime, setEndTime] = useState(1200);
     const [date, setDate] = useState([]);
     
-    const [courseDescription, setCoDe] = useState("");
+    const [classDesc, setCoDe] = useState("");
     const [maxTutee, setMaxTutee] = useState(tuteeMaxArray[0]);
     let startTimeArray = [];
     let endTimeArray = [];
@@ -53,7 +53,7 @@ function MakeClass({history}){
             + "&studyAbout=" + studyAbout + "&className=" + classname + "&price=" + price;
         switch (classTypeSelect) {
             case 0:
-                data = data + '&time_day=' + weeksRaw[date] + '&time_start=' + startTime + '&time_finish=' + endTime + '&course_description=' + courseDescription + "&maxTutee=" + maxTutee;
+                data = data + '&time_day=' + weeksRaw[date] + '&time_start=' + startTime + '&time_finish=' + endTime + '&class_description=' + classDesc + "&maxTutee=" + maxTutee;
                 break;
         
             default:
