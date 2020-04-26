@@ -3,6 +3,7 @@ import Axios from "axios";
 import { URL } from "./App";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 function CardShow({ _class }) {
   const [tutorName, setTutorName] = useState("");
@@ -22,21 +23,23 @@ function CardShow({ _class }) {
           {tutorName === "" ? (
             <Card.Text>로딩중입니다.</Card.Text>
           ) : (
-            <Card.Text>{tutorName}</Card.Text>
+            <>
+              <Card.Text>{tutorName}</Card.Text>
+              <Link to={`class/id/${_class._id}`}>
+                <Button>수강하기!!</Button>
+              </Link>
+            </>
           )}
-
-          <Link
-            to={{
-              pathname: `class/id/${_class._id}`,
-              _class,
-            }}
-          >
-            <Button>수강하기!!</Button>
-          </Link>
         </Card.Body>
       </Card>
     </Col>
   );
 }
 
-export default CardShow;
+function mapDispatchToProps(dispatch){
+  return {
+    
+  }
+}
+
+export default connect(null, mapDispatchToProps) (CardShow);
