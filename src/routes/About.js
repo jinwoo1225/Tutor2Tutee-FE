@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-function About(){
-    const [text, setText] = useState("")
+function About() {
+  const [text, setText] = useState("");
 
-    setInterval(() => {
-        setText(Date.now())
-    }, 100000);
+  setInterval(() => {
+    setText(Date.now());
+  }, 100000);
 
-    return(
-        <h2>This is about: {text}</h2>
-    )
+  return <h2>This is about: {text}</h2>;
 }
 
 export default About;
