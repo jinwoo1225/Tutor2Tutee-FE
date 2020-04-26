@@ -39,6 +39,8 @@ function MakeClass({ history }) {
 
   const [classDesc, setCoDe] = useState("");
   const [maxTutee, setMaxTutee] = useState(tuteeMaxArray[0]);
+
+  const [place, setPlace] = useState("");
   let startTimeArray = [];
   let endTimeArray = [];
   for (
@@ -81,6 +83,35 @@ function MakeClass({ history }) {
           endTime +
           "&class_description=" +
           classDesc +
+          "&maxTutee=" +
+          maxTutee;
+        break;
+
+      case 1:
+        break;
+
+      case 2:
+        data =
+          data +
+          "&time_day=" +
+          weeksRaw[date] +
+          "&time_start=" +
+          startTime +
+          "&time_finish=" +
+          endTime;
+        break;
+
+      case 3:
+        data =
+          data +
+          "&time_day=" +
+          weeksRaw[date] +
+          "&time_start=" +
+          startTime +
+          "&time_finish=" +
+          endTime +
+          "&place=" +
+          place +
           "&maxTutee=" +
           maxTutee;
         break;
@@ -272,6 +303,7 @@ function MakeClass({ history }) {
               as="textarea"
               rows="4"
               placeholder="ex) 학교 도서관, 혜움, 카페, 우리집😍"
+              onchange={(e) => setPlace(e.target.value)}
             />
           </Form.Group>
         ) : null}
