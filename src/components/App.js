@@ -16,11 +16,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //서버주소
 export const URL = "http://tutor2tutee.ddns.net:3000/";
 
-function App({ dispatchClass, dispatchUser, dlogout }) {
-  //초기 시작되면 구동되는 코드
-  checkClass({ dispatchClass });
+function App({ dispatchUser, dlogout, dispatchClass }) {
+  //초기 시작되면 사용자의 세션이 남아있는 서버에 확인
   checkAuth({ dispatchUser, dlogout });
-
+  // 모든 클래스를 불러오는 함수
+  checkClass({ dispatchClass });
+  // 그 함수를 정기적으로 실행시키는 코드
+  const checkClassTimeout = () => {
+    setTimeout(() => {
+      checkClass({ dispatchClass });
+      checkClassTimeout();
+    }, 3000);
+  };
+  checkClassTimeout();
   return (
     <Router>
       <Navigation />
@@ -53,7 +61,7 @@ export const checkAuth = ({ dispatchUser, dlogout }) => {
     });
 };
 
-//받아온 Class를 업데이트하는 function
+//모든 Class를 업데이트하는 function
 export function checkClass({ dispatchClass }) {
   Axios.get(URL + "class/name/all")
     .then((response) => {
