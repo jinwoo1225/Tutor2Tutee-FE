@@ -7,19 +7,8 @@ import {
 } from "react-bootstrap";
 import jQuery from "jquery";
 import { URL } from "../components/App";
+import { classTypes, classTypesRaw } from "../components/App";
 
-const classTypes = [
-  "온라인 실시간",
-  "온라인 동영상",
-  "온라인 질의응답",
-  "오프라인 질의응답",
-];
-const classTypesRaw = [
-  "RealtimeOnlineCourseType",
-  "OnlineCourseType",
-  "QnAType",
-  "OfflineType",
-];
 const weeks = ["월", "화", "수", "목", "금", "토", "일"];
 const weeksRaw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const categorys = ["컴퓨터공학", "수학", "영어"];
@@ -303,7 +292,7 @@ function MakeClass({ history }) {
               as="textarea"
               rows="4"
               placeholder="ex) 학교 도서관, 혜움, 카페, 우리집😍"
-              onchange={(e) => setPlace(e.target.value)}
+              onChange={(e) => setPlace(e.target.value)}
             />
           </Form.Group>
         ) : null}

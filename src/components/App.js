@@ -16,6 +16,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //서버주소
 export const URL = "http://tutor2tutee.ddns.net:3000/";
 
+export const classTypes = [
+  "온라인 실시간",
+  "온라인 동영상",
+  "온라인 질의응답",
+  "오프라인 질의응답",
+];
+export const classTypesRaw = [
+  "RealtimeOnlineCourseType",
+  "OnlineCourseType",
+  "QnAType",
+  "OfflineType",
+];
+
 function App({ dispatchUser, dlogout, dispatchClass }) {
   //초기 시작되면 사용자의 세션이 남아있는 서버에 확인
   checkAuth({ dispatchUser, dlogout });
