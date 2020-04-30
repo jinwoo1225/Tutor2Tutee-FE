@@ -26,7 +26,7 @@ function MakeClass({ history }) {
   const [endTime, setEndTime] = useState(1200);
   const [date, setDate] = useState([]);
 
-  const [classDesc, setCoDe] = useState("");
+  const [courseDesc, setCoDe] = useState("");
   const [maxTutee, setMaxTutee] = useState(tuteeMaxArray[0]);
 
   const [place, setPlace] = useState("");
@@ -70,8 +70,8 @@ function MakeClass({ history }) {
           startTime +
           "&time_finish=" +
           endTime +
-          "&class_description=" +
-          classDesc +
+          "&course_description=" +
+          courseDesc +
           "&maxTutee=" +
           maxTutee;
         break;
