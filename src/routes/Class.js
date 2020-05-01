@@ -50,7 +50,7 @@ function Class({
                 <p>{_class.studyAbout}</p>
                 <ul>
                   {_class.courses.map((course) => {
-                    return <li key={course._id}>{course.description}</li>;
+                    return <li key={course._id}> {course.description} </li>;
                   })}
                 </ul>
               </Tab>

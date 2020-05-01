@@ -1,0 +1,15 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: build",
+            "detail": "react-scripts build && rm -r /home/ubuntu/node_project/pbl3-server-side/public/* &&  mv /home/ubuntu/node_project/tutor2tutee/build/* /home/ubuntu/node_project/pbl3-server-side/public "
+        }
+    ]
+}
