@@ -14,7 +14,7 @@ import Axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //서버주소
-export const URL = "http://tutor2tutee.ddns.net:3000/";
+export const URL = "http://192.168.0.31:3000/";
 
 export const classTypes = [
   "온라인 실시간",
