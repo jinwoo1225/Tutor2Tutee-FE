@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { logout, updateUser } from "../store";
 import { connect } from "react-redux";
-import { checkAuth } from "../components/App";
 
 function Navigation({ loginState, dlogout, dispatchUser }) {
   return (
@@ -24,8 +23,9 @@ function Navigation({ loginState, dlogout, dispatchUser }) {
         <Nav className="mt-3">
           {loginState.user.nickname !== "" ? (
             <>
+              <Nav.Link as="p">나의 포인트 : {loginState.user.point}</Nav.Link>
               <Link to="/class/new">
-                <Nav.Link as="p">NewClass</Nav.Link>
+                <Nav.Link as="p">클래스 만들기</Nav.Link>
               </Link>
               <Link to="/user">
                 <Nav.Link as="p">Hello, {loginState.user.nickname}</Nav.Link>
@@ -44,14 +44,6 @@ function Navigation({ loginState, dlogout, dispatchUser }) {
               </Link>
             </>
           )}
-          <Nav.Link
-            as="p"
-            onClick={() => {
-              checkAuth({ dispatchUser, dlogout });
-            }}
-          >
-            CheckAuth
-          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
