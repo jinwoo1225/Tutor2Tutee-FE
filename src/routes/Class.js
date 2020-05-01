@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Container, Tab, Tabs, ProgressBar } from "react-bootstrap";
-import { classTypes, classTypesRaw, URL } from "../components/App";
+import {
+  Container,
+  Tab,
+  Tabs,
+  ProgressBar,
+  FormControl,
+  InputGroup,
+  Button,
+} from "react-bootstrap";
+import {
+  states,
+  statesRaw,
+  classTypes,
+  classTypesRaw,
+  URL,
+} from "../components/App";
 import Axios from "axios";
 
 function Class({
@@ -13,6 +27,7 @@ function Class({
   const [key, setKey] = useState("overview");
   const [_class, setClass] = useState({ classLoaded: false });
   const [tutorName, setTutorName] = useState("");
+  const [classState, setClassState] = useState();
 
   if (_class.classLoaded === false) {
     Axios.get(URL + "class/" + id).then((response) => {
@@ -26,6 +41,7 @@ function Class({
       setTutorName(response.data.nickname);
     });
     setTutorName("Loading");
+    setClassState(statesRaw.indexOf(_class.state));
   }
 
   return (
@@ -39,7 +55,15 @@ function Class({
               Category : {_class.category}
               <br />
               Tutor : {tutorName}
+              <br />
+              State : {states[classState]}
             </p>
+            {classState === 1 ? (
+              //강의를 개설할 준비가 되면
+              <Button>참가하기</Button>
+            ) : (
+              <Button disabled>완료되었습니다.</Button>
+            )}
             <Tabs
               id="controlled-tab"
               activeKey={key}
@@ -56,7 +80,6 @@ function Class({
               </Tab>
 
               {_class.classType !== classTypesRaw[2] ? (
-                //출결
                 <Tab eventKey="attendance" title="출결">
                   <h2>현재 진행 상황(60%)</h2>
                   <ProgressBar now={60} />
@@ -66,7 +89,16 @@ function Class({
               {_class.classType === classTypesRaw[0] ? (
                 //출결
                 <Tab eventKey="skypeLink" title="스카이프 링크">
-                  <input placeholder="스카이프 링크를 입력하세요!"></input>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      placeholder="스카이프 링크를 이곳에 입력하세요!"
+                      aria-label="스카이프 링크를 이곳에 입력하세요!"
+                      aria-describedby="basic-addon2"
+                    />
+                    <InputGroup.Append>
+                      <Button variant="outline-secondary">접수</Button>
+                    </InputGroup.Append>
+                  </InputGroup>
                 </Tab>
               ) : null}
 

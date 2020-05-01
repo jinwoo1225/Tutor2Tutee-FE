@@ -28,6 +28,8 @@ export const classTypesRaw = [
   "QnAType",
   "OfflineType",
 ];
+export const statesRaw = ["Prepare", "Joinable", "Ended"];
+export const states = ["준비중", "참가가능", "완료"];
 
 function App({ dispatchUser, dlogout, dispatchClass }) {
   //초기 시작되면 사용자의 세션이 남아있는 서버에 확인
