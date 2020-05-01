@@ -35,7 +35,8 @@ function Class({
           <>
             <h1>{_class.className}</h1>
             <p>
-              ClassType : {_class.classType} Category : {_class.category}
+              ClassType : {classTypes[classTypesRaw.indexOf(_class.classType)]}{" "}
+              Category : {_class.category}
               <br />
               Tutor : {tutorName}
             </p>
