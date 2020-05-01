@@ -26,10 +26,12 @@ function MakeClass({ history }) {
   const [endTime, setEndTime] = useState(1200);
   const [date, setDate] = useState([]);
 
+  const [classDesc, setClDe] = useState("");
   const [courseDesc, setCoDe] = useState("");
   const [maxTutee, setMaxTutee] = useState(tuteeMaxArray[0]);
 
   const [place, setPlace] = useState("");
+  const [grade, setGrade] = useState("");
   let startTimeArray = [];
   let endTimeArray = [];
   for (
@@ -59,7 +61,11 @@ function MakeClass({ history }) {
       "&className=" +
       classname +
       "&price=" +
-      price;
+      price +
+      "&grade=" +
+      grade +
+      "&class_description=" +
+      classDesc;
     switch (classTypeSelect) {
       case 0:
         data =
@@ -188,8 +194,22 @@ function MakeClass({ history }) {
           />
         </Form.Group>
         <Form.Group>
+          <Form.Label>수업 설명</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows="2"
+            placeholder="수업설명"
+            onChange={(e) => {
+              setClDe(e.target.value);
+            }}
+          />
+        </Form.Group>
+        <Form.Group>
           <Form.Label>성적인증</Form.Label>
-          <Form.Control placeholder="성적을 인증할수있는 링크를 주세요!(추후 이미지 저장으로 바뀔예정입니다 😀 )" />
+          <Form.Control
+            onChange={(e) => setGrade(e.target.value)}
+            placeholder="성적을 인증할수있는 링크를 주세요!(추후 이미지 저장으로 바뀔예정입니다 😀 )"
+          />
         </Form.Group>
 
         {classTypeSelect !== 1 ? ( //온라인 동영상 강의를 제외한 수업에 필요한 요소

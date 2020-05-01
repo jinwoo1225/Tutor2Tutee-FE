@@ -11,7 +11,6 @@ function Home({ loginState, history, dispatchClass }) {
   const [updated, setUpdated] = useState(true);
   if (updated) {
     checkClass({ dispatchClass });
-    console.log("ticked!");
     setUpdated(false);
   }
 
