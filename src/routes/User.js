@@ -22,16 +22,6 @@ function User({ history }) {
     });
     setUserInfo({ isDataQuerried: true });
   }
-
-  if (classes.length) {
-    user.classesAsTutor.map((classID) => {
-      const className = classes.filter((_class) => {
-        return _class._id === classID;
-      });
-      console.log(className[0].className);
-    });
-  }
-
   return (
     <Container>
       {user.nickname === "" ? null : (
