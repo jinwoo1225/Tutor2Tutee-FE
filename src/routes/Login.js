@@ -9,6 +9,11 @@ import { URL, checkAuth } from "../components/App";
 function Login({ dispatchUser, history }) {
   const [userID, setUserID] = useState("");
   const [userPW, setPassword] = useState("");
+  function enterKey() {
+    if (window.event.keyCode === 13) {
+      onClickLogin();
+    }
+  }
 
   const onClickLogin = () => {
     //ajax로 날릴 데이터
@@ -44,6 +49,7 @@ function Login({ dispatchUser, history }) {
             onChange={(e) => {
               setUserID(e.target.value);
             }}
+            onKeyUp={enterKey}
           />
         </Form.Group>
         <Form.Group>
@@ -54,6 +60,7 @@ function Login({ dispatchUser, history }) {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            onKeyUp={enterKey}
           />
         </Form.Group>
         <Form.Group controlId="formBasicCheckbox">
