@@ -5,6 +5,7 @@ import Navigation from "../components/Navigation";
 import Home from "../routes/Home";
 import About from "../routes/About";
 import Class from "../routes/Class";
+import ClassEdit from "../routes/ClassEdit";
 import Login from "../routes/Login";
 import Register from "../routes/Register";
 import MakeClass from "../routes/MakeClass";
@@ -45,6 +46,7 @@ function App({ dispatchUser, dlogout, dispatchClass }) {
       <Route path="/user/login" component={Login} />
       <Route path="/user/register" component={Register} />
       <Route path="/class/id/:id" exact component={Class} />
+      <Route path="/class/id/:id/edit" exact component={ClassEdit} />
       <Route path="/class/new" exact component={MakeClass} />
     </Router>
   );

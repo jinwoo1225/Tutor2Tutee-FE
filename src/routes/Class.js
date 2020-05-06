@@ -10,6 +10,7 @@ import {
   classTypesRaw,
   URL,
 } from "../components/App";
+import { Link } from "react-router-dom";
 
 const joinClass = (id, setClass) => {
   Axios.get(URL + "class/" + id + "/join").then((response) => {
@@ -75,14 +76,18 @@ function Class({
               <br />
               Current / Max : {_class.tutees.length} / {_class.maxTutee}
             </p>
+            <Link to={_class._id + "/edit"}>
+              <Button>설정하기</Button>
+            </Link>
             {_class.tutor === user._id ? (
-              <p>이건 내강의인데요.</p>
+              <Link>
+                <Button>설정하기</Button>
+              </Link>
             ) : classState === 1 ? (
               //강의를 개설할 준비가 되면
               <>
                 <p>내가 튜티네요!</p>
                 <Button
-                  className="my-3"
                   onClick={() => {
                     joinClass(_class._id, setClass);
                   }}
@@ -91,11 +96,15 @@ function Class({
                 </Button>
               </>
             ) : (
-              <Button className="my-3" disabled>
-                완료되었습니다.
-              </Button>
+              <Button disabled>완료되었습니다.</Button>
             )}
-            <ClassTab classInfo={_class} classType={classTypeNum} />
+            <div className="my-3">
+              <ClassTab
+                classInfo={_class}
+                userInfo={user}
+                classType={classTypeNum}
+              />
+            </div>
           </>
         ) : null}
       </div>
