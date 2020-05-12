@@ -8,6 +8,7 @@ function Register({ history }) {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
+  const [authNum, setAuthNum] = useState(0);
 
   const onSubmit = () => {
     const data =
@@ -20,7 +21,7 @@ function Register({ history }) {
       "&webmail=" +
       webmail +
       "@hknu.ac.kr";
-    Axios.post(URL + "user/register", data).then((response) => {
+    Axios.post(URL + "user", data).then((response) => {
       if (response.data === "Create Successfully") {
         alert("등록에 성공했어요!!");
         history.push("/user/login");
@@ -29,6 +30,23 @@ function Register({ history }) {
       }
     });
   };
+
+  function sendEmail() {
+    Axios.post(URL + "auth/sendEmail", "email=" + webmail).then((response) => {
+      console.log(response.data);
+      alert("이메일을 확인해주세요!");
+    });
+  }
+
+  function checkEmail() {
+    Axios.post(
+      URL + "auth/authEmail",
+      "authNum=" + authNum + "&email=" + webmail
+    ).then((response) => {
+      console.log(response.data);
+    });
+  }
+  // authNum=" + authNum + "&email="+mail
 
   return (
     <Container>
@@ -67,7 +85,20 @@ function Register({ history }) {
             />
             <InputGroup.Append>
               <InputGroup.Text id="email-addon">@hknu.ac.kr</InputGroup.Text>
-              <Button>이메일 인증</Button>
+              <Button onClick={sendEmail}>이메일 인증</Button>
+            </InputGroup.Append>
+          </InputGroup>
+          <InputGroup>
+            <Form.Control
+              onChange={(e) => {
+                setAuthNum(e.target.value);
+              }}
+              placeholder="인증번호"
+              aria-label="인증번호"
+              aria-describedby="email-addon"
+            />
+            <InputGroup.Append>
+              <Button onClick={checkEmail}>확인</Button>
             </InputGroup.Append>
           </InputGroup>
         </Form.Group>
