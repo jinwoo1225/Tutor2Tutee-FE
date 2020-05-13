@@ -20,7 +20,7 @@ function Register({ history }) {
       "&webmail=" +
       webmail +
       "@hknu.ac.kr";
-    Axios.post(URL + "user/register", data).then((response) => {
+    Axios.post(URL + "user", data).then((response) => {
       if (response.data === "Create Successfully") {
         alert("등록에 성공했어요!!");
         history.push("/user/login");

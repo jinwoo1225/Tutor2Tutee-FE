@@ -124,12 +124,12 @@ function LectureNoteInput({ classID }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const sendLectureNote = () => {
-    Axios.post(
-      URL + "class/" + classID + "/lecture-note",
-      "title=" + title + "&content=" + content
-    ).then((res) => {
+    const data = "title=" + title + "&content=" + content;
+    console.log(data);
+    Axios.post(URL + "class/" + classID + "/lecture-note", data).then((res) => {
       console.log(res);
     });
+    console.log(classID);
   };
   return (
     <div>

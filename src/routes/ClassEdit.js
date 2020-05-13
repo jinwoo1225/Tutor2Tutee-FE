@@ -27,7 +27,7 @@ function ClassEdit({
         <>
           <h2>강의 : {classInfo.className} 관리페이지입니다.</h2>
           <Form>
-            <LectureNoteInput />
+            <LectureNoteInput classID={id} />
             {classInfo.classType === "RealtimeOnlineCourseType" ? (
               <SkypeLinkInput classID={id} />
             ) : null}
