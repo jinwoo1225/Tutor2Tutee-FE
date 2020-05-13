@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && rm -r /home/ubuntu/node_project/pbl3-server-side/public/* &&  mv /home/ubuntu/node_project/tutor2tutee/build/* /home/ubuntu/node_project/pbl3-server-side/public ",
+    "build": "react-scripts build && rm -r /Users/jinwoo/node_project/pbl3-server-side/public/* &&  mv /Users/jinwoo/node_project/tutor2tutee/build/* /Users/jinwoo/node_project/pbl3-server-side/public ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
