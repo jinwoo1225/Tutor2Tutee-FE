@@ -1,6 +1,8 @@
 import React from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import Axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../components/Navigation";
 import Home from "../routes/Home";
 import About from "../routes/About";
@@ -11,8 +13,6 @@ import Register from "../routes/Register";
 import MakeClass from "../routes/MakeClass";
 import User from "../routes/User";
 import { updateClass, updateUser, logout } from "../store";
-import Axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 //서버주소
 export const URL = "http://localhost:3000/";

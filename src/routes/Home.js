@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { checkClass } from "../components/App";
 import { updateClass } from "../store";
+import WhatIs from "../components/WhatIs";
 
 // checkClass({dispatchClass})
 function Home({ loginState, history, dispatchClass }) {
@@ -17,12 +18,7 @@ function Home({ loginState, history, dispatchClass }) {
   return (
     <Container className="pt-3">
       {loginState.user.nickname === "" ? (
-        <div className="text-center">
-          로그인을 하시면 서비스를 이용할수있어요!
-          <Link to="/user/login">
-            <Button className="ml-3">로그인하러가기</Button>
-          </Link>
-        </div>
+        <WhatIs />
       ) : (
         <>
           <h4>안녕하세요! {loginState.user.nickname}</h4>
