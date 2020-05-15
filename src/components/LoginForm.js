@@ -8,20 +8,21 @@ import { updateUser } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faKey } from "@fortawesome/free-solid-svg-icons";
 
-function LoginForm() {
+function LoginForm({ dispatchUser, history }) {
   const [userID, setUserID] = useState("");
   const [userPW, setPassword] = useState("");
   function enterKey() {
     if (window.event.keyCode === 13) {
-      onClickLogin();
+      onClickLogin({ dispatchUser, history });
     }
   }
 
-  const onClickLogin = ({ dispatchUser, history }) => {
+  const onClickLogin = (dispatchUser, history) => {
     //ajax로 날릴 데이터
-    Axios.post(URL + "auth/login", { username: userID, password: userPW }).then(
+    Axios.post(URL + "auth/login", { id: userID, password: userPW }).then(
       (res) => {
-        if (res === "success") {
+        console.log(res.data);
+        if (res.data === "success") {
           console.log("로그인 성공");
           checkAuth({ dispatchUser });
           history.push("/");
@@ -78,7 +79,13 @@ function LoginForm() {
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="비밀번호 저장" />
           </Form.Group>
-          <Button block className="my-md-3" onClick={onClickLogin}>
+          <Button
+            block
+            className="my-md-3"
+            onClick={() => {
+              onClickLogin(dispatchUser, history);
+            }}
+          >
             로그인
           </Button>
           <p>
