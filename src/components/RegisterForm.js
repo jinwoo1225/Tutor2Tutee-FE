@@ -29,6 +29,7 @@ function RegisterForm({ history }) {
       console.log(response.data);
       alert("이메일을 확인해주세요!");
     });
+
     setSented(true);
     setTimer();
   }
@@ -53,7 +54,7 @@ function RegisterForm({ history }) {
       a--;
     }, 1000);
   };
-  function sendRegitserInfo() {
+  function sendRegisterInfo() {
     Axios.post(URL + "user", { id: email, password, nickname, major }).then(
       (res) => {
         if (res.data === "fail") alert("오류가 발생했어요.");
@@ -175,7 +176,7 @@ function RegisterForm({ history }) {
             </InputGroup>
           </FormGroup>
           <FormGroup>
-            <Button block onClick={sendRegitserInfo}>
+            <Button block onClick={sendRegisterInfo}>
               회원 가입
             </Button>
           </FormGroup>
