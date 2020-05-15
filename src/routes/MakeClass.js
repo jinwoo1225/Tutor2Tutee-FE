@@ -146,7 +146,7 @@ function MakeClass({ history }) {
         type="radio"
         name="options"
         style={{ display: "flex" }}
-        className="mx-md-2 text-center"
+        className="mx-md-2 text-center my-md-3"
         aria-label="Type group"
         defaultValue={0}
         onChange={(e) => {
@@ -163,7 +163,6 @@ function MakeClass({ history }) {
       </ToggleButtonGroup>
       <Card>
         <Card.Body>
-          <h3>{classTypes[classTypeSelect]}</h3>
           <Form>
             <Form.Group>
               <Form.Label>수업 이름 정하셨나요?</Form.Label>
@@ -330,7 +329,7 @@ function MakeClass({ history }) {
             </Form.Group>
           </Form>
           <Button block onClick={submitToDB}>
-            Submit
+            수업 개설
           </Button>
         </Card.Body>
       </Card>

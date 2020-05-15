@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import CardComp from "../components/CardComp";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { checkClass } from "../components/App";
 import { updateClass } from "../store";
 import WhatIs from "../components/WhatIs";

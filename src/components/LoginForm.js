@@ -4,10 +4,9 @@ import { Form, Button, Card, InputGroup } from "react-bootstrap";
 import { URL, checkAuth } from "../components/App";
 import Axios from "axios";
 import { connect } from "react-redux";
-import { login, updateUser } from "../store";
+import { updateUser } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faKey } from "@fortawesome/free-solid-svg-icons";
-import { InputGroupPrepend } from "react-bootstrap/InputGroup";
 
 function LoginForm() {
   const [userID, setUserID] = useState("");
