@@ -2,10 +2,10 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import RegisterForm from "../components/RegisterForm";
 
-function Register() {
+function Register({ history }) {
   return (
     <Container>
-      <RegisterForm />
+      <RegisterForm history={history} />
     </Container>
   );
 }

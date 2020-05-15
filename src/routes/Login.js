@@ -2,10 +2,10 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import LoginForm from "../components/LoginForm";
 
-function Login() {
+function Login({ history }) {
   return (
     <Container>
-      <LoginForm />
+      <LoginForm history={history} />
     </Container>
   );
 }
