@@ -13,7 +13,6 @@ import {
 
 function ClassTab({ classInfo, userInfo, classType }) {
   const [key, setKey] = useState("overview");
-
   return (
     <Tabs id="controlled-tab" activeKey={key} onSelect={(e) => setKey(e)}>
       <Tab eventKey="overview" title="개요">
@@ -27,7 +26,7 @@ function ClassTab({ classInfo, userInfo, classType }) {
         <Attendance classType={classType} />
       </Tab>
       <Tab eventKey="lectureNote" title="수업 노트">
-        <LectureNote />
+        <LectureNote LectureNotes={classInfo.lectureNotes} />
       </Tab>
       <Tab eventKey="QnA" title="Q&A">
         <QnA />

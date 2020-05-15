@@ -35,8 +35,19 @@ function SkypeLink({ skypeLink }) {
   return <h1>This is SkypeLink</h1>;
 }
 
-function LectureNote() {
-  return <h1>This is LectureNote</h1>;
+function LectureNote({ LectureNotes }) {
+  return (
+    <ol>
+      {LectureNotes.map((lectureNote) => {
+        return (
+          <li key={lectureNote._id}>
+            <h4>{lectureNote.title}</h4>
+            <p>{lectureNote.content}</p>
+          </li>
+        );
+      })}
+    </ol>
+  );
 }
 
 function RealTimeChat() {
@@ -50,10 +61,9 @@ function VideoLink() {
 function SkypeLinkInput({ classID }) {
   const [link, setLink] = useState("");
   const sendLink = () => {
-    Axios.post(
-      URL + "class/" + classID + "/skype",
-      "skypeLink=" + link
-    ).then((response) => console.log(response));
+    Axios.post(URL + "class/" + classID + "/skype", {
+      skypeLink: link,
+    }).then((response) => console.log(response));
   };
   return (
     <Form.Group as={Row}>
@@ -78,13 +88,12 @@ function MaxTutee({ classID, classMaxTutee, history }) {
   const tuteeMaxArray = [...Array(11).keys()];
   const [maxTutee, setMaxTutee] = useState(classMaxTutee);
   const sendLink = () => {
-    Axios.post(
-      URL + "class/" + classID + "/max-tutee",
-      "maxTutee=" + maxTutee
-    ).then((res) => {
-      alert(res.data);
-      history.push("/");
-    });
+    Axios.post(URL + "class/" + classID + "/max-tutee", { maxTutee }).then(
+      (res) => {
+        alert(res.data);
+        history.push("/");
+      }
+    );
   };
   return (
     <Form.Group as={Row}>
@@ -124,12 +133,14 @@ function LectureNoteInput({ classID }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const sendLectureNote = () => {
-    const data = "title=" + title + "&content=" + content;
-    console.log(data);
-    Axios.post(URL + "class/" + classID + "/lecture-note", data).then((res) => {
-      console.log(res);
+    Axios.post(URL + "class/" + classID + "/lecture-note", {
+      title,
+      content,
+    }).then((res) => {
+      res.data === "success"
+        ? alert("강의노트 추가에 성공했어요!")
+        : alert("강의노트 추가에 실패했어요...");
     });
-    console.log(classID);
   };
   return (
     <div>
