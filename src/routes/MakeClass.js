@@ -7,7 +7,7 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
-import jQuery from "jquery";
+import Axios from "axios";
 import { URL } from "../components/App";
 import { classTypes, classTypesRaw } from "../components/App";
 
@@ -53,89 +53,64 @@ function MakeClass({ history }) {
   }
 
   const submitToDB = () => {
-    let data =
-      "classType=" +
-      classTypesRaw[classTypeSelect] +
-      "&category=" +
-      category +
-      "&studyAbout=" +
-      studyAbout +
-      "&className=" +
-      classname +
-      "&price=" +
-      price +
-      "&grade=" +
-      grade +
-      "&class_description=" +
-      classDesc;
+    let data = {
+      classtype: classTypesRaw[classTypeSelect],
+      category,
+      studyAbout,
+      className: classname,
+      price,
+      grade,
+      class_description: classDesc,
+    };
     switch (classTypeSelect) {
       case 0:
-        data =
-          data +
-          "&time_day=" +
-          weeksRaw[date] +
-          "&time_start=" +
-          startTime +
-          "&time_finish=" +
-          endTime +
-          "&course_description=" +
-          courseDesc +
-          "&maxTutee=" +
-          maxTutee;
+        data = {
+          ...data,
+          time_day: weeksRaw[date],
+          time_start: startTime,
+          time_finish: endTime,
+          course_description: courseDesc,
+          maxTutee,
+        };
         break;
 
       case 1:
         break;
 
       case 2:
-        data =
-          data +
-          "&time_day=" +
-          weeksRaw[date] +
-          "&time_start=" +
-          startTime +
-          "&time_finish=" +
-          endTime;
+        data = {
+          ...data,
+          time_day: weeksRaw[date],
+          time_start: startTime,
+          time_finish: endTime,
+        };
         break;
 
       case 3:
-        data =
-          data +
-          "&time_day=" +
-          weeksRaw[date] +
-          "&time_start=" +
-          startTime +
-          "&time_finish=" +
-          endTime +
-          "&place=" +
-          place +
-          "&maxTutee=" +
-          maxTutee;
+        data = {
+          ...data,
+          time_day: weeksRaw[date],
+          time_start: startTime,
+          time_finish: endTime,
+          place,
+          maxTutee,
+        };
         break;
 
       default:
         break;
     }
     console.log(data);
-    jQuery.ajax({
-      type: "POST",
-      url: URL + "class",
-      data: data,
-      dataType: "text",
-      success: (res) => {
-        if (res === "fail") {
-          alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
-        } else {
-          alert("등록에 성공했어요!! 홈화면으로 돌아갑니다!");
-          classInfo = res;
-          console.log(classInfo);
-          history.push("/");
-        }
-        console.log(res);
-      },
-      error: (xhr) => {
-        console.log(xhr);
-      },
+
+    Axios.post(URL + "class", data).then((res) => {
+      if (res === "fail") {
+        alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
+      } else {
+        alert("등록에 성공했어요!! 홈화면으로 돌아갑니다!");
+        classInfo = res;
+        console.log(classInfo);
+        history.push("/");
+      }
     });
   };
 
