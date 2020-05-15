@@ -5,10 +5,12 @@ import { connect } from "react-redux";
 import { checkClass } from "../components/App";
 import { updateClass } from "../store";
 import WhatIs from "../components/WhatIs";
+import CurrentClass from "../components/CurrentClass";
 
 // checkClass({dispatchClass})
 function Home({ loginState, history, dispatchClass }) {
   const [updated, setUpdated] = useState(true);
+
   if (updated) {
     checkClass({ dispatchClass });
     setUpdated(false);
@@ -16,16 +18,7 @@ function Home({ loginState, history, dispatchClass }) {
 
   return (
     <Container className="pt-3">
-      {loginState.user.nickname === "" ? (
-        <WhatIs />
-      ) : (
-        <>
-          <h4>안녕하세요! {loginState.user.nickname}</h4>
-          지금 수강중인 강의 : ...
-          <br />
-          지금 가르치는 강의 : ...
-        </>
-      )}
+      {loginState.user.nickname === "" ? <WhatIs /> : <CurrentClass />}
       <CardComp />
     </Container>
   );
