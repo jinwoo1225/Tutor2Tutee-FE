@@ -54,7 +54,7 @@ function MakeClass({ history }) {
 
   const submitToDB = () => {
     let data = {
-      classtype: classTypesRaw[classTypeSelect],
+      classType: classTypesRaw[classTypeSelect],
       category,
       studyAbout,
       className: classname,

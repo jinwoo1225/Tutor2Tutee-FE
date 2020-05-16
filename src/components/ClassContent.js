@@ -32,7 +32,7 @@ function QnA() {
 }
 
 function SkypeLink({ skypeLink }) {
-  return <h1>This is SkypeLink</h1>;
+  return <a href={skypeLink}>스카이프링크 접속하기!</a>;
 }
 
 function LectureNote({ LectureNotes }) {

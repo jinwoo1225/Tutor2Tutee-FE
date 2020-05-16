@@ -33,7 +33,7 @@ function ClassTab({ classInfo, userInfo, classType }) {
       </Tab>
       {[0].includes(classType) ? (
         <Tab eventKey="skypeLink" title="스카이프링크">
-          <SkypeLink classType={classType} />
+          <SkypeLink classType={classType} skypeLink={classInfo.skypeLink} />
         </Tab>
       ) : null}
       {[1].includes(classType) ? (
