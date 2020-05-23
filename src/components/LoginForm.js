@@ -4,30 +4,28 @@ import { Form, Button, Card, InputGroup } from "react-bootstrap";
 import { URL, checkAuth } from "../components/App";
 import Axios from "axios";
 import { connect } from "react-redux";
-import { updateUser } from "../store";
+import { updateUser, logout } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faKey } from "@fortawesome/free-solid-svg-icons";
 
-function LoginForm({ dispatchUser, history }) {
+function LoginForm({ dispatchUser, dlogout, history }) {
   const [userID, setUserID] = useState("");
   const [userPW, setPassword] = useState("");
   function enterKey() {
     if (window.event.keyCode === 13) {
-      onClickLogin({ dispatchUser, history });
+      onClickLogin(dispatchUser, dlogout, history);
     }
   }
 
-  const onClickLogin = (dispatchUser, history) => {
-    //ajax로 날릴 데이터
+  const onClickLogin = (dispatchUser, dlogout, history) => {
     Axios.post(URL + "auth/login", { id: userID, password: userPW }).then(
       (res) => {
-        console.log(res.data);
-        if (res.data === "success") {
-          console.log("로그인 성공");
-          checkAuth({ dispatchUser });
-          history.push("/");
-        } else {
+        if (res.data === "fail") {
           alert("로그인 실패");
+        } else {
+          console.log("로그인 성공");
+          checkAuth({ dispatchUser, dlogout });
+          history.push("/");
         }
       }
     );
@@ -83,7 +81,7 @@ function LoginForm({ dispatchUser, history }) {
             block
             className="my-md-3"
             onClick={() => {
-              onClickLogin(dispatchUser, history);
+              onClickLogin(dispatchUser, dlogout, history);
             }}
           >
             로그인
@@ -103,6 +101,9 @@ function LoginForm({ dispatchUser, history }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { dispatchUser: (data) => dispatch(updateUser(data)) };
+  return {
+    dispatchUser: (data) => dispatch(updateUser(data)),
+    dlogout: () => dispatch(logout()),
+  };
 }
 export default connect(null, mapDispatchToProps)(LoginForm);
