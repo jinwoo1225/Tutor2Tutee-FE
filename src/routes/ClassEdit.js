@@ -5,6 +5,7 @@ import {
   SkypeLinkInput,
   MaxTutee,
   LectureNoteInput,
+  VideoLinkInput,
 } from "../components/ClassContent";
 
 function ClassEdit({
@@ -30,6 +31,9 @@ function ClassEdit({
             <LectureNoteInput classID={id} />
             {classInfo.classType === "RealtimeOnlineCourseType" ? (
               <SkypeLinkInput classID={id} />
+            ) : null}
+            {classInfo.classType === "OnlineCourseType" ? (
+              <VideoLinkInput classID={id} />
             ) : null}
             {classInfo.maxTutee === undefined ? null : (
               <MaxTutee classID={id} classMaxTutee={classInfo.maxTutee} />
