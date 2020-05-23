@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 import ClassTab from "../components/ClassTab";
 
 import {
@@ -59,55 +59,55 @@ function Class({
     setUser({ _id: "" });
   }
   return (
-    <Container>
-      <div>
-        {_class._id === id ? (
-          <>
-            <h1>{_class.className}</h1>
-            <p>
-              ClassType : {classTypes[classTypeNum]} Category :{" "}
-              {_class.category}
-              <br />
-              Tutor : {tutorName}
-              <br />
-              State : {states[classState]}
-              <br />
-              User : {user._id}
-              <br />
-              Current / Max : {_class.tutees.length} / {_class.maxTutee}
-            </p>
-            <Link to={_class._id + "/edit"}>
-              <Button>설정하기</Button>
-            </Link>
-            {_class.tutor === user._id ? (
-              <Link>
+    <Container className="mt-3">
+      <Card bg="light">
+        <Card.Body>
+          {_class._id === id ? (
+            <>
+              <h1>{_class.className}</h1>
+              <p>
+                ClassType : {classTypes[classTypeNum]} Category :{" "}
+                {_class.category}
+                <br />
+                Tutor : {tutorName}
+                <br />
+                State : {states[classState]}
+                <br />
+                User : {user._id}
+                <br />
+                Current / Max : {_class.tutees.length} / {_class.maxTutee}
+              </p>
+              <Link to={_class._id + "/edit"}>
                 <Button>설정하기</Button>
               </Link>
-            ) : classState === 1 ? (
-              //강의를 개설할 준비가 되면
-              <>
-                <p>내가 튜티네요!</p>
-                <Button
-                  onClick={() => {
-                    joinClass(_class._id, setClass);
-                  }}
-                >
-                  참가하기
-                </Button>
-              </>
-            ) : (
-              <Button disabled>완료되었습니다.</Button>
-            )}
-            <div className="my-3">
+              {_class.tutor === user._id ? (
+                <Link>
+                  <Button>설정하기</Button>
+                </Link>
+              ) : classState === 1 ? (
+                //강의를 개설할 준비가 되면
+                <>
+                  <p>내가 튜티네요!</p>
+                  <Button
+                    onClick={() => {
+                      joinClass(_class._id, setClass);
+                    }}
+                  >
+                    참가하기
+                  </Button>
+                </>
+              ) : (
+                <Button disabled>완료되었습니다.</Button>
+              )}
               <ClassTab
                 classInfo={_class}
                 userInfo={user}
                 classType={classTypeNum}
               />
-            </div>
-          </>
-        ) : null}
-      </div>
+            </>
+          ) : null}
+        </Card.Body>
+      </Card>
     </Container>
   );
 }
