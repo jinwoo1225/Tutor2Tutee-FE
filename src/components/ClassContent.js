@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "./App";
+import { Link } from "react-router-dom";
 
 function Overview({ studyAbout, courses }) {
   return (
@@ -32,7 +33,11 @@ function QnA() {
 }
 
 function SkypeLink({ skypeLink }) {
-  return <a href={skypeLink}>스카이프링크 접속하기!</a>;
+  return (
+    <a href={skypeLink}>
+      <Button>Link to Skype Call</Button>
+    </a>
+  );
 }
 
 function LectureNote({ LectureNotes }) {
@@ -54,10 +59,52 @@ function RealTimeChat() {
   return <h1>This is RealTimeChat</h1>;
 }
 
-function VideoLink() {
-  return <h1>This is VideoLink</h1>;
+function VideoLink({ VideoLinks }) {
+  return (
+    <ol>
+      {VideoLinks.map((link) => {
+        return (
+          <li>
+            <a href={link.link}>{link.description}</a>
+          </li>
+        );
+      })}
+    </ol>
+  );
 }
-
+function VideoLinkInput({ classID }) {
+  //동영상 강의 링크 업로드
+  const [description, setDesc] = useState("");
+  const [link, setLink] = useState("");
+  const sendLink = () => {
+    Axios.post(URL + "class/" + classID + "/course", {
+      link,
+      description,
+    }).then((response) => console.log(response));
+  };
+  return (
+    <InputGroup as={Row}>
+      <InputGroup.Prepend>
+        <InputGroup.Text>온라인 강의 등록</InputGroup.Text>
+      </InputGroup.Prepend>
+      <Form.Control
+        className="col-3"
+        placeholder="강의 제목"
+        type="text"
+        onChange={(e) => setDesc(e.target.value)}
+      />
+      <Form.Control
+        className="col-9"
+        placeholder="강의 링크"
+        type="text"
+        onChange={(e) => setLink(e.target.value)}
+      />
+      <InputGroup.Append>
+        <Button onClick={sendLink}>저장</Button>
+      </InputGroup.Append>
+    </InputGroup>
+  );
+}
 function SkypeLinkInput({ classID }) {
   const [link, setLink] = useState("");
   const sendLink = () => {
@@ -182,6 +229,7 @@ export {
   LectureNote,
   RealTimeChat,
   VideoLink,
+  VideoLinkInput,
   MaxTutee,
   LectureNoteInput,
 };
