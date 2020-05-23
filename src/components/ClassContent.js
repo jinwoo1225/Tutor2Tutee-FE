@@ -9,7 +9,6 @@ import {
 } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "./App";
-import { Link } from "react-router-dom";
 
 function Overview({ studyAbout, courses }) {
   return (
