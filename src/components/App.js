@@ -58,10 +58,8 @@ export const checkAuth = ({ dispatchUser, dlogout }) => {
     .then((response) => {
       if (response.data === "fail") {
         dlogout();
-        return false;
       } else {
         dispatchUser(response.data);
-        return true;
       }
     })
     .catch((error) => {
