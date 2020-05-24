@@ -34,6 +34,7 @@ function Class({
   const [classState, setClassState] = useState();
   const [classTypeNum, setClassType] = useState();
   const [user, setUser] = useState({ _id: undefined });
+  const [attenCode, setAttenCode] = useState("");
 
   if (_class.classLoaded === false) {
     Axios.get(URL + "class/" + id).then((response) => {
@@ -58,6 +59,14 @@ function Class({
     });
     setUser({ _id: "" });
   }
+
+  function startAttendance() {
+    Axios.get(URL + "class/" + id + "/attendance").then((response) => {
+      setAttenCode(response.data);
+      alert("출석이 시작되었습니다!" + response.data);
+    });
+  }
+
   return (
     <Container className="mt-3">
       <Card bg="light">
@@ -77,14 +86,17 @@ function Class({
                 <br />
                 Current / Max : {_class.tutees.length} / {_class.maxTutee}
               </p>
-              <Link to={_class._id + "/edit"}>
-                <Button>설정하기</Button>
-              </Link>
+
               {_class.tutor === user._id ? (
-                <Link>
-                  <Button>설정하기</Button>
-                </Link>
+                // 내가 튜터 이면
+                <>
+                  <Link to={_class._id + "/edit"}>
+                    <Button>설정하기</Button>
+                  </Link>
+                  <Button onClick={startAttendance}>출석하기</Button>
+                </>
               ) : classState === 1 ? (
+                // 내가 튜티이면
                 //강의를 개설할 준비가 되면
                 <>
                   <p>내가 튜티네요!</p>
