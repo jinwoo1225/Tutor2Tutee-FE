@@ -8,7 +8,7 @@ import WhatIs from "../components/WhatIs";
 import CurrentClass from "../components/CurrentClass";
 
 // checkClass({dispatchClass})
-function Home({ loginState, history, dispatchClass }) {
+function Home({ user, dispatchClass }) {
   const [updated, setUpdated] = useState(true);
 
   if (updated) {
@@ -18,14 +18,14 @@ function Home({ loginState, history, dispatchClass }) {
 
   return (
     <Container className="pt-3">
-      {loginState.user.nickname === "" ? <WhatIs /> : <CurrentClass />}
+      {user.nickname === "" ? <WhatIs /> : <CurrentClass />}
       <CardComp />
     </Container>
   );
 }
 
-function mapStateToProps(state, ownProps) {
-  return { loginState: state, props: ownProps };
+function mapStateToProps(state) {
+  return { user: state.user };
 }
 
 function mapDispatchToProps(dispatch) {
