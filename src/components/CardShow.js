@@ -4,7 +4,7 @@ import { URL } from "./App";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function CardShow({ _class }) {
+function CardShow({ _class, col }) {
   const [tutorName, setTutorName] = useState("");
   if (tutorName === "") {
     Axios.get(URL + "user/" + _class.tutor).then((response) => {
@@ -14,7 +14,7 @@ function CardShow({ _class }) {
   }
 
   return (
-    <Col md="4" className="my-3" key={_class._id}>
+    <Col md={col} className="my-3" key={_class._id}>
       <Card>
         <Card.Body>
           <Card.Title>{_class.className}</Card.Title>
