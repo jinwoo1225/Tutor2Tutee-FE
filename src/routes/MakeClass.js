@@ -103,7 +103,7 @@ function MakeClass({ history }) {
     console.log(data);
 
     Axios.post(URL + "class", data).then((res) => {
-      if (res === "fail") {
+      if (res.data === "fail") {
         alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
       } else {
         alert("등록에 성공했어요!! 홈화면으로 돌아갑니다!");
