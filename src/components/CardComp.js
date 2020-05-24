@@ -22,7 +22,7 @@ function CardComp({ classes, user }) {
         </>
       ) : (
         classes.map((_class) => {
-          return <CardShow key={_class._id} _class={_class} />;
+          return <CardShow col={4} key={_class._id} _class={_class} />;
         })
       )}
     </Row>
