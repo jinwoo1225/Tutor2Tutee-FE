@@ -33,24 +33,36 @@ function QnA() {
 
 function SkypeLink({ skypeLink }) {
   return (
-    <a href={skypeLink}>
-      <Button>Link to Skype Call</Button>
-    </a>
+    <>
+      {skypeLink === undefined ? (
+        <h4>Skype 링크가 아직 없어요! 잠시만 기다려주세요~~</h4>
+      ) : (
+        <a href={skypeLink}>
+          <Button>Link to Skype Call</Button>
+        </a>
+      )}
+    </>
   );
 }
 
 function LectureNote({ LectureNotes }) {
   return (
-    <ol>
-      {LectureNotes.map((lectureNote) => {
-        return (
-          <li key={lectureNote._id}>
-            <h4>{lectureNote.title}</h4>
-            <p>{lectureNote.content}</p>
-          </li>
-        );
-      })}
-    </ol>
+    <>
+      {LectureNotes.length === 0 ? (
+        <h4>아직 수업노트가 없네요!!</h4>
+      ) : (
+        <ol>
+          {LectureNotes.map((lectureNote) => {
+            return (
+              <li key={lectureNote._id}>
+                <h4>{lectureNote.title}</h4>
+                <p>{lectureNote.content}</p>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </>
   );
 }
 
