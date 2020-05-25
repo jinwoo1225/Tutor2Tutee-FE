@@ -113,7 +113,7 @@ function Class({
                     <Button onClick={startClass}>강의 마감하기</Button>
                   ) : null}
                 </>
-              ) : user._id === "" ? null : [1].includes(classState) ? ( //게스트인 경우
+              ) : user._id === "" ? null : [3].includes(classState) ? ( //게스트인 경우
                 // 내가 튜티이면
                 //강의를 개설할 준비가 되면
                 <>
@@ -137,14 +137,10 @@ function Class({
                         </InputGroup>
                       ) : null}
                     </>
-                  ) : (
-                    <Button onClick={joinClass}>
-                      {_class.className} 참가하기
-                    </Button>
-                  )}
+                  ) : null}
                 </>
               ) : (
-                <Button disabled>완료되었습니다.</Button>
+                <Button onClick={joinClass}>{_class.className} 참가하기</Button>
               )}
               <ClassTab
                 classInfo={_class}
