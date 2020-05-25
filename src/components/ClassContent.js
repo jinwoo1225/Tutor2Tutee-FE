@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  InputGroup,
-  FormControl,
-  Button,
-  Form,
-  Col,
-  Row,
-} from "react-bootstrap";
+import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "./App";
 
@@ -94,26 +87,36 @@ function VideoLinkInput({ classID }) {
     }).then((response) => console.log(response));
   };
   return (
-    <InputGroup as={Row}>
-      <InputGroup.Prepend>
-        <InputGroup.Text>온라인 강의 등록</InputGroup.Text>
-      </InputGroup.Prepend>
-      <Form.Control
-        className="col-3"
-        placeholder="강의 제목"
-        type="text"
-        onChange={(e) => setDesc(e.target.value)}
-      />
-      <Form.Control
-        className="col-9"
-        placeholder="강의 링크"
-        type="text"
-        onChange={(e) => setLink(e.target.value)}
-      />
-      <InputGroup.Append>
-        <Button onClick={sendLink}>저장</Button>
-      </InputGroup.Append>
-    </InputGroup>
+    <Card className="mt-3">
+      <Card.Title className="text-center mt-3">
+        <h2>온라인 강의 등록</h2>
+      </Card.Title>
+      <Card.Subtitle className="text-center">
+        강의는 유튜브 링크로 대체해주세요
+      </Card.Subtitle>
+      <Card.Body>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>온라인 강의 등록</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            className="col-3"
+            placeholder="강의 제목"
+            type="text"
+            onChange={(e) => setDesc(e.target.value)}
+          />
+          <Form.Control
+            className="col-9"
+            placeholder="강의 링크"
+            type="text"
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </InputGroup>
+        <Button className="mt-3" block onClick={sendLink}>
+          저장
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
 function SkypeLinkInput({ classID }) {
@@ -124,25 +127,30 @@ function SkypeLinkInput({ classID }) {
     }).then((response) => console.log(response));
   };
   return (
-    <Form.Group as={Row}>
-      <Form.Label column sm="2">
-        스카이프 공유 링크
-      </Form.Label>
-      <InputGroup size="lg" as={Col} sm="10">
-        <FormControl
-          aria-label="Large"
-          aria-describedby="inputGroup-sizing-sm"
-          onChange={(e) => setLink(e.target.value)}
-        />
-        <InputGroup.Append>
-          <Button onClick={sendLink}>입력</Button>
-        </InputGroup.Append>
-      </InputGroup>
-    </Form.Group>
+    <Card className="mt-3">
+      <Card.Title className="mt-3 text-center">
+        <h2>스카이프 링크 입력</h2>
+      </Card.Title>
+      <Card.Body>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>스카이프 공유 링크</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            aria-label="Large"
+            aria-describedby="inputGroup-sizing-sm"
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </InputGroup>
+        <Button className="mt-3" block onClick={sendLink}>
+          입력
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
 
-function MaxTutee({ classID, classMaxTutee, history }) {
+function MaxTuteeInput({ classID, classMaxTutee, history }) {
   const tuteeMaxArray = [...Array(11).keys()];
   const [maxTutee, setMaxTutee] = useState(classMaxTutee);
   const sendLink = () => {
@@ -154,36 +162,35 @@ function MaxTutee({ classID, classMaxTutee, history }) {
     );
   };
   return (
-    <Form.Group as={Row}>
-      <Form.Label column sm="2">
-        최대 튜티수 변경
-      </Form.Label>
-      <InputGroup size="lg" as={Col} sm="10">
-        <InputGroup.Prepend>
-          <InputGroup.Text id="inputGroup-sizing-lg">
-            현재 : {classMaxTutee}명
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-
-        <FormControl
-          as="select"
-          onChange={(e) => {
-            setMaxTutee(e.target.value);
-          }}
-        >
-          {tuteeMaxArray.map((tuteeMax, index) => {
-            return (
-              <option key={index} value={tuteeMax + 3}>
-                {tuteeMax + 3}
-              </option>
-            );
-          })}
-        </FormControl>
-        <InputGroup.Append>
-          <Button onClick={sendLink}>입력</Button>
-        </InputGroup.Append>
-      </InputGroup>
-    </Form.Group>
+    <Card className="mt-3">
+      <Card.Title className="text-center mt-3">
+        <h3>최대 튜티수 변경</h3>
+      </Card.Title>
+      <Card.Body>
+        <InputGroup className="mt-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text>현재 : {classMaxTutee}명</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            as="select"
+            onChange={(e) => {
+              setMaxTutee(e.target.value);
+            }}
+          >
+            {tuteeMaxArray.map((tuteeMax, index) => {
+              return (
+                <option key={index} value={tuteeMax + 3}>
+                  {tuteeMax + 3}
+                </option>
+              );
+            })}
+          </Form.Control>
+        </InputGroup>
+        <Button className="mt-3" block onClick={sendLink}>
+          완료
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
 
@@ -191,6 +198,9 @@ function LectureNoteInput({ classID }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const sendLectureNote = () => {
+    if (title === "" || content === "") {
+      alert("강의노트 모든란을 채워주세요.");
+    }
     Axios.post(URL + "class/" + classID + "/lecture-note", {
       title,
       content,
@@ -200,34 +210,42 @@ function LectureNoteInput({ classID }) {
         : alert("강의노트 추가에 실패했어요...");
     });
   };
+
   return (
-    <div>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          강의노트 제목
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control onChange={(e) => setTitle(e.target.value)} />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          강의노트 내용
-        </Form.Label>
-        <Col sm="10">
-          <InputGroup>
-            <Form.Control
-              as="textarea"
-              rows="3"
-              onChange={(e) => setContent(e.target.value)}
-            />
-            <InputGroup.Append>
-              <Button onClick={sendLectureNote}>완료</Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Col>
-      </Form.Group>
-    </div>
+    <Card className="mt-3">
+      <Card.Title className="text-center mt-3">
+        <h3>수업노트 추가</h3>
+      </Card.Title>
+      <Card.Subtitle className="text-center">
+        수업노트의 내용 창은 우측하단을 눌러서 확장이 가능해요!!
+      </Card.Subtitle>
+      <Card.Body>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>수업노트 제목</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            placeholder="노트 제목"
+            type="text"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </InputGroup>
+        <InputGroup className="mt-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text>수업노트 내용</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            placeholder="노트 내용"
+            as="textarea"
+            type="text"
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </InputGroup>
+        <Button className="mt-3" block onClick={sendLectureNote}>
+          저장
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
 
@@ -241,6 +259,6 @@ export {
   RealTimeChat,
   VideoLink,
   VideoLinkInput,
-  MaxTutee,
+  MaxTuteeInput,
   LectureNoteInput,
 };

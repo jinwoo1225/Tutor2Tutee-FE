@@ -121,7 +121,7 @@ function Class({
                   {user.classesAsTutee.includes(_class._id) ? (
                     <>
                       {classTypeNum !== undefined &&
-                      [0].includes(classTypeNum) ? (
+                      [0, 3].includes(classTypeNum) ? (
                         //온라인 실시간 수업일 경우의 인증번호
                         <InputGroup>
                           <InputGroup.Prepend>
@@ -135,12 +135,12 @@ function Class({
                             <Button onClick={getAttendance}>출석하기</Button>
                           </InputGroup.Append>
                         </InputGroup>
-                      ) : (
-                        <Button onClick={getAttendance}>출석하기</Button>
-                      )}
+                      ) : null}
                     </>
                   ) : (
-                    <Button onClick={joinClass}>참가하기</Button>
+                    <Button onClick={joinClass}>
+                      {_class.className} 참가하기
+                    </Button>
                   )}
                 </>
               ) : (
