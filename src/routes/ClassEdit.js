@@ -19,7 +19,6 @@ function ClassEdit({
   const classInfo = classes.filter((_class) => {
     return _class._id === id;
   })[0];
-  console.log(classInfo);
   return (
     //TODO 잘못된 사용자 접근 차단
     <Container>
