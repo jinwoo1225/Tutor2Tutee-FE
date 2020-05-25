@@ -122,7 +122,8 @@ function Class({
                     <>
                       {classTypeNum !== undefined &&
                       [0, 3].includes(classTypeNum) ? (
-                        //온라인 실시간 수업일 경우의 인증번호
+                        //온라인 실시간 수업 || 오프라인 일 경우의 인증번호
+
                         <InputGroup>
                           <InputGroup.Prepend>
                             <InputGroup.Text>인증번호</InputGroup.Text>
@@ -140,7 +141,14 @@ function Class({
                   ) : null}
                 </>
               ) : (
-                <Button onClick={joinClass}>{_class.className} 참가하기</Button>
+                <>
+                  <p>내가 튜티네요!</p>
+                  {user.classesAsTutee.includes(_class._id) ? null : (
+                    <Button onClick={joinClass}>
+                      {_class.className} 참가하기
+                    </Button>
+                  )}
+                </>
               )}
               <ClassTab
                 classInfo={_class}
