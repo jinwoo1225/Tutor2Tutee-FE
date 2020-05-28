@@ -8,7 +8,7 @@ import {
   VideoLinkInput,
 } from "../components/ClassContent";
 import Axios from "axios";
-import { URL } from "../components/App";
+import { URL, classTypesRaw } from "../components/App";
 
 function ClassEdit({
   match: {
@@ -19,9 +19,14 @@ function ClassEdit({
   classes,
 }) {
   const [classInfo, setClassInfo] = useState(undefined);
-  Axios.get(URL + "class/" + id).then((res) => {
-    setClassInfo(res.data);
-  });
+  if (classInfo === undefined) {
+    Axios.get(URL + "class/" + id).then((res) => {
+      setClassInfo(res.data);
+    });
+  }
+
+  console.log(classTypesRaw);
+
   return (
     //TODO 잘못된 사용자 접근 차단
     <Container>
