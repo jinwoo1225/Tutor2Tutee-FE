@@ -11,6 +11,8 @@ import {
 } from "./ClassContent";
 
 function ClassTab({ classInfo, userInfo, classType }) {
+  console.log(userInfo)
+  // 테스트
   const [key, setKey] = useState("overview");
   return (
     <Card>
@@ -52,7 +54,7 @@ function ClassTab({ classInfo, userInfo, classType }) {
         ) : null}
         {[1, 2].includes(classType) ? (
           <Tab eventKey="realTimeChat" title="실시간 채팅방">
-            <RealTimeChat classType={classType} />
+            <RealTimeChat userInfo={userInfo}/>
           </Tab>
         ) : null}
       </Tabs>

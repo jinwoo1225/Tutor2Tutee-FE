@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "./App";
+import Chat from "./Chat";
+
 
 function Overview({ studyAbout, courses }) {
   return (
@@ -59,8 +61,8 @@ function LectureNote({ LectureNotes }) {
   );
 }
 
-function RealTimeChat() {
-  return <h1>This is RealTimeChat</h1>;
+function RealTimeChat({userInfo, classType }) {
+  return <Chat/>;
 }
 
 function VideoLink({ VideoLinks }) {

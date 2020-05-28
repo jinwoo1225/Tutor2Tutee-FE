@@ -45,6 +45,7 @@ function Class({
   function checkAuth() {
     Axios.get(URL + "auth/isAuthenticated").then((response) => {
       response.data !== "fail" ? setUser(response.data) : setUser({ _id: "" });
+      console.log(user)
     });
     setUser({ _id: "" });
   }
