@@ -114,38 +114,40 @@ function Class({
                     <Button onClick={startClass}>강의 마감하기</Button>
                   ) : null}
                 </>
-              ) : user._id === "" ? null : [1].includes(classState) ? ( //게스트인 경우
+              ) : user._id === "" ? null : [3].includes(classState) ? ( //게스트인 경우
                 // 내가 튜티이면
                 //강의를 개설할 준비가 되면
                 <>
                   <p>내가 튜티네요!</p>
                   {user.classesAsTutee.includes(_class._id) ? (
-                    <>
-                      {classTypeNum !== undefined &&
-                      [0, 3].includes(classTypeNum) ? (
-                        //온라인 실시간 수업일 경우의 인증번호
-                        <InputGroup>
-                          <InputGroup.Prepend>
-                            <InputGroup.Text>인증번호</InputGroup.Text>
-                          </InputGroup.Prepend>
-                          <Form.Control
-                            placeholder="인증번호는 튜터에게 물어보세요!!"
-                            onChange={(e) => setAttenCode(e.target.value)}
-                          ></Form.Control>
-                          <InputGroup.Append>
-                            <Button onClick={getAttendance}>출석하기</Button>
-                          </InputGroup.Append>
-                        </InputGroup>
-                      ) : null}
-                    </>
-                  ) : (
+                    //유저가 수강 중인 수업일 경우
+                    classTypeNum !== undefined &&
+                    [0, 3].includes(classTypeNum) ? (
+                      //온라인 실시간 수업 || 오프라인 일 경우의 인증번호받는 시스템이 필요
+                      <InputGroup>
+                        <InputGroup.Prepend>
+                          <InputGroup.Text>인증번호</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control
+                          placeholder="인증번호는 튜터에게 물어보세요!!"
+                          onChange={(e) => setAttenCode(e.target.value)}
+                        ></Form.Control>
+                        <InputGroup.Append>
+                          <Button onClick={getAttendance}>출석 시작</Button>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    ) : null
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <p>내가 튜티네요!</p>
+                  {user.classesAsTutee.includes(_class._id) ? null : (
                     <Button onClick={joinClass}>
                       {_class.className} 참가하기
                     </Button>
                   )}
                 </>
-              ) : (
-                <Button disabled>완료되었습니다.</Button>
               )}
               <ClassTab
                 classInfo={_class}

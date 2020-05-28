@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
@@ -7,6 +7,8 @@ import {
   LectureNoteInput,
   VideoLinkInput,
 } from "../components/ClassContent";
+import Axios from "axios";
+import { URL } from "../components/App";
 
 function ClassEdit({
   match: {
@@ -16,15 +18,14 @@ function ClassEdit({
   user,
   classes,
 }) {
-  const classInfo = classes.filter((_class) => {
-    return _class._id === id;
-  })[0];
-  console.log(classInfo);
+  const [classInfo, setClassInfo] = useState(undefined);
+  Axios.get(URL + "class/" + id).then((res) => {
+    setClassInfo(res.data);
+  });
   return (
     //TODO 잘못된 사용자 접근 차단
     <Container>
       <h1>안녕하세요! {user.nickname}</h1>
-
       {classInfo === undefined ? null : (
         <>
           <h2>강의 : {classInfo.className} 관리페이지입니다.</h2>

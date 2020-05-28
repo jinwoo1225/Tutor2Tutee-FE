@@ -1,8 +1,10 @@
 import React from "react";
-import CardShow from "../components/CardShow";
 import Axios from "axios";
 import { URL } from "./App";
 import { useState } from "react";
+import CardForTutor from "./CardClass/CardForTutor";
+import { Row } from "react-bootstrap";
+import CardForTutee from "./CardClass/CardForTutee";
 
 function CurrentClass({ nickname, user }) {
   const [clAsTutee, setCATutee] = useState(undefined);
@@ -19,27 +21,25 @@ function CurrentClass({ nickname, user }) {
     <>
       <h4>안녕하세요! {nickname}</h4>
       지금 수강중인 강의 :
-      {clAsTutee === undefined || clAsTutee === [] ? (
+      {clAsTutee === undefined || clAsTutee.length === 0 ? (
         <h1>수강하는 강의가 없네요!!</h1>
       ) : (
-        <ol>
+        <Row>
           {clAsTutee.map((_class) => {
-            console.log(_class);
-            return <CardShow _class={_class} col={12} />;
+            return <CardForTutee key={_class._id} _class={_class} />;
           })}
-        </ol>
+        </Row>
       )}
       <br />
       지금 가르치는 강의 :
-      {clAsTutor === undefined || clAsTutor === [] ? (
+      {clAsTutor === undefined || clAsTutor.length === 0 ? (
         <h1>수강하는 강의가 없네요!!</h1>
       ) : (
-        <ol>
+        <Row>
           {clAsTutor.map((_class) => {
-            console.log(_class);
-            return <CardShow _class={_class} col={12} />;
+            return <CardForTutor key={_class._id} _class={_class} />;
           })}
-        </ol>
+        </Row>
       )}
     </>
   );
