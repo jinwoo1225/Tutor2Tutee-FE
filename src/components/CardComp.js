@@ -12,19 +12,21 @@ function CardComp({ classes, user }) {
       </h3>
       <Row className="text-center">
         {classes.length === 0 ? (
-          <>
-            {user.nickname === "" ? (
-              <h1 className="col-12 mt-3">개설된 수업이 없습니다.</h1>
-            ) : (
-              <>
-                <h1 className="col-12 mt-3">
-                  아무런 수업이 없어요! 개설하실레요?
-                </h1>
-                <Button>개설하러 가기!!</Button>
-              </>
-            )}
-          </>
+          //클래스가 하나도 없는 경우 or 아직 로딩이 안된경우
+          user.nickname === "" ? (
+            //유저가 로그인하지 않은 경우.
+            <h1 className="col-12 mt-3">개설된 수업이 없습니다.</h1>
+          ) : (
+            //유저가 로그인을 한경우
+            <>
+              <h1 className="col-12 mt-3">
+                아무런 수업이 없어요! 개설하실레요?
+              </h1>
+              <Button>개설하러 가기!!</Button>
+            </>
+          )
         ) : (
+          //클래스가 있을 경우
           classes
             .filter((_class) => _class.state !== "InProgress")
             //InProgress인 강의는 제외한다.
