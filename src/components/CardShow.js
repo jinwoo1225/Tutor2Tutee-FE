@@ -3,6 +3,7 @@ import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function CardShow({ _class, col }) {
+  //보여줄 카드의 정보 컴포넌트
   return (
     <Col md={col} className="my-3" key={_class._id}>
       <Card body>

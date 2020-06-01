@@ -4,13 +4,16 @@ import Axios from "axios";
 import { URL } from "./App";
 import Chat from "./Chat";
 
+//클래스 관련 컴포넌트 모음집
 
 function Overview({ studyAbout, courses }) {
+  //클래스의 개요 컴포넌트
   return (
     <>
       <h1 className="text-center mt-3">{studyAbout}</h1>
       <ol>
         {courses.map((course) => {
+          //코스 정보를 표시
           return <li key={course._id}>{course.description}</li>;
         })}
       </ol>
@@ -19,14 +22,18 @@ function Overview({ studyAbout, courses }) {
 }
 
 function Attendance({ classType }) {
+  //출석 정보 표시
   return <h1>This is Attendance{classType}</h1>;
 }
 
 function QnA() {
+  //질의 응답 표시
   return <h1>This is Question</h1>;
 }
 
 function SkypeLink({ skypeLink }) {
+  //스카이프 링크 표시
+  //온라인 실시간 강의 전용
   return (
     <>
       {skypeLink === undefined ? (
@@ -41,28 +48,27 @@ function SkypeLink({ skypeLink }) {
 }
 
 function LectureNote({ LectureNotes }) {
-  return (
-    <>
-      {LectureNotes.length === 0 ? (
-        <h4>아직 수업노트가 없네요!!</h4>
-      ) : (
-        <ol>
-          {LectureNotes.map((lectureNote) => {
-            return (
-              <li key={lectureNote._id}>
-                <h4>{lectureNote.title}</h4>
-                <p>{lectureNote.content}</p>
-              </li>
-            );
-          })}
-        </ol>
-      )}
-    </>
+  //강의 노트
+  return LectureNotes.length === 0 ? (
+    <h4>아직 수업노트가 없네요!!</h4>
+  ) : (
+    // 수업노트가 존재할 경우
+    <ol>
+      {LectureNotes.map((lectureNote) => {
+        return (
+          <li key={lectureNote._id}>
+            <h4>{lectureNote.title}</h4>
+            <p>{lectureNote.content}</p>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
-function RealTimeChat({userInfo, classType }) {
-  return <Chat/>;
+function RealTimeChat({ userInfo, classType }) {
+  //
+  return <Chat />;
 }
 
 function VideoLink({ VideoLinks }) {
@@ -153,7 +159,7 @@ function SkypeLinkInput({ classID }) {
 }
 
 function MaxTuteeInput({ classID, classMaxTutee, history }) {
-  const tuteeMaxArray = [...Array(11).keys()];
+  const tuteeMaxArray = [...Array(10).keys()];
   const [maxTutee, setMaxTutee] = useState(classMaxTutee);
   const sendLink = () => {
     Axios.post(URL + "class/" + classID + "/max-tutee", { maxTutee }).then(
