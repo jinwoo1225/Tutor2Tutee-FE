@@ -26,8 +26,7 @@ function RegisterForm({ history }) {
 
   function sendEmail() {
     Axios.post(URL + "auth/sendEmail", { email }).then((response) => {
-      console.log(response.data);
-      alert("이메일을 확인해주세요!");
+      alert("이메일을 확인해주세요!" + response.data);
     });
 
     setSented(true);

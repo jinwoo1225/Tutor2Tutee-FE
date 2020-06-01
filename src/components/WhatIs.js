@@ -1,6 +1,7 @@
 import React from "react";
 
 function WhatIs() {
+  //튜터2튜티를 설명하는 컴포넌트
   return (
     <div className="text-center">
       <h1>What is Tutor2Tutee?</h1>
