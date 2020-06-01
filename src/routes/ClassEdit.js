@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   SkypeLinkInput,
@@ -9,6 +9,7 @@ import {
 } from "../components/ClassContent";
 import Axios from "axios";
 import { URL, classTypesRaw } from "../components/App";
+import { Link } from "react-router-dom";
 
 function ClassEdit({
   match: {
@@ -46,6 +47,9 @@ function ClassEdit({
               <MaxTuteeInput classID={id} classMaxTutee={classInfo.maxTutee} />
             )}
           </Form>
+          <Link to={"../" + id}>
+            <Button block>돌아가기</Button>
+          </Link>
         </>
       )}
     </Container>
