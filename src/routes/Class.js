@@ -150,6 +150,7 @@ function Class({
               classInfo={_class}
               userInfo={user}
               classType={classTypeNum}
+              amITutor={_class.tutor === user._id}
             />
           </>
         ) : null}
