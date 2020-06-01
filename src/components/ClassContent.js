@@ -26,11 +26,6 @@ function Attendance({ classType }) {
   return <h1>This is Attendance{classType}</h1>;
 }
 
-function QnA() {
-  //질의 응답 표시
-  return <h1>This is Question</h1>;
-}
-
 function SkypeLink({ skypeLink }) {
   //스카이프 링크 표시
   //온라인 실시간 강의 전용
@@ -64,11 +59,6 @@ function LectureNote({ LectureNotes }) {
       })}
     </ol>
   );
-}
-
-function RealTimeChat({ userInfo, classType }) {
-  //
-  return <Chat />;
 }
 
 function VideoLink({ VideoLinks }) {
@@ -260,11 +250,9 @@ function LectureNoteInput({ classID }) {
 export {
   Overview,
   Attendance,
-  QnA,
   SkypeLink,
   SkypeLinkInput,
   LectureNote,
-  RealTimeChat,
   VideoLink,
   VideoLinkInput,
   MaxTuteeInput,
