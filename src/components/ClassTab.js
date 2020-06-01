@@ -3,14 +3,14 @@ import { Tabs, Tab, Card } from "react-bootstrap";
 import {
   Overview,
   Attendance,
-  QnA,
   SkypeLink,
   VideoLink,
   LectureNote,
-  RealTimeChat,
 } from "./ClassContent";
+import QnA from "./QnA";
+import Chat from "./Chat";
 
-function ClassTab({ classInfo, userInfo, classType }) {
+function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   //클래스의 탭부분 컴포넌트
   const [key, setKey] = useState("overview");
   return (
@@ -44,7 +44,7 @@ function ClassTab({ classInfo, userInfo, classType }) {
               <LectureNote LectureNotes={classInfo.lectureNotes} />
             </Tab>
             <Tab eventKey="QnA" title="Q&A">
-              <QnA />
+              <QnA classInfo={classInfo} amITutor={amITutor} />
             </Tab>
             {[0].includes(classType) ? (
               <Tab
@@ -68,7 +68,7 @@ function ClassTab({ classInfo, userInfo, classType }) {
             ) : null}
             {[1, 2].includes(classType) ? (
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
-                <RealTimeChat userInfo={userInfo} />
+                <Chat />
               </Tab>
             ) : null}
           </Tabs>
