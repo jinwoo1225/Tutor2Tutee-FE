@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "../components/App";
+import CurrentClass from "../components/CurrentClass";
 
 function User({ history }) {
+  // 유저 정보를 확인할때 사용되는 컴포넌트 & 라우트
+
+  //isDataQuerried ==> data를 요청했는지 확인하는 State.var
   const [user, setUserInfo] = useState({ isDataQuerried: false, nickname: "" });
-  const [classes, setClasses] = useState([]);
+
   if (user.isDataQuerried === false) {
     Axios.get(URL + "auth/isAuthenticated").then((response) => {
       if (response.data === "fail") {
@@ -13,48 +17,20 @@ function User({ history }) {
         history.push("/");
       } else {
         setUserInfo(response.data);
-        console.log(response.data);
       }
     });
-    Axios.get(URL + "class/name/all").then((response) => {
-      setClasses(response.data);
-      console.log(response.data);
-    });
+
     setUserInfo({ isDataQuerried: true });
   }
   return (
     <Container>
-      {user.nickname === "" ? null : (
+      {user.nickname === "" ? null : ( //유저 정보가 불러와지지 않았을때
+        //유저정보가 불러와졌을때
         <>
           <h1>안녕하세요! {user.nickname}님!</h1>
           <h2>이메일 : {user.webmail}</h2>
           <h2>현재 나의 포인트 : {user.point}</h2>
-          <p>classesAsTutor</p>
-          {classes.length && user.classesAsTutor.length ? (
-            <ol>
-              {user.classesAsTutor.map((classID) => {
-                const _class = classes.filter((_class) => {
-                  return _class._id === classID;
-                });
-                return <li>{_class[0].className}</li>;
-              })}
-            </ol>
-          ) : (
-            <p>개설한 수업이 없네요! 개설하시겠어요? Button</p>
-          )}
-          <p>classesAsTutee</p>
-          {classes.length && user.classesAsTutee.length ? (
-            <ol>
-              {user.classesAsTutee.map((classID) => {
-                const _class = classes.filter((_class) => {
-                  return _class._id === classID;
-                });
-                return <li>{_class[0].className}</li>;
-              })}
-            </ol>
-          ) : (
-            <p>수강하시는 수업이 없네요? 수강하시겠어요? Button</p>
-          )}
+          <CurrentClass />
         </>
       )}
     </Container>

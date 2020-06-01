@@ -7,8 +7,8 @@ import { updateClass } from "../store";
 import WhatIs from "../components/WhatIs";
 import CurrentClass from "../components/CurrentClass";
 
-// checkClass({dispatchClass})
 function Home({ user, dispatchClass }) {
+  // 홈화면, 유저가 처음 로그인하면 보는 컴포넌트/ 라우트
   const [updated, setUpdated] = useState(true);
 
   if (updated) {
@@ -18,7 +18,13 @@ function Home({ user, dispatchClass }) {
 
   return (
     <Container className="pt-3">
-      {user.nickname === "" ? <WhatIs /> : <CurrentClass />}
+      {user.nickname === "" ? (
+        //유저가 로그인 하지않으면
+        <WhatIs />
+      ) : (
+        //유저가 로그인에 성공했으면 현재 진행중인 강의를 표시
+        <CurrentClass />
+      )}
       <CardComp />
     </Container>
   );

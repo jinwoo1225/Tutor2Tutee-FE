@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 function About() {
-  const [text, setText] = useState("");
-
-  setInterval(() => {
-    setText(Date.now());
-  }, 100000);
-
+  let text = Date.now();
   return <h2>This is about: {text}</h2>;
 }
 
