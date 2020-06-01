@@ -4,11 +4,12 @@ import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import "../css/chat.css";
 
-const socket = socketio.connect("https://localhost:3000/");
+let socket;
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    socket = socketio.connect("https://localhost:3000/");
     console.log(this.props);
     this.state = {
       user: this.props.user,
