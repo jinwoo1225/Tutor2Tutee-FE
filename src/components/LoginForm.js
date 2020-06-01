@@ -23,7 +23,6 @@ function LoginForm({ dispatchUser, dlogout, history }) {
         if (res.data === "fail") {
           alert("로그인 실패");
         } else {
-          console.log("로그인 성공");
           checkAuth({ dispatchUser, dlogout });
           history.push("/");
         }
