@@ -1,117 +1,108 @@
 import React, { Component } from "react";
 import socketio from "socket.io-client";
 import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
-import Axios from "axios";
-import { URL } from "./App";
 import { connect } from "react-redux";
-import { render } from "@testing-library/react";
-import '../css/chat.css';
+import "../css/chat.css";
 
-const socket = socketio.connect(URL);
+const socket = socketio.connect("https://localhost:3000/");
 
-class Chat extends React.Component{
-    constructor(props) {
-        super(props);
-        console.log(this.props)
-        this.state = {
-            user: this.props.user,
-            username: this.props.user.nickname,
-            chat: new Array(),
-            msg: ''
-        };
-        this.send = this.send.bind(this);
-        this.keysend = this.keysend.bind(this);
-        this.inputMSG = this.inputMSG.bind(this);
-    }
+class Chat extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props);
+    this.state = {
+      user: this.props.user,
+      username: this.props.user.nickname,
+      chat: new Array(),
+      msg: "",
+    };
+    this.send = this.send.bind(this);
+    this.keysend = this.keysend.bind(this);
+    this.inputMSG = this.inputMSG.bind(this);
+  }
 
-    componentDidMount(){
-        socket.emit("join", {
-            username: this.state.username
-        })
-        socket.on("chat", (data) => {
-            this.setState({chat: this.state.chat.concat([data])})
-            document.querySelector(".chattingView").scrollTo(0,document.querySelector(".chattingView").scrollHeight);
-        });
-        socket.on("system", (data) =>{
-            this.setState({chat: this.state.chat.concat([data])})
-        })
+  componentDidMount() {
+    socket.emit("join", {
+      username: this.state.username,
+    });
+    socket.on("chat", (data) => {
+      this.setState({ chat: this.state.chat.concat([data]) });
+      document
+        .querySelector(".chattingView")
+        .scrollTo(0, document.querySelector(".chattingView").scrollHeight);
+    });
+    socket.on("system", (data) => {
+      this.setState({ chat: this.state.chat.concat([data]) });
+    });
+  }
+  componentWillReceiveProps() {
+    console.log("퇴장");
+    socket.emit("quit", { username: this.state.username });
+    // this.setState({channel:changeProps.channel},()=>{
+    //     this.setState({chatList:[]});
+    //     socket.emit('channelJoin', this.state.channel);
+    // });
+  }
+  keysend(event) {
+    if (event.keyCode == 13) {
+      this.send();
     }
-    componentWillReceiveProps(){
-        console.log("퇴장")
-        socket.emit('quit', {username: this.state.username});
-        // this.setState({channel:changeProps.channel},()=>{
-        //     this.setState({chatList:[]});
-        //     socket.emit('channelJoin', this.state.channel);
-        // });
-    }
-    keysend(event){
-        if(event.keyCode == 13) {
-            this.send()
-        }
-    }
-    send(){
-        socket.emit("chat", {
-            username: this.state.username,
-            message: this.state.msg
-        });
-        this.setState({msg: ''})
-        document.querySelector(".inputMsg").value="";
-    }
-    inputMSG(event){
-        this.setState({
-            msg: event.target.value
-        });
-    }    
-    render(){
-        let list = this.state.chat.map((item, index) =>{
-            let alignType = item.username == this.state.username ? ('right') : ('left')
+  }
+  send() {
+    socket.emit("chat", {
+      username: this.state.username,
+      message: this.state.msg,
+    });
+    this.setState({ msg: "" });
+    document.querySelector(".inputMsg").value = "";
+  }
+  inputMSG(event) {
+    this.setState({
+      msg: event.target.value,
+    });
+  }
+  render() {
+    let list = this.state.chat.map((item, index) => {
+      let alignType = item.username == this.state.username ? "right" : "left";
 
-            let result = item.system ? (
-                    <div className='system'>
-                        {item.message}
-                    </div>
-                ):(
-                    <div className='msg'>
-                        <div className={alignType}>
-                            <div>{item.username}</div>
-                            <div className={'chat-time'}>{item.time}</div>
-                            <div key={index} className={'content ' + alignType}>
-                                {item.message}
-                            </div>
-                        </div>
-                    </div>
-                )
-            return result
-        });
-
-        return (
-            <div>
-                <h1>userName : {this.state.username}</h1>
-                <div className="chattingView">
-                    {list}
-                </div>         
-                <div className="input-group -input">
-                    <Form.Control 
-                        className="inputMsg"
-                        placeholder="내용을 입력해 주세요."
-                        onKeyUp={this.keysend}
-                        onChange={this.inputMSG}
-                    />
-                    <Button
-                        block
-                        className="my-md-3 send"
-                        onClick={this.send}
-                    >
-                        전송
-                    </Button>
-                </div>
+      let result = item.system ? (
+        <div className="system">{item.message}</div>
+      ) : (
+        <div className="msg">
+          <div className={alignType}>
+            <div>{item.username}</div>
+            <div className={"chat-time"}>{item.time}</div>
+            <div key={index} className={"content " + alignType}>
+              {item.message}
             </div>
-        );
-    }
+          </div>
+        </div>
+      );
+      return result;
+    });
+
+    return (
+      <div>
+        <h1>userName : {this.state.username}</h1>
+        <div className="chattingView">{list}</div>
+        <div className="input-group -input">
+          <Form.Control
+            className="inputMsg"
+            placeholder="내용을 입력해 주세요."
+            onKeyUp={this.keysend}
+            onChange={this.inputMSG}
+          />
+          <Button block className="my-md-3 send" onClick={this.send}>
+            전송
+          </Button>
+        </div>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {user: state.user };
+  return { user: state.user };
 }
 export default connect(mapStateToProps)(Chat);
 
@@ -178,5 +169,3 @@ export default connect(mapStateToProps)(Chat);
 //   // 서버로 message 이벤트 전달 + 데이터와 함께
 //   socket.emit('message', {type: 'message', message: message})
 // }
-
-
