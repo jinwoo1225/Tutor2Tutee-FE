@@ -61,8 +61,8 @@ function LectureNote({ LectureNotes }) {
   );
 }
 
-function RealTimeChat({userInfo, classType }) {
-  return <Chat/>;
+function RealTimeChat({classInfo}) {
+  return <Chat classInfo={classInfo}/>;
 }
 
 function VideoLink({ VideoLinks }) {
