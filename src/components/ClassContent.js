@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import Axios from "axios";
-import { URL } from "./App";
+import { URL, dateToString } from "./App";
 
 //클래스 관련 컴포넌트 모음집
 
@@ -20,9 +20,36 @@ function Overview({ studyAbout, courses }) {
   );
 }
 
-function Attendance({ classType }) {
+function Attendance({ amITutor, classID }) {
   //출석 정보 표시
-  return <h1>This is Attendance{classType}</h1>;
+  const [attendances, setAttenDances] = useState(undefined);
+
+  if (attendances === undefined) {
+    Axios.get(URL + "class/" + classID + "/attendance/my").then(({ data }) => {
+      setAttenDances(data);
+    });
+  }
+  return (
+    <Card body>
+      {amITutor ? null : ( //TODO 튜터일 경우 모든 튜티들의 출결상황을 보는 상황판을 만들어야 할것
+        <>
+          <h1 className="text-center">출석 정보입니다.</h1>
+          <ol>
+            {attendances !== undefined && attendances !== "fail"
+              ? attendances.map((attendance) => {
+                  return (
+                    <li>
+                      <h3>{dateToString(new Date(attendance.date))}</h3>
+                      <h5>{attendance.isAttend ? "출석" : "결석"}</h5>
+                    </li>
+                  );
+                })
+              : null}
+          </ol>
+        </>
+      )}
+    </Card>
+  );
 }
 
 function SkypeLink({ skypeLink }) {

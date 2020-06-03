@@ -22,7 +22,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
     ) : null;
   };
   return (
-    <Card>
+    <Card body>
       {userInfo._id === "" ? (
         //유저가 로그인 되어있지 않다면
         <Overview
@@ -45,11 +45,15 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 courses={classInfo.courses}
               />
             </Tab>
-            {amITutor ? null : (
+            {[0, 3].includes(classType) ? (
               <Tab eventKey="attendance" title="출석">
-                <Attendance classType={classType} amITutor={amITutor} />
+                <Attendance
+                  classType={classType}
+                  amITutor={amITutor}
+                  classID={classInfo._id}
+                />
               </Tab>
-            )}
+            ) : null}
             <Tab eventKey="lectureNote" title="수업 노트">
               <editClass tabName="강의 노트 추가" amITutor={amITutor} />
               <LectureNote LectureNotes={classInfo.lectureNotes} />
