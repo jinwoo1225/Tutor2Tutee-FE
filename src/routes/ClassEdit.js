@@ -8,25 +8,21 @@ import {
   VideoLinkInput,
 } from "../components/ClassContent";
 import Axios from "axios";
-import { URL, classTypesRaw } from "../components/App";
+import { URL } from "../components/App";
 import { Link } from "react-router-dom";
 
 function ClassEdit({
   match: {
     params: { id },
   },
-  history,
   user,
-  classes,
 }) {
   const [classInfo, setClassInfo] = useState(undefined);
   if (classInfo === undefined) {
-    Axios.get(URL + "class/" + id).then((res) => {
-      setClassInfo(res.data);
+    Axios.get(URL + "class/" + id).then(({ data }) => {
+      setClassInfo(data);
     });
   }
-
-  console.log(classTypesRaw);
 
   return (
     //TODO 잘못된 사용자 접근 차단
