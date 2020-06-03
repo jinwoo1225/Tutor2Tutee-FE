@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import Axios from "axios";
 import { URL } from "./App";
-import Chat from "./Chat";
 
 //클래스 관련 컴포넌트 모음집
 
