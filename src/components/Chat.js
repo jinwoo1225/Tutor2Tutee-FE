@@ -1,24 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import socketio from "socket.io-client";
-import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import { render } from "@testing-library/react";
 import { URL } from "./App";
 import "../css/chat.css";
 
-const socket = socketio.connect(URL);
+let socket;
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     console.log(this.props);
     //this.classInfo = this.props.classInfo;
+    socket = socketio.connect(URL);
     this.state = {
       classInfo: this.props.classInfo,
       joined: false,
       user: this.props.user,
       userID: this.props.user._id,
-      chat: new Array(),
+      chat: [],
       msg: "",
     };
     this.send = this.send.bind(this);
@@ -33,7 +33,7 @@ class Chat extends React.Component {
       room: "TEST",
       userID: this.state.userID,
     });
-    this.state.joined = true;
+    this.setState({ joined: true });
   }
 
   join() {
@@ -41,7 +41,7 @@ class Chat extends React.Component {
       room: this.state.classInfo.chattingRoom,
       userID: this.state.userID,
     });
-    this.state.joined = true;
+    this.setState({ joined: true });
   }
 
   componentDidMount() {
@@ -66,7 +66,7 @@ class Chat extends React.Component {
     // });
   }
   keysend(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
       this.send();
     }
   }
@@ -86,7 +86,7 @@ class Chat extends React.Component {
   render() {
     let list = this.state.chat.map((item, index) => {
       let alignType =
-        item.username == this.state.user.nickname ? "right" : "left";
+        item.username === this.state.user.nickname ? "right" : "left";
 
       let result = item.system ? (
         <div className="system">{item.message}</div>
