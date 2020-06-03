@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tabs, Tab, Card } from "react-bootstrap";
+import { Tabs, Tab, Card, Button } from "react-bootstrap";
 import {
   Overview,
   Attendance,
@@ -9,6 +9,7 @@ import {
 } from "./ClassContent";
 import QnA from "./QnA";
 import Chat from "./Chat";
+import { Link } from "react-router-dom";
 
 function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   //클래스의 탭부분 컴포넌트
@@ -37,10 +38,17 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 courses={classInfo.courses}
               />
             </Tab>
-            <Tab eventKey="attendance" title="출석">
-              <Attendance classType={classType} />
-            </Tab>
+            {amITutor ? null : (
+              <Tab eventKey="attendance" title="출석">
+                <Attendance classType={classType} />
+              </Tab>
+            )}
             <Tab eventKey="lectureNote" title="수업 노트">
+              {amITutor ? (
+                <Link to={"./" + classInfo._id + "/edit"}>
+                  <Button block>강의노트 추가하기</Button>
+                </Link>
+              ) : null}
               <LectureNote LectureNotes={classInfo.lectureNotes} />
             </Tab>
             <Tab eventKey="QnA" title="Q&A">
