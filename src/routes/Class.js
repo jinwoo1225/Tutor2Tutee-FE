@@ -81,6 +81,18 @@ function Class({
     });
   }
 
+  function quitClass() {
+    Axios.get(URL + "class/" + id + "/quit").then(({ data }) => {
+      if (data === "fail") {
+        alert("문제가 있어요!!");
+      } else {
+        alert("정상적으로 수업에 탈퇴했어요!");
+        setClass({ classLoaded: false });
+        checkAuth();
+      }
+    });
+  }
+
   return (
     <Container className="mt-3">
       <Card body bg="light">
@@ -139,7 +151,9 @@ function Class({
             ) : (
               <>
                 <p>내가 튜티네요!</p>
-                {user.classesAsTutee.includes(_class._id) ? null : (
+                {user.classesAsTutee.includes(_class._id) ? (
+                  <Button onClick={quitClass}>그만두기</Button>
+                ) : (
                   <Button onClick={joinClass}>
                     {_class.className} 참가하기
                   </Button>
