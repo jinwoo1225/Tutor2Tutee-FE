@@ -208,7 +208,7 @@ function MakeClass({ history }) {
             <>
               <Form.Group>
                 <Form.Label style={{ display: "block" }}>
-                  수업 요일을 골라주세요!(아직은 하나만 골라주세요!)
+                  수업 요일을 골라주세요!(하나 이상 골라주세요)
                 </Form.Label>
                 <ToggleButtonGroup
                   type="checkbox"
