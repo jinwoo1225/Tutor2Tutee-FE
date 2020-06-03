@@ -67,6 +67,7 @@ function Class({
     Axios.get(URL + "class/" + id + "/start").then((response) => {
       alert(response.data);
     });
+    setClass({ classLoaded: false });
   }
 
   function joinClass() {
@@ -119,7 +120,8 @@ function Class({
                   <Button>설정하기</Button>
                 </Link>
                 <Button onClick={startAttendance}>출석하기</Button>
-                {[1].includes(classState) ? (
+                {[1].includes(classState) && [0, 3].includes(classTypeNum) ? (
+                  //클래스 타입 ==> 온라인 실시간, 오프라인 질의응답, classState는 joinable이여야함
                   <Button onClick={startClass}>강의 마감하기</Button>
                 ) : null}
               </>
