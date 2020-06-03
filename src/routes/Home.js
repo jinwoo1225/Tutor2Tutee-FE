@@ -6,6 +6,7 @@ import { checkClass } from "../components/App";
 import { updateClass } from "../store";
 import WhatIs from "../components/WhatIs";
 import CurrentClass from "../components/CurrentClass";
+import SearchBar from "../components/SearchBar";
 
 function Home({ user, dispatchClass }) {
   // 홈화면, 유저가 처음 로그인하면 보는 컴포넌트/ 라우트
@@ -18,6 +19,7 @@ function Home({ user, dispatchClass }) {
 
   return (
     <Container className="pt-3">
+      <SearchBar />
       {user.nickname === "" ? (
         //유저가 로그인 하지않으면
         <WhatIs />
