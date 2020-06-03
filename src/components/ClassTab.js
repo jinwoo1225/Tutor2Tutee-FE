@@ -60,6 +60,11 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 title="스카이프링크"
                 className="text-center"
               >
+                {amITutor ? (
+                  <Link to={"./" + classInfo._id + "/edit"}>
+                    <Button block>스카이프 링크 추가하기</Button>
+                  </Link>
+                ) : null}
                 <SkypeLink
                   classType={classType}
                   skypeLink={classInfo.skypeLink}
@@ -68,6 +73,11 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
             ) : null}
             {[1].includes(classType) ? (
               <Tab eventKey="videoLink" title="비디오 링크">
+                {amITutor ? (
+                  <Link to={"./" + classInfo._id + "/edit"}>
+                    <Button block>비디오링크 추가하기</Button>
+                  </Link>
+                ) : null}
                 <VideoLink
                   classType={classType}
                   VideoLinks={classInfo.courses}
