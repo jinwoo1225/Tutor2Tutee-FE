@@ -32,6 +32,20 @@ export const classTypesRaw = [
 ];
 export const statesRaw = ["Prepare", "Joinable", "Ended", "InProgress"];
 export const states = ["준비중", "참가가능", "완료", "진행중"];
+export const dateToString = (date) => {
+  return (
+    date.getFullYear() +
+    "년 " +
+    date.getMonth() +
+    "월 " +
+    date.getDay() +
+    "일 " +
+    date.getHours() +
+    "시 " +
+    date.getMinutes() +
+    "분 "
+  );
+};
 
 function App({ dispatchUser, dlogout, dispatchClass }) {
   //초기 시작되면 사용자의 세션이 남아있는 서버에 확인
