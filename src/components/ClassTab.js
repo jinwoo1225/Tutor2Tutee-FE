@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   //클래스의 탭부분 컴포넌트
   const [key, setKey] = useState("overview");
-  const editClass = (tabName, amITutor) => {
+  const EditClass = (tabName, amITutor) => {
     return amITutor ? (
       <Link to={"./" + classInfo._id + "/edit"}>
         <Button block>{tabName} 링크 추가하기</Button>
@@ -55,7 +55,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
               </Tab>
             ) : null}
             <Tab eventKey="lectureNote" title="수업 노트">
-              <editClass tabName="강의 노트 추가" amITutor={amITutor} />
+              <EditClass tabName="강의 노트 추가" amITutor={amITutor} />
               <LectureNote LectureNotes={classInfo.lectureNotes} />
             </Tab>
             <Tab eventKey="QnA" title="Q&A">
@@ -67,7 +67,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 title="스카이프링크"
                 className="text-center"
               >
-                <editClass tabName="스카이프 링크" amITutor={amITutor} />
+                <EditClass tabName="스카이프 링크" amITutor={amITutor} />
                 <SkypeLink
                   classType={classType}
                   skypeLink={classInfo.skypeLink}
@@ -76,7 +76,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
             ) : null}
             {[1].includes(classType) ? (
               <Tab eventKey="videoLink" title="비디오 링크">
-                <editClass tabName="비디오 링크" amITutor={amITutor} />
+                <EditClass tabName="비디오 링크" amITutor={amITutor} />
                 <VideoLink
                   classType={classType}
                   VideoLinks={classInfo.courses}
