@@ -25,7 +25,6 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
 
   return (
     <Card body>
-      <QnA classInfo={classInfo} amITutor={amITutor} />
       {userInfo._id === "" ? (
         //유저가 로그인 되어있지 않다면
         <Overview
