@@ -100,15 +100,61 @@ function VideoLink({ VideoLinks }) {
     </ol>
   );
 }
+
+function AddCourse({ classID }) {
+  const [course, setCourse] = useState("");
+
+  const sendLink = () => {
+    Axios.post(URL + "class/" + classID + "/course", {
+      description: course,
+    }).then(({ data }) => {
+      console.log(data);
+      data === "success"
+        ? alert("커리큘럼 추가에 성공했어요!")
+        : alert("커리큘럼 추가에 실패했어요.");
+    });
+  };
+  return (
+    <Card className="mt-3">
+      <Card.Title className="text-center mt-3">
+        <h2>강의 커리큘럼 등록</h2>
+      </Card.Title>
+      <Card.Body>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>강의 커리큘럼 등록</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            placeholder="커리큘럼 내용"
+            type="text"
+            onChange={(e) => setCourse(e.target.value)}
+          />
+        </InputGroup>
+        <Button className="mt-3" block onClick={sendLink}>
+          저장
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+}
+
 function VideoLinkInput({ classID }) {
   //동영상 강의 링크 업로드
   const [description, setDesc] = useState("");
   const [link, setLink] = useState("");
   const sendLink = () => {
+    if (description === "" || link === "") {
+      alert("모든란을 채워주세요.");
+      return;
+    }
     Axios.post(URL + "class/" + classID + "/course", {
       link,
       description,
-    }).then((response) => console.log(response));
+    }).then(({ data }) => {
+      data === "success"
+        ? alert("링크 추가에 성공했어요!")
+        : alert("링크 추가에 실패했어요.");
+    });
   };
   return (
     <Card className="mt-3">
@@ -148,7 +194,11 @@ function SkypeLinkInput({ classID }) {
   const sendLink = () => {
     Axios.post(URL + "class/" + classID + "/skype", {
       skypeLink: link,
-    }).then((response) => console.log(response));
+    }).then(({ data }) => {
+      data === "success"
+        ? alert("링크 추가에 성공했어요!")
+        : alert("링크 추가에 실패했어요.");
+    });
   };
   return (
     <Card className="mt-3">
@@ -179,8 +229,8 @@ function MaxTuteeInput({ classID, classMaxTutee, history }) {
   const [maxTutee, setMaxTutee] = useState(classMaxTutee);
   const sendLink = () => {
     Axios.post(URL + "class/" + classID + "/max-tutee", { maxTutee }).then(
-      (res) => {
-        alert(res.data);
+      ({ data }) => {
+        alert("최대 튜티수를 " + maxTutee + "명으로 늘렸습니다.");
         history.push("/");
       }
     );
@@ -224,6 +274,7 @@ function LectureNoteInput({ classID }) {
   const sendLectureNote = () => {
     if (title === "" || content === "") {
       alert("강의노트 모든란을 채워주세요.");
+      return;
     }
     Axios.post(URL + "class/" + classID + "/lecture-note", {
       title,
@@ -276,6 +327,7 @@ function LectureNoteInput({ classID }) {
 export {
   Overview,
   Attendance,
+  AddCourse,
   SkypeLink,
   SkypeLinkInput,
   LectureNote,

@@ -6,6 +6,7 @@ import {
   MaxTuteeInput,
   LectureNoteInput,
   VideoLinkInput,
+  AddCourse,
 } from "../components/ClassContent";
 import Axios from "axios";
 import { URL } from "../components/App";
@@ -32,12 +33,16 @@ function ClassEdit({
         <>
           <h2>강의 : {classInfo.className} 관리페이지입니다.</h2>
           <Form>
-            <LectureNoteInput classID={id} />
-            {classInfo.classType === "RealtimeOnlineCourseType" ? (
-              <SkypeLinkInput classID={id} />
-            ) : null}
             {classInfo.classType === "OnlineCourseType" ? (
               <VideoLinkInput classID={id} />
+            ) : (
+              <>
+                <AddCourse classID={id} />
+                <LectureNoteInput classID={id} />
+              </>
+            )}
+            {classInfo.classType === "RealtimeOnlineCourseType" ? (
+              <SkypeLinkInput classID={id} />
             ) : null}
             {classInfo.maxTutee === undefined ? null : (
               <MaxTuteeInput classID={id} classMaxTutee={classInfo.maxTutee} />

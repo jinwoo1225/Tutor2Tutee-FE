@@ -61,14 +61,16 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 />
               </Tab>
             ) : null}
-            <Tab eventKey="lectureNote" title="수업 노트">
-              <EditClass
-                classInfo={classInfo}
-                tabName="강의 노트 추가"
-                amITutor={amITutor}
-              />
-              <LectureNote LectureNotes={classInfo.lectureNotes} />
-            </Tab>
+            {[0, 2, 3].includes(classType) ? (
+              <Tab eventKey="lectureNote" title="수업 노트">
+                <EditClass
+                  classInfo={classInfo}
+                  tabName="강의 노트 추가"
+                  amITutor={amITutor}
+                />
+                <LectureNote LectureNotes={classInfo.lectureNotes} />
+              </Tab>
+            ) : null}
             <Tab eventKey="QnA" title="Q&A">
               <QnA classInfo={classInfo} amITutor={amITutor} />
             </Tab>
