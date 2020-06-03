@@ -4,7 +4,7 @@ import {
   Overview,
   Attendance,
   SkypeLink,
-  VideoLink,
+  VideoLinks,
   LectureNote,
 } from "./ClassContent";
 import QnA from "./QnA";
@@ -98,9 +98,11 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                   tabName="비디오 링크"
                   amITutor={amITutor}
                 />
-                <VideoLink
-                  classType={classType}
+                <VideoLinks
+                  classID={classInfo._id}
+                  participations={classInfo.participations}
                   VideoLinks={classInfo.courses}
+                  userID={userInfo._id}
                 />
               </Tab>
             ) : null}

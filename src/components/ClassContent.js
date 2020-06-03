@@ -87,17 +87,48 @@ function LectureNote({ LectureNotes }) {
   );
 }
 
-function VideoLink({ VideoLinks }) {
+function VideoLinks({ VideoLinks, participations, classID, userID }) {
   return (
     <ol>
-      {VideoLinks.map((link) => {
+      {VideoLinks.map((link, index) => {
         return (
-          <li>
-            <a href={link.link}>{link.description}</a>
-          </li>
+          <VideoLink
+            link={link}
+            course={participations[index]}
+            classID={classID}
+            userID={userID}
+            index={index}
+          />
         );
       })}
     </ol>
+  );
+}
+
+function VideoLink({ link, course, classID, userID, index }) {
+  const [_course, setCourse] = useState(course);
+  console.log(_course);
+  function getAttendance() {
+    Axios.post(URL + "class/" + classID + "/attendance", {
+      auth: _course.courseID,
+    }).then(() => {
+      Axios.get(URL + "class/" + classID).then(({ data }) => {
+        setCourse(data.participations[index]);
+        console.log(data);
+      });
+    });
+  }
+  return (
+    <li>
+      <h4>{link.description}</h4>
+      <a href={link.link} onClick={getAttendance}>
+        <Button>
+          {_course === undefined || _course.tutees.includes(userID)
+            ? "봤어요"
+            : "수강"}
+        </Button>
+      </a>
+    </li>
   );
 }
 
@@ -331,7 +362,7 @@ export {
   SkypeLink,
   SkypeLinkInput,
   LectureNote,
-  VideoLink,
+  VideoLinks,
   VideoLinkInput,
   MaxTuteeInput,
   LectureNoteInput,
