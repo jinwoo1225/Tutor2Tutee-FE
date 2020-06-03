@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import { Button, Form, Row, Col } from "react-bootstrap";
-import { URL } from "./App";
+import { Button, Form, Row, Col, Card, ButtonGroup } from "react-bootstrap";
+import { URL, dateToString } from "./App";
 
 function QnA({ classInfo, amITutor }) {
   const [questionBox, setQuestionBox] = useState(false);
@@ -12,15 +12,14 @@ function QnA({ classInfo, amITutor }) {
     Axios.post(URL + "class/" + _class._id + "/question", {
       content: question,
     }).then(({ data }) => {
-      alert(data);
+      alert("질문 등록이 완료되었습니다.");
+      getCurrentClasses();
     });
-    getCurrentClasses();
     setQuestionBox(false);
   };
 
   const getCurrentClasses = () => {
     Axios.get(URL + "class/" + _class._id).then(({ data }) => {
-      console.log(data);
       setClass(data);
     });
   };
@@ -42,6 +41,7 @@ function QnA({ classInfo, amITutor }) {
     <>
       {amITutor ? null : (
         <Button
+          className="my-3"
           block
           onClick={() => {
             setQuestionBox(true);
@@ -51,41 +51,50 @@ function QnA({ classInfo, amITutor }) {
         </Button>
       )}
       {_class.qnas.length ? ( //불러오기에 성공하면 //
-        <ol>
-          {_class.qnas.map(({ question, _id, answer }) => {
+        <>
+          {_class.qnas.map(({ question, _id, answer }, index) => {
             return (
-              <li key={question._id}>
+              <div key={question._id}>
                 <Row>
-                  <Col>
-                    <p>
-                      {question.content}
-                      <br />
-                      {question.Writer}
-                      <br />
-                      {question.createdAt}
-                    </p>
-                  </Col>
-                  {amITutor ? (
-                    <Answer
-                      qid={_id}
-                      _class={_class}
-                      getCurrentClasses={getCurrentClasses}
-                    />
-                  ) : null}
-                  {answer === undefined ? null : (
-                    <Col md="12">
-                      <p>
-                        {answer.content}
-                        <br />
-                        {answer.createdAt}
-                      </p>
-                    </Col>
-                  )}
+                  <Card body as={Col}>
+                    <Row>
+                      <Col>
+                        <p>
+                          Q{index + 1}:{question.content}
+                          <br />
+                          질문자 : {question.Writer}
+                          <br />
+                          작성일 : {dateToString(new Date(question.createdAt))}
+                        </p>
+                      </Col>
+                      {amITutor ? (
+                        <Answer
+                          isAnswered={answer === undefined}
+                          qid={_id}
+                          _class={_class}
+                          getCurrentClasses={getCurrentClasses}
+                        />
+                      ) : null}
+
+                      <Col md="12">
+                        <hr />
+                        {answer === undefined ? (
+                          <p>아직 답변이 없습니다.</p>
+                        ) : (
+                          <p>
+                            A : {answer.content}
+                            <br />
+                            작성일 : {dateToString(new Date(answer.createdAt))}
+                          </p>
+                        )}
+                      </Col>
+                    </Row>
+                  </Card>
                 </Row>
-              </li>
+              </div>
             );
           })}
-        </ol>
+        </>
       ) : (
         <h1>아직 등록된 질문이 없습니다.</h1>
       )}
@@ -93,15 +102,16 @@ function QnA({ classInfo, amITutor }) {
   );
 }
 
-function Answer({ qid, _class, getCurrentClasses }) {
+function Answer({ qid, _class, getCurrentClasses, isAnswered }) {
   const [isClicked, setIsClicked] = useState(false);
   const [answer, setAnswer] = useState("");
+
   const sendAnswer = (qid) => {
     Axios.post(URL + "class/" + _class._id + "/question/" + qid, {
       qid,
       content: answer,
     }).then(({ data }) => {
-      alert(data);
+      alert("답변이 등록 완료되었습니다.");
       getCurrentClasses();
       setIsClicked(false);
     });
@@ -110,12 +120,19 @@ function Answer({ qid, _class, getCurrentClasses }) {
   return isClicked ? (
     <Col md="12">
       <Form.Control as="textarea" onChange={(e) => setAnswer(e.target.value)} />
-      <Button onClick={(e) => sendAnswer(qid)}>답변완료</Button>
+      <ButtonGroup className="mt-md-3">
+        <Button onClick={() => sendAnswer(qid)}>답변완료</Button>
+        <Button onClick={() => setIsClicked(false)}>취소</Button>
+      </ButtonGroup>
     </Col>
   ) : (
     <Col md="3">
-      <Button block onClick={(e) => setIsClicked(true)}>
-        답변하기
+      <Button
+        block
+        style={{ height: "100%" }}
+        onClick={() => setIsClicked(true)}
+      >
+        {isAnswered ? "답변하기" : "답변수정"}
       </Button>
     </Col>
   );
