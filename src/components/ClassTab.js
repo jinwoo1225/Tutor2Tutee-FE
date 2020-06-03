@@ -26,9 +26,12 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   return (
     <Card body>
       {userInfo._id === "" ||
-      !userInfo.classesAsTutee.includes(classInfo._id) ||
-      (classInfo.state !== "InProgress" && [0, 3].includes(classType)) ? (
-        //유저가 로그인 되어있지 않다면 || 수강하지 않았다면 || 강의가 시작되지 않았다면 && 온라인실시간 또는 오프라인 질의응답
+      (!userInfo.classesAsTutee.includes(classInfo._id) &&
+        classInfo.state !== "InProgress" &&
+        [0, 3].includes(classType) &&
+        !amITutor) ? (
+        //유저가 로그인 되어있지 않다면 || 수강하지 않았다면 ||
+        //강의가 시작되지 않았다면 && 온라인실시간 또는 오프라인 질의응답 && 내가 튜터가 아니라면
         <Overview
           studyAbout={classInfo.studyAbout}
           courses={classInfo.courses}
@@ -99,7 +102,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 />
               </Tab>
             ) : null}
-            {[1, 2].includes(classType) ? (
+            {[2].includes(classType) ? (
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
                 <Chat classInfo={classInfo} />
               </Tab>

@@ -62,7 +62,7 @@ function QnA({ classInfo, amITutor }) {
                         <p>
                           Q{index + 1}:{question.content}
                           <br />
-                          질문자 : {question.Writer}
+                          질문자 : <Nickname userID={question.Writer} />
                           <br />
                           작성일 : {dateToString(new Date(question.createdAt))}
                         </p>
@@ -136,6 +136,18 @@ function Answer({ qid, _class, getCurrentClasses, isAnswered }) {
       </Button>
     </Col>
   );
+}
+
+function Nickname({ userID }) {
+  const [nickname, setNickname] = useState(undefined);
+
+  if (nickname === undefined) {
+    Axios.get(URL + "user/" + userID).then(({ data }) => {
+      setNickname(data.nickname);
+    });
+  }
+
+  return nickname === undefined ? "Loading" : nickname;
 }
 
 export default QnA;

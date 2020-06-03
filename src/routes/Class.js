@@ -66,8 +66,8 @@ function Class({
   function startClass() {
     Axios.get(URL + "class/" + id + "/start").then((response) => {
       alert(response.data);
+      setClass({ classLoaded: false });
     });
-    setClass({ classLoaded: false });
   }
 
   function joinClass() {
