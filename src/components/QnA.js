@@ -40,14 +40,16 @@ function QnA({ classInfo, amITutor }) {
     </>
   ) : (
     <>
-      <Button
-        block
-        onClick={(e) => {
-          setQuestionBox(true);
-        }}
-      >
-        질문하기
-      </Button>
+      {amITutor ? null : (
+        <Button
+          block
+          onClick={() => {
+            setQuestionBox(true);
+          }}
+        >
+          질문하기
+        </Button>
+      )}
       {_class.qnas.length ? ( //불러오기에 성공하면 //
         <ol>
           {_class.qnas.map(({ question, _id, answer }) => {
