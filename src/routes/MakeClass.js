@@ -25,7 +25,7 @@ function MakeClass({ history }) {
   const [price, setPrice] = useState(0);
   const [classTypeSelect, setSelect] = useState(0);
 
-  const [startTime, setStartTime] = useState(1200);
+  const [startTime, setStartTime] = useState(1000);
   const [endTime, setEndTime] = useState(1200);
   const [date, setDate] = useState([]);
 
@@ -69,14 +69,16 @@ function MakeClass({ history }) {
       class_description: classDesc,
     };
 
+    let lectureTimes = date.map((date) => {
+      return { day: weeksRaw[date], start: startTime, finish: endTime };
+    });
+
     switch (classTypeSelect) {
       case 0:
         //실시간 온라인 강의형을 위한 시간정보, 강의 설명, 최대 튜티수
         data = {
           ...data,
-          time_day: weeksRaw[date],
-          time_start: startTime,
-          time_finish: endTime,
+          lectureTimes,
           course_description: courseDesc,
           maxTutee,
         };
@@ -90,9 +92,7 @@ function MakeClass({ history }) {
         //온라인 질의 응답형을 위한 시간 정보
         data = {
           ...data,
-          time_day: weeksRaw[date],
-          time_start: startTime,
-          time_finish: endTime,
+          lectureTimes,
         };
         break;
 
@@ -100,9 +100,7 @@ function MakeClass({ history }) {
         // 오프라인 질의 응답형을 위한 시간, 장소정보, 최대 튜티수
         data = {
           ...data,
-          time_day: weeksRaw[date],
-          time_start: startTime,
-          time_finish: endTime,
+          lectureTimes,
           place,
           maxTutee,
         };
@@ -111,7 +109,7 @@ function MakeClass({ history }) {
       default:
         break;
     }
-
+    console.log(data);
     Axios.post(URL + "class", data).then((res) => {
       if (res.data === "fail") {
         alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
