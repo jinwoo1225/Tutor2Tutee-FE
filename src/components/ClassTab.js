@@ -25,8 +25,10 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
 
   return (
     <Card body>
-      {userInfo._id === "" ? (
-        //유저가 로그인 되어있지 않다면
+      {userInfo._id === "" ||
+      !userInfo.classesAsTutee.includes(classInfo._id) ||
+      classInfo.state !== "InProgress" ? (
+        //유저가 로그인 되어있지 않다면 || 수강하지 않았다면 || 강의가 시작되지 않았다면
         <Overview
           studyAbout={classInfo.studyAbout}
           courses={classInfo.courses}
