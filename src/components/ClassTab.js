@@ -68,7 +68,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
             ) : null}
             {[1, 2].includes(classType) ? (
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
-                <Chat />
+                <Chat classInfo={classInfo} />
               </Tab>
             ) : null}
           </Tabs>

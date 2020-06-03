@@ -2,30 +2,51 @@ import React, { Component } from "react";
 import socketio from "socket.io-client";
 import { InputGroup, FormControl, Button, Form, Card } from "react-bootstrap";
 import { connect } from "react-redux";
+import { render } from "@testing-library/react";
+import { URL } from "./App";
 import "../css/chat.css";
 
-let socket;
+const socket = socketio.connect(URL);
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    socket = socketio.connect("https://localhost:3000/");
     console.log(this.props);
+    //this.classInfo = this.props.classInfo;
     this.state = {
+      classInfo: this.props.classInfo,
+      joined: false,
       user: this.props.user,
-      username: this.props.user.nickname,
+      userID: this.props.user._id,
       chat: new Array(),
       msg: "",
     };
     this.send = this.send.bind(this);
     this.keysend = this.keysend.bind(this);
     this.inputMSG = this.inputMSG.bind(this);
+    this.join = this.join.bind(this);
+    this.joinTest = this.joinTest.bind(this);
+  }
+
+  joinTest() {
+    socket.emit("join", {
+      room: "TEST",
+      userID: this.state.userID,
+    });
+    this.state.joined = true;
+  }
+
+  join() {
+    socket.emit("join", {
+      room: this.state.classInfo.chattingRoom,
+      userID: this.state.userID,
+    });
+    this.state.joined = true;
   }
 
   componentDidMount() {
-    socket.emit("join", {
-      username: this.state.username,
-    });
+    console.log(this.state.classInfo._id);
+
     socket.on("chat", (data) => {
       this.setState({ chat: this.state.chat.concat([data]) });
       document
@@ -38,7 +59,7 @@ class Chat extends React.Component {
   }
   componentWillReceiveProps() {
     console.log("퇴장");
-    socket.emit("quit", { username: this.state.username });
+    socket.emit("quit", { userID: this.state.userID });
     // this.setState({channel:changeProps.channel},()=>{
     //     this.setState({chatList:[]});
     //     socket.emit('channelJoin', this.state.channel);
@@ -51,7 +72,7 @@ class Chat extends React.Component {
   }
   send() {
     socket.emit("chat", {
-      username: this.state.username,
+      userID: this.state.userID,
       message: this.state.msg,
     });
     this.setState({ msg: "" });
@@ -64,7 +85,8 @@ class Chat extends React.Component {
   }
   render() {
     let list = this.state.chat.map((item, index) => {
-      let alignType = item.username == this.state.username ? "right" : "left";
+      let alignType =
+        item.username == this.state.user.nickname ? "right" : "left";
 
       let result = item.system ? (
         <div className="system">{item.message}</div>
@@ -82,9 +104,9 @@ class Chat extends React.Component {
       return result;
     });
 
-    return (
+    let chatRoom = (
       <div>
-        <h1>userName : {this.state.username}</h1>
+        <h1>userName : {this.state.user.nickname}</h1>
         <div className="chattingView">{list}</div>
         <div className="input-group -input">
           <Form.Control
@@ -99,6 +121,19 @@ class Chat extends React.Component {
         </div>
       </div>
     );
+
+    return this.state.joined ? (
+      <div>{chatRoom}</div>
+    ) : (
+      <div>
+        <Button block className="my-md-3 send" onClick={this.join}>
+          입장하기
+        </Button>
+        <Button block className="my-md-3 send" onClick={this.joinTest}>
+          테스트 채널 입장하기
+        </Button>
+      </div>
+    );
   }
 }
 
@@ -106,67 +141,3 @@ function mapStateToProps(state) {
   return { user: state.user };
 }
 export default connect(mapStateToProps)(Chat);
-
-// var socket = io()
-
-// /* 접속 되었을 때 실행 */
-// socket.on('connect', function() {
-//   /* 이름을 입력받고 */
-//   var name = prompt('반갑습니다! 채팅방에서 사용할 닉네임을 작성하세요!', '')
-
-//   /* 이름이 빈칸인 경우 */
-//   if(!name) {
-//     name = '익명'
-//   }
-
-//   /* 서버에 새로운 유저가 왔다고 알림 */
-//   socket.emit('newUser', name)
-// })
-
-// /* 서버로부터 데이터 받은 경우 */
-// socket.on('update', function(data) {
-//   var chat = document.getElementById('chat')
-
-//   var message = document.createElement('div')
-//   var node = document.createTextNode(`${data.name}: ${data.message}`)
-//   var className = ''
-
-//   // 타입에 따라 적용할 클래스를 다르게 지정
-//   switch(data.type) {
-//     case 'message':
-//       className = 'other'
-//       break
-
-//     case 'connect':
-//       className = 'connect'
-//       break
-
-//     case 'disconnect':
-//       className = 'disconnect'
-//       break
-//   }
-
-//   message.classList.add(className)
-//   message.appendChild(node)
-//   chat.appendChild(message)
-// })
-
-// /* 메시지 전송 함수 */
-// function send() {
-//   // 입력되어있는 데이터 가져오기
-//   var message = document.getElementById('test').value
-
-//   // 가져왔으니 데이터 빈칸으로 변경
-//   document.getElementById('test').value = ''
-
-//   // 내가 전송할 메시지 클라이언트에게 표시
-//   var chat = document.getElementById('chat')
-//   var msg = document.createElement('div')
-//   var node = document.createTextNode(message)
-//   msg.classList.add('me')
-//   msg.appendChild(node)
-//   chat.appendChild(msg)
-
-//   // 서버로 message 이벤트 전달 + 데이터와 함께
-//   socket.emit('message', {type: 'message', message: message})
-// }
