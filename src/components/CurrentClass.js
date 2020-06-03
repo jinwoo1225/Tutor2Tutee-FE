@@ -21,7 +21,7 @@ function CurrentClass({ nickname }) {
     <>
       <h5>지금 수강중인 강의</h5>
       {clAsTutee === undefined || clAsTutee.length === 0 ? (
-        <h3 className="text-center">수강하는 강의가 없네요!!</h3>
+        <h3 className="text-center">아직 수강하신 강의가 없습니다.</h3>
       ) : (
         <Row>
           {clAsTutee.map((_class) => {
@@ -32,7 +32,7 @@ function CurrentClass({ nickname }) {
       <br />
       <h5>지금 가르치는 강의</h5>
       {clAsTutor === undefined || clAsTutor.length === 0 ? (
-        <h3 className="text-center">수강하는 강의가 없네요!!</h3>
+        <h3 className="text-center">아직 개설하신 강의가 없습니다.</h3>
       ) : (
         <Row>
           {clAsTutor.map((_class) => {
