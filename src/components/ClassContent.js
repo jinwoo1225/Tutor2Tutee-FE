@@ -9,7 +9,7 @@ function Overview({ studyAbout, courses }) {
   //클래스의 개요 컴포넌트
   return (
     <>
-      <h1 className="text-center mt-3">{studyAbout}</h1>
+      <h3 className="text-center mt-3">{studyAbout}</h3>
       <ol>
         {courses.map((course) => {
           //코스 정보를 표시
