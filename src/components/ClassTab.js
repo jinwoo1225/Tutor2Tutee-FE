@@ -24,7 +24,6 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   const [key, setKey] = useState("overview");
   return (
     <Card body>
-      <h1>{classInfo.chattingRoom === undefined ? "비었어요" : null}</h1>
       {userInfo._id === "" ||
       (!userInfo.classesAsTutee.includes(classInfo._id) &&
         classInfo.state !== "InProgress" &&
