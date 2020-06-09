@@ -24,15 +24,21 @@ function NewChat({ classInfo, userInfo }) {
   useEffect(() => {
     socket = socketio.connect(URL);
     if (classInfo.chattingRoom !== undefined) {
-      socket.emit("join", {
-        room: classInfo.chattingRoom,
-        userID: userInfo._id,
-      });
-      socket.on("chat", (data) => {
-        setChat((c) => {
-          return c.concat(data);
+      socket
+        .emit("join", {
+          room: classInfo.chattingRoom,
+          userID: userInfo._id,
+        })
+        .on("chat", (data) => {
+          setChat((chat) => {
+            return chat.concat(data);
+          });
+        })
+        .on("system", (data) => {
+          setChat((chat) => {
+            return chat.concat(data);
+          });
         });
-      });
     }
   }, [classInfo, userInfo]);
 
@@ -50,10 +56,11 @@ function NewChat({ classInfo, userInfo }) {
             flexWrap: "nowrap",
           }}
         >
-          {chat.map(({ username, time, message }, index) => {
+          {chat.map(({ username, time, message, system }, index) => {
             return (
               <Card
                 body
+                key={index}
                 style={{
                   float: username === userInfo.nickname ? "right" : "left",
                 }}

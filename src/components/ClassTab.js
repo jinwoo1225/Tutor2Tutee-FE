@@ -10,8 +10,9 @@ import {
 import QnA from "./QnA";
 import Chat from "./Chat";
 import { Link } from "react-router-dom";
+import NewChat from "./newChat";
 
-const EditClass = (classInfo, tabName, amITutor) => {
+const EditClass = ({ classInfo, tabName, amITutor }) => {
   return amITutor ? (
     <Link to={"./" + classInfo._id + "/edit"}>
       <Button block>{tabName} 링크 추가하기</Button>
@@ -22,13 +23,17 @@ const EditClass = (classInfo, tabName, amITutor) => {
 function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   //클래스의 탭부분 컴포넌트
   const [key, setKey] = useState("overview");
-
   return (
     <Card body>
       <h1>
-        {classInfo.chattingRoom === undefined
-          ? "비었어요"
-          : classInfo.chattingRoom}
+        {classInfo.chattingRoom === undefined ? (
+          "비었어요"
+        ) : (
+          <>
+            {/* <Chat classInfo={classInfo} /> */}
+            <NewChat classInfo={classInfo} userInfo={userInfo} />
+          </>
+        )}
       </h1>
       {userInfo._id === "" ||
       (!userInfo.classesAsTutee.includes(classInfo._id) &&
@@ -113,7 +118,12 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
             ) : null}
             {[2].includes(classType) ? (
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
-                <Chat classInfo={classInfo} />
+                {/* <Chat classInfo={classInfo} /> */}
+                <NewChat
+                  classInfo={classInfo}
+                  userInfo={userInfo}
+                  socket={socket}
+                />
               </Tab>
             ) : null}
           </Tabs>
