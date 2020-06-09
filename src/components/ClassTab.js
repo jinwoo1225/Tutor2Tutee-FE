@@ -25,6 +25,11 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
 
   return (
     <Card body>
+      <h1>
+        {classInfo.chattingRoom === undefined
+          ? "비었어요"
+          : classInfo.chattingRoom}
+      </h1>
       {userInfo._id === "" ||
       (!userInfo.classesAsTutee.includes(classInfo._id) &&
         classInfo.state !== "InProgress" &&
