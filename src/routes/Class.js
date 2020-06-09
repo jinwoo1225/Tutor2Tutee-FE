@@ -52,6 +52,7 @@ function Class({
     Axios.get(URL + "class/" + id + "/attendance").then((response) => {
       setAttenCode(response.data);
       alert("출석이 시작되었습니다!" + response.data);
+      setClass({ classLoaded: false });
     });
   }
 
