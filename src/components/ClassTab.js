@@ -8,7 +8,6 @@ import {
   LectureNote,
 } from "./ClassContent";
 import QnA from "./QnA";
-import Chat from "./Chat";
 import { Link } from "react-router-dom";
 import NewChat from "./newChat";
 
@@ -25,16 +24,8 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
   const [key, setKey] = useState("overview");
   return (
     <Card body>
-      <h1>
-        {classInfo.chattingRoom === undefined ? (
-          "비었어요"
-        ) : (
-          <>
-            {/* <Chat classInfo={classInfo} /> */}
-            <NewChat classInfo={classInfo} userInfo={userInfo} />
-          </>
-        )}
-      </h1>
+      <h1>{classInfo.chattingRoom === undefined ? "비었어요" : null}</h1>
+      <NewChat classInfo={classInfo} userInfo={userInfo} />
       {userInfo._id === "" ||
       (!userInfo.classesAsTutee.includes(classInfo._id) &&
         classInfo.state !== "InProgress" &&
@@ -119,11 +110,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
             {[2].includes(classType) ? (
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
                 {/* <Chat classInfo={classInfo} /> */}
-                <NewChat
-                  classInfo={classInfo}
-                  userInfo={userInfo}
-                  socket={socket}
-                />
+                <NewChat classInfo={classInfo} userInfo={userInfo} />
               </Tab>
             ) : null}
           </Tabs>
