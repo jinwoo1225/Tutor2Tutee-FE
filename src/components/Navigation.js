@@ -1,47 +1,32 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { logout, updateUser } from "../store";
+import { logout } from "../store";
 import { connect } from "react-redux";
 
-function Navigation({ loginState, dlogout, dispatchUser }) {
+function Navigation({ loginState, dlogout, history }) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Link to="/">
-        <Navbar.Brand>Tutor 2 Tutee</Navbar.Brand>
-      </Link>
+      <Navbar.Brand href="/#/">Tutor 2 Tutee</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto mt-3">
-          <Link to="/">
-            <Nav.Link as="p">Home</Nav.Link>
-          </Link>
-          <Link to="/about">
-            <Nav.Link as="p">About</Nav.Link>
-          </Link>
+        <Nav className="mr-auto my-auto">
+          <Nav.Link href="/#/">홈</Nav.Link>
+          <Nav.Link href="/#/about">튜터2튜티는??</Nav.Link>
         </Nav>
-        <Nav className="mt-3">
+        <Nav className="my-auto">
           {loginState.user.nickname !== "" ? (
             <>
-              <Nav.Link as="p">나의 포인트 : {loginState.user.point}</Nav.Link>
-              <Link to="/class/new">
-                <Nav.Link as="p">클래스 만들기</Nav.Link>
-              </Link>
-              <Link to="/user">
-                <Nav.Link as="p">Hello, {loginState.user.nickname}</Nav.Link>
-              </Link>
-              <Nav.Link as="p" onClick={dlogout}>
-                Logout
+              <Nav.Link>나의 포인트 : {loginState.user.point}</Nav.Link>
+              <Nav.Link href="/#/class/new">클래스 만들기</Nav.Link>
+              <Nav.Link href="/#/user">
+                Hello, {loginState.user.nickname}
               </Nav.Link>
+              <Nav.Link onClick={dlogout}>Logout</Nav.Link>
             </>
           ) : (
             <>
-              <Link to="/user/register">
-                <Nav.Link as="p">Register</Nav.Link>
-              </Link>
-              <Link to="/user/login">
-                <Nav.Link as="p">Login</Nav.Link>
-              </Link>
+              <Nav.Link href="/#/user/register/">회원가입</Nav.Link>
+              <Nav.Link href="/#/user/login/">로그인</Nav.Link>
             </>
           )}
         </Nav>
@@ -50,14 +35,13 @@ function Navigation({ loginState, dlogout, dispatchUser }) {
   );
 }
 
-function mapStateToProps(state, ownProps) {
-  return { loginState: state, props: ownProps };
+function mapStateToProps(state) {
+  return { loginState: state };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dlogout: () => dispatch(logout()),
-    dispatchUser: (data) => dispatch(updateUser(data)),
   };
 }
 
