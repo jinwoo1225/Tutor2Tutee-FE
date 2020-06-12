@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Form,
@@ -13,13 +13,13 @@ import { classTypes, classTypesRaw } from "../components/App";
 
 const weeks = ["월", "화", "수", "목", "금", "토", "일"];
 const weeksRaw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const categorys = ["컴퓨터공학", "수학", "영어"];
 
 const tuteeMaxArray = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 function MakeClass({ history }) {
   //강의를 만들때 사용되는 컴포넌트 & 라우트
-  const [category, setCategory] = useState(categorys[0]);
+  const [categorys, setCategorys] = useState(undefined);
+  const [category, setCategory] = useState("");
   const [studyAbout, setStudyAbout] = useState("");
   const [classname, setClassName] = useState("");
   const [price, setPrice] = useState(0);
@@ -37,6 +37,17 @@ function MakeClass({ history }) {
   const [grade, setGrade] = useState("");
   let startTimeArray = [];
   let endTimeArray = [];
+
+  useEffect(() => {
+    Axios.get(URL + "search/list/category")
+      .then(({ data }) => {
+        console.log(data);
+        setCategorys(() => {
+          return data;
+        });
+      })
+      .catch(({ error }) => console.log(error));
+  }, []);
 
   for (
     //시간을 30분 단위로 10시부터 22시까지 정할수있게함
@@ -163,15 +174,18 @@ function MakeClass({ history }) {
             <Form.Control
               as="select"
               onChange={(e) => {
-                setCategory(e.target.value);
+                setCategory(categorys[e.target.value].cID);
               }}
             >
-              {
-                //카테고리를 select option으로 표시
-                categorys.map((category, index) => {
-                  return <option key={index}>{category}</option>;
-                })
-              }
+              {categorys === undefined
+                ? null
+                : categorys.map((category, index) => {
+                    return (
+                      <option key={index} value={index}>
+                        {category.representation}
+                      </option>
+                    );
+                  })}
             </Form.Control>
           </Form.Group>
           <Form.Group>

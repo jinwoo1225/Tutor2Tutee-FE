@@ -15,7 +15,7 @@ import User from "../routes/User";
 import { updateClass, updateUser, logout } from "../store";
 import Footer from "./Footer";
 import SearchResult from "./SearchResult";
-import Rating from "./Rating";
+// import Rating from "./Rating";
 
 //서버주소
 export const URL = "http://localhost:3000/";
@@ -66,7 +66,7 @@ function App({ dispatchUser, dlogout, dispatchClass }) {
       <Route path="/class/id/:id/edit" exact component={ClassEdit} />
       <Route path="/class/new" exact component={MakeClass} />
       <Route path="/search/result/:query" exact component={SearchResult} />
-      <Route path="/test" exact component={Rating} />
+      
       <Footer />
     </Router>
   );
