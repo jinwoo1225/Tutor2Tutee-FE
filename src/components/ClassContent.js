@@ -20,18 +20,49 @@ function Overview({ studyAbout, courses }) {
   );
 }
 
-function Attendance({ amITutor, classID }) {
+function Attendance({ amITutor, classID, classType }) {
   //출석 정보 표시
   const [attendances, setAttenDances] = useState(undefined);
+  const [attenCode, setAttenCode] = useState("");
+  const [authenticationCode, setAuthCode] = useState(undefined);
 
-  if (attendances === undefined) {
-    Axios.get(URL + "class/" + classID + "/attendance/my").then(({ data }) => {
-      setAttenDances(data);
+  function postAttendance() {
+    Axios.post(URL + "class/" + classID + "/attendance", {
+      auth: attenCode,
+    }).then((response) => {
+      alert(response.data);
+      setAttenDances(undefined);
     });
+  }
+
+  function startAttendance() {
+    Axios.get(URL + "class/" + classID + "/attendance").then(({ data }) => {
+      setAuthCode(data);
+      alert("출석이 시작되었습니다! 인증번호 : " + data);
+    });
+  }
+
+  if (!amITutor && attendances === undefined) {
+    Axios.get(URL + "class/" + classID + "/attendance/my").then(({ data }) =>
+      setAttenDances(data)
+    );
   }
   return (
     <Card body>
-      {amITutor ? null : ( //TODO 튜터일 경우 모든 튜티들의 출결상황을 보는 상황판을 만들어야 할것
+      {amITutor && <Button onClick={startAttendance}>출석시작</Button>}
+      {authenticationCode && <h5>{authenticationCode}</h5>}
+      {!amITutor && [0, 3].includes(classType) && (
+        <InputGroup style={{ margin: "auto", maxWidth: "400px" }}>
+          <InputGroup.Append>
+            <InputGroup.Text>출석번호</InputGroup.Text>
+          </InputGroup.Append>
+          <Form.Control onChange={(e) => setAttenCode(e.target.value)} />
+          <InputGroup.Prepend>
+            <Button onClick={postAttendance}>출석</Button>
+          </InputGroup.Prepend>
+        </InputGroup>
+      )}
+      {!amITutor && ( //TODO 튜터일 경우 모든 튜티들의 출결상황을 보는 상황판을 만들어야 할것
         <>
           <h1 className="text-center">출석 정보입니다.</h1>
           <ol>

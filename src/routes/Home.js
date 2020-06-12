@@ -8,7 +8,7 @@ import WhatIs from "../components/WhatIs";
 import CurrentClass from "../components/CurrentClass";
 import SearchBar from "../components/SearchBar";
 
-function Home({ user, dispatchClass }) {
+function Home({ user, dispatchClass, history }) {
   // 홈화면, 유저가 처음 로그인하면 보는 컴포넌트/ 라우트
   const [updated, setUpdated] = useState(true);
 
@@ -19,7 +19,7 @@ function Home({ user, dispatchClass }) {
 
   return (
     <Container className="pt-3">
-      <SearchBar />
+      <SearchBar history={history} />
       {user.nickname === "" ? (
         //유저가 로그인 하지않으면
         <WhatIs />
