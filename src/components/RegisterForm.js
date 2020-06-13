@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { URL } from "../components/App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,9 +13,8 @@ import { InputGroup, Form, Button, Card, FormGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
-const MAJORLIST = ["컴퓨터공학", "경영", "화학"];
-
 function RegisterForm({ history }) {
+  const [MAJORLIST, setMAJORLIST] = useState(undefined);
   const [email, setEmail] = useState("");
   const [authNum, setAuthNum] = useState("");
   const [reAuthTime, setReAuthTime] = useState(180);
@@ -23,6 +22,17 @@ function RegisterForm({ history }) {
   const [password, setPassword] = useState("");
   const [major, setMajor] = useState("");
   const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    Axios.get(URL + "search/list/category")
+      .then(({ data }) => {
+        console.log(data);
+        setMAJORLIST(() => {
+          return data;
+        });
+      })
+      .catch(({ error }) => console.log(error));
+  }, []);
 
   function sendEmail() {
     Axios.post(URL + "auth/sendEmail", { email }).then((response) => {
@@ -147,16 +157,20 @@ function RegisterForm({ history }) {
               </InputGroup.Prepend>
               <select
                 className="custom-select"
-                onChange={(e) => setMajor(MAJORLIST[e.target.value])}
+                onChange={(e) => 
+                  setMajor(MAJORLIST[e.target.value].cID)
+                }
               >
                 <option>학과를 골라주세요.</option>
-                {MAJORLIST.map((major, index) => {
-                  return (
-                    <option key={index} value={index}>
-                      {major}
-                    </option>
-                  );
-                })}
+                {MAJORLIST === undefined
+                  ? null
+                  : MAJORLIST.map((major, index) => {
+                      return (
+                        <option key={index} value={index}>
+                          {major.representation}
+                        </option>
+                      );
+                    })}
               </select>
             </InputGroup>
           </FormGroup>
