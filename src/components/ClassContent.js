@@ -49,10 +49,19 @@ function Attendance({ amITutor, classID, classType }) {
   }
   return (
     <Card body>
-      {amITutor && <Button onClick={startAttendance}>출석시작</Button>}
-      {authenticationCode && <h5>{authenticationCode}</h5>}
+      {amITutor && (
+        <Button block onClick={startAttendance}>
+          출석시작
+        </Button>
+      )}
+      {authenticationCode && (
+        <Card body bg="light" className="text-center mt-3">
+          <Card.Title>출석 번호 : {authenticationCode}</Card.Title>
+          <Card.Text>출석번호는 튜티들에게 알려주세요!</Card.Text>
+        </Card>
+      )}
       {!amITutor && [0, 3].includes(classType) && (
-        <InputGroup style={{ margin: "auto", maxWidth: "400px" }}>
+        <InputGroup size="lg" style={{ margin: "auto", maxWidth: "600px" }}>
           <InputGroup.Append>
             <InputGroup.Text>출석번호</InputGroup.Text>
           </InputGroup.Append>
@@ -63,21 +72,23 @@ function Attendance({ amITutor, classID, classType }) {
         </InputGroup>
       )}
       {!amITutor && ( //TODO 튜터일 경우 모든 튜티들의 출결상황을 보는 상황판을 만들어야 할것
-        <>
+        <div style={{ margin: "auto", maxWidth: "600px" }}>
+          <hr></hr>
           <h1 className="text-center">출석 정보입니다.</h1>
-          <ol>
-            {attendances !== undefined && attendances !== "fail"
-              ? attendances.map((attendance) => {
-                  return (
-                    <li>
-                      <h3>{dateToString(new Date(attendance.date))}</h3>
-                      <h5>{attendance.isAttend ? "출석" : "결석"}</h5>
-                    </li>
-                  );
-                })
-              : null}
-          </ol>
-        </>
+          <hr></hr>
+          {attendances !== undefined && attendances !== "fail"
+            ? attendances.map((attendance, index) => {
+                return (
+                  <Card body key={index} className="text-center mt-3">
+                    <h4>
+                      {index + 1} : {dateToString(new Date(attendance.date))}
+                    </h4>
+                    <h5>{attendance.isAttend ? "출석" : "결석"}</h5>
+                  </Card>
+                );
+              })
+            : null}
+        </div>
       )}
     </Card>
   );
