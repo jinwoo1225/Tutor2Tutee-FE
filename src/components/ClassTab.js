@@ -8,16 +8,22 @@ import {
   LectureNote,
 } from "./ClassContent";
 import QnA from "./QnA";
-import { Link } from "react-router-dom";
 import Axios from "axios";
 import NewChat from "./newChat";
 
 const EditClass = ({ classInfo, tabName, amITutor }) => {
-  return amITutor ? (
-    <Link to={"./" + classInfo._id + "/edit"}>
-      <Button block>{tabName} 링크 추가하기</Button>
-    </Link>
-  ) : null;
+  return (
+    amITutor && (
+      <Button
+        block
+        href={"/#/class/id/" + classInfo._id + "/edit"}
+        className="mb-3"
+        style={{ maxWidth: "400px", margin: "auto" }}
+      >
+        {tabName} 추가하기
+      </Button>
+    )
+  );
 };
 
 function ClassTab({ classInfo, userInfo, classType, amITutor }) {
@@ -62,7 +68,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
               <Tab eventKey="lectureNote" title="수업 노트">
                 <EditClass
                   classInfo={classInfo}
-                  tabName="강의 노트 추가"
+                  tabName="강의 노트"
                   amITutor={amITutor}
                 />
                 <LectureNote LectureNotes={classInfo.lectureNotes} />

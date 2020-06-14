@@ -15,13 +15,13 @@ function JoinableClass({ classes, user }) {
           //클래스가 하나도 없는 경우 or 아직 로딩이 안된경우
           user.nickname === "" ? (
             //유저가 로그인하지 않은 경우.
-            <h1 className="col-12 mt-3">개설된 수업이 없습니다.</h1>
+            <h3 className="col-12 mt-3">개설된 수업이 없습니다.</h3>
           ) : (
             //유저가 로그인을 한경우
             <>
-              <h1 className="col-12 mt-3">
-                아무런 수업이 없어요! 개설하실레요?
-              </h1>
+              <h3 className="col-12 mt-3">
+                아무런 수업이 없어요! 개설하실까요?
+              </h3>
               <Button block href={"/#/class/new"}>
                 개설하러 가기!!
               </Button>

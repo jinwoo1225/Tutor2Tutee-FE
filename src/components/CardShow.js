@@ -14,7 +14,7 @@ function CardShow({ _class, col }) {
         </Card.Subtitle>
         <Card.Text>튜터 : {_class.tutorNickName}</Card.Text>
         <Link to={`class/id/${_class._id}`}>
-          <Button block>자세히</Button>
+          <Button block>자세히 보기</Button>
         </Link>
       </Card>
     </Col>
