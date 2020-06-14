@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CardComp from "../components/CardComp";
+import JoinableClass from "../components/JoinableClass";
 import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { checkClass } from "../components/App";
@@ -27,7 +27,7 @@ function Home({ user, dispatchClass, history }) {
         //유저가 로그인에 성공했으면 현재 진행중인 강의를 표시
         <CurrentClass />
       )}
-      <CardComp />
+      <JoinableClass />
     </Container>
   );
 }

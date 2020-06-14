@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { Row, Button } from "react-bootstrap";
 import CardShow from "./CardShow";
 
-function CardComp({ classes, user }) {
+function JoinableClass({ classes, user }) {
   return (
     <>
-      <h3>
+      <h3 className="text-center mt-3">
         현재 모집중인 강의 :{" "}
         {classes.filter((_class) => _class.state !== "InProgress").length}개
       </h3>
@@ -22,7 +22,9 @@ function CardComp({ classes, user }) {
               <h1 className="col-12 mt-3">
                 아무런 수업이 없어요! 개설하실레요?
               </h1>
-              <Button>개설하러 가기!!</Button>
+              <Button block href={"/#/class/new"}>
+                개설하러 가기!!
+              </Button>
             </>
           )
         ) : (
@@ -43,4 +45,4 @@ function mapStateToProps(state) {
   return { classes: state.class, user: state.user };
 }
 
-export default connect(mapStateToProps)(CardComp);
+export default connect(mapStateToProps)(JoinableClass);
