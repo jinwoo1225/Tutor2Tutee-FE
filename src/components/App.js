@@ -66,7 +66,6 @@ function App({ dispatchUser, dlogout, dispatchClass }) {
       <Route path="/class/id/:id/edit" exact component={ClassEdit} />
       <Route path="/class/new" exact component={MakeClass} />
       <Route path="/search/result/:query" exact component={SearchResult} />
-      
       <Footer />
     </Router>
   );

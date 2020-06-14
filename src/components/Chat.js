@@ -6,7 +6,7 @@ import { URL } from "./App";
 import "../css/chat.css";
 
 let socket;
-
+//deprecated Chat Component
 class Chat extends React.Component {
   constructor(props) {
     super(props);
