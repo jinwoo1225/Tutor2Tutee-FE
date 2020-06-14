@@ -3,18 +3,18 @@ import Axios from "axios";
 import { URL } from "./App";
 import { useState } from "react";
 import CardForTutor from "./CardClass/CardForTutor";
-import { Row, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import CardForTutee from "./CardClass/CardForTutee";
 
 function CurrentClass({ nickname }) {
   const [clAsTutee, setCATutee] = useState(undefined);
   const [clAsTutor, setCATutor] = useState(undefined);
   if (clAsTutee === undefined && clAsTutor === undefined) {
-    Axios.get(URL + "user/class/tutee").then((response) => {
-      setCATutee(response.data);
+    Axios.get(URL + "user/class/tutee").then(({ data }) => {
+      setCATutee(data);
     });
-    Axios.get(URL + "user/class/tutor").then((response) => {
-      setCATutor(response.data);
+    Axios.get(URL + "user/class/tutor").then(({ data }) => {
+      setCATutor(data);
     });
   }
   return (
@@ -33,7 +33,7 @@ function CurrentClass({ nickname }) {
           })}
         </Card>
       )}
-      <br></br>
+      <hr></hr>
 
       {clAsTutor === undefined || clAsTutor.length === 0 ? (
         <h3 className="text-center">

@@ -76,7 +76,7 @@ function Class({
   return (
     <Container className="mt-3">
       <Card body bg="light">
-        {_class._id === id ? (
+        {_class._id === id && (
           <>
             <ClassInfo
               ClassInfo={_class}
@@ -101,7 +101,7 @@ function Class({
               amITutor={_class.tutor === user._id}
             />
           </>
-        ) : null}
+        )}
       </Card>
     </Container>
   );

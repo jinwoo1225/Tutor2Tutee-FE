@@ -10,7 +10,6 @@ import {
 } from "../components/ClassContent";
 import Axios from "axios";
 import { URL } from "../components/App";
-import { Link } from "react-router-dom";
 
 function ClassEdit({
   match: {
@@ -27,10 +26,10 @@ function ClassEdit({
 
   return (
     //TODO 잘못된 사용자 접근 차단
-    <Container>
+    <Container className="text-center">
       <h1>안녕하세요! {user.nickname}</h1>
       {classInfo === undefined ? null : (
-        <>
+        <div style={{ maxWidth: "600px", margin: "auto" }}>
           <h2>강의 : {classInfo.className} 관리페이지입니다.</h2>
           <Form>
             {classInfo.classType === "OnlineCourseType" ? (
@@ -48,10 +47,11 @@ function ClassEdit({
               <MaxTuteeInput classID={id} classMaxTutee={classInfo.maxTutee} />
             )}
           </Form>
-          <Link to={"../" + id}>
-            <Button block>돌아가기</Button>
-          </Link>
-        </>
+
+          <Button className="mt-3" block href={"/#/class/id/" + id}>
+            돌아가기
+          </Button>
+        </div>
       )}
     </Container>
   );

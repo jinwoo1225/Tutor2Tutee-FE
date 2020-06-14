@@ -177,15 +177,15 @@ function MakeClass({ history }) {
                 setCategory(categorys[e.target.value].cID);
               }}
             >
-              {categorys === undefined
-                ? null
-                : categorys.map((category, index) => {
-                    return (
-                      <option key={index} value={index}>
-                        {category.representation}
-                      </option>
-                    );
-                  })}
+              {category === "" && <option value={0}>분야를 골라주세요!</option>}
+              {categorys !== undefined &&
+                categorys.map((category, index) => {
+                  return (
+                    <option key={index} value={index + 1}>
+                      {category.representation}
+                    </option>
+                  );
+                })}
             </Form.Control>
           </Form.Group>
           <Form.Group>
@@ -218,7 +218,7 @@ function MakeClass({ history }) {
             />
           </Form.Group>
 
-          {classTypeSelect !== 1 ? ( //온라인 동영상 강의를 제외한 수업에 필요한 요소
+          {[0, 2, 3].includes(classTypeSelect) && ( //온라인 동영상 강의를 제외한 수업에 필요한 요소
             <>
               <Form.Group>
                 <Form.Label style={{ display: "block" }}>
@@ -277,9 +277,9 @@ function MakeClass({ history }) {
                 </Form.Control>
               </Form.Group>
             </>
-          ) : null}
+          )}
 
-          {classTypeSelect === 0 || classTypeSelect === 2 ? (
+          {[0, 2].includes(classTypeSelect) && (
             <Form.Group>
               <Form.Label>커리큘럼</Form.Label>
               <Form.Control
@@ -289,9 +289,9 @@ function MakeClass({ history }) {
                 onChange={(e) => setCoDe(e.target.value)}
               />
             </Form.Group>
-          ) : null}
+          )}
 
-          {classTypeSelect === 0 || classTypeSelect === 3 ? (
+          {[0, 3].includes(classTypeSelect) && (
             <Form.Group>
               <Form.Label>튜티수를 골라주셔야됩니다!</Form.Label>
               <Form.Control
@@ -309,9 +309,9 @@ function MakeClass({ history }) {
                 })}
               </Form.Control>
             </Form.Group>
-          ) : null}
+          )}
 
-          {classTypeSelect === 3 ? (
+          {[3].includes(classTypeSelect) && (
             <Form.Group>
               <Form.Label>어디서 할지 정하셨나요?</Form.Label>
               <Form.Control
@@ -322,7 +322,7 @@ function MakeClass({ history }) {
                 onChange={(e) => setPlace(e.target.value)}
               />
             </Form.Group>
-          ) : null}
+          )}
           <Form.Group>
             <Form.Label>가격</Form.Label>
             <Form.Control
