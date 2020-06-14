@@ -15,11 +15,14 @@ function CardForTutor({ _class }) {
         </Card.Text>
       )}
       <Card.Text>{_class.tutees.length}명이 수강중이예요!</Card.Text>
-      <Link to={`class/id/${_class._id}`}>
-        <Button style={{ float: "center" }} block>
-          자세히
-        </Button>
-      </Link>
+
+      <Button
+        href={`/#/class/id/${_class._id}`}
+        style={{ float: "center" }}
+        block
+      >
+        자세히
+      </Button>
     </Card>
   );
 }

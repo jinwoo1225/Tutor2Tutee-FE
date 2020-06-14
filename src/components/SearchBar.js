@@ -11,7 +11,7 @@ function SearchBar({ prefix, history }) {
       document.querySelector(".searchQuery").value = prefix;
   }, [prefix]);
   return (
-    <InputGroup>
+    <InputGroup className="mb-3">
       <Form.Control
         placeholder="강의를 검색하세요!"
         onChange={(e) => {
