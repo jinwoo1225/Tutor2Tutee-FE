@@ -9,6 +9,7 @@ function ClassJoin({
   amITutor,
   amIGuest,
   startClass,
+  endClass,
   joinClass,
   quitClass,
 }) {
@@ -21,6 +22,7 @@ function ClassJoin({
           classState={classState}
           classTypeNum={classTypeNum}
           startClass={startClass}
+          endClass={endClass}
         />
       )}
       {/* 내가 게스트인 경우 */}
@@ -39,7 +41,7 @@ function ClassJoin({
   );
 }
 
-function TutorMenu({ ClassInfo, classState, classTypeNum, startClass }) {
+function TutorMenu({ ClassInfo, classState, classTypeNum, startClass, endClass}) {
   return (
     <>
       <Button
@@ -55,6 +57,13 @@ function TutorMenu({ ClassInfo, classState, classTypeNum, startClass }) {
           강의 마감하기
         </Button>
       )}
+      
+      {[1].includes(classState) && [2].includes(classTypeNum) && (
+        <Button className="my-3" block onClick={endClass}>
+          강의 그만두기
+        </Button>
+      )}
+      
     </>
   );
 }
