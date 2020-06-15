@@ -68,16 +68,17 @@ function GuestMenu() {
 }
 
 function UserMenu({ ClassInfo, classState, UserInfo, joinClass, quitClass }) {
-  return ![3].includes(classState) &&
+  return ![3].includes(classState) ? (
     UserInfo.classesAsTutee.includes(ClassInfo._id) ? (
-    <Button block className="my-3" onClick={quitClass}>
-      그만두기
-    </Button>
-  ) : (
-    <Button block className="my-3" onClick={joinClass}>
-      {ClassInfo.className} 참가하기
-    </Button>
-  );
+      <Button block className="my-3" onClick={quitClass}>
+        그만두기
+      </Button>
+    ) : (
+      <Button block className="my-3" onClick={joinClass}>
+        {ClassInfo.className} 참가하기
+      </Button>
+    )
+  ) : null;
 }
 
 export default ClassJoin;
