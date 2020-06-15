@@ -25,8 +25,8 @@ function MakeClass({ history }) {
   const [price, setPrice] = useState(0);
   const [classTypeSelect, setSelect] = useState(0);
 
-  const [startTime, setStartTime] = useState(1000);
-  const [endTime, setEndTime] = useState(1200);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [date, setDate] = useState([]);
 
   const [classDesc, setClDe] = useState("");
@@ -50,10 +50,19 @@ function MakeClass({ history }) {
   }, []);
 
   for (
-    //시간을 30분 단위로 10시부터 22시까지 정할수있게함
-    let index = 1000;
-    index < 2201;
-    index % 100 === 0 ? (index = index + 30) : (index = index + 70)
+    let index = "0000";
+    index < "2359";
+    Number.parseInt(index) % 100 === 0
+      ? (index =
+          "0".repeat(
+            4 - Number.parseInt(Number.parseInt(index) + 30).toString().length
+          ) +
+          (Number.parseInt(index) + 30))
+      : (index =
+          "0".repeat(
+            4 - Number.parseInt(Number.parseInt(index) + 70).toString().length
+          ) +
+          (Number.parseInt(index) + 70))
   ) {
     startTimeArray.push(index);
   }
@@ -62,8 +71,18 @@ function MakeClass({ history }) {
     //위와 마찬가지
     //위의 시간을 바꾸면 새로 정해짐
     let index = startTime;
-    index < 2201;
-    index % 100 === 0 ? (index = index + 30) : (index = index + 70)
+    index < "2359";
+    Number.parseInt(index) % 100 === 0
+      ? (index =
+          "0".repeat(
+            4 - Number.parseInt(Number.parseInt(index) + 30).toString().length
+          ) +
+          (Number.parseInt(index) + 30))
+      : (index =
+          "0".repeat(
+            4 - Number.parseInt(Number.parseInt(index) + 70).toString().length
+          ) +
+          (Number.parseInt(index) + 70))
   ) {
     endTimeArray.push(index);
   }
@@ -134,31 +153,31 @@ function MakeClass({ history }) {
 
   return (
     <Container className="mt-md-3">
-      <h2>수업방식을 골라주세요!</h2>
-      <ToggleButtonGroup
-        type="radio"
-        name="options"
-        style={{ display: "flex" }}
-        className="mx-md-2 text-center my-md-3"
-        aria-label="Type group"
-        defaultValue={0}
-        onChange={(e) => {
-          setSelect(e);
-        }}
-      >
-        {
-          //클래스 타입을 표시, [classTypes...]
-          classTypes.map((classType, index) => {
-            return (
-              <ToggleButton size="lg" key={index} type="radio" value={index}>
-                {classType}
-              </ToggleButton>
-            );
-          })
-        }
-      </ToggleButtonGroup>
-      <Card body>
+      <Card body style={{ maxWidth: "600px", margin: "auto" }}>
         {/* 카드형태로 표시 */}
+        <h2>수업방식을 골라주세요!</h2>
+        <ToggleButtonGroup
+          type="radio"
+          name="options"
+          style={{ display: "flex" }}
+          className="mx-md-2 text-center my-md-3"
+          aria-label="Type group"
+          defaultValue={0}
+          onChange={(e) => {
+            setSelect(e);
+          }}
+        >
+          {
+            //클래스 타입을 표시, [classTypes...]
+            classTypes.map((classType, index) => {
+              return (
+                <ToggleButton key={index} type="radio" value={index} size="sm">
+                  {classType}
+                </ToggleButton>
+              );
+            })
+          }
+        </ToggleButtonGroup>
         <Form>
           <Form.Group>
             <Form.Label>수업 이름 정하셨나요?</Form.Label>
@@ -220,62 +239,94 @@ function MakeClass({ history }) {
 
           {[0, 2, 3].includes(classTypeSelect) && ( //온라인 동영상 강의를 제외한 수업에 필요한 요소
             <>
-              <Form.Group>
-                <Form.Label style={{ display: "block" }}>
-                  수업 요일을 골라주세요!(하나 이상 골라주세요)
-                </Form.Label>
-                <ToggleButtonGroup
-                  type="checkbox"
-                  className="mb-2"
-                  onChange={(e) => {
-                    setDate(e);
-                  }}
-                >
-                  {weeks.map((week, index) => {
-                    return (
-                      <ToggleButton key={index} value={index}>
-                        {week}
-                      </ToggleButton>
-                    );
-                  })}
-                </ToggleButtonGroup>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>수업시간을 골라주세요!</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => {
-                    setStartTime(Number.parseInt(e.target.value));
-                  }}
-                >
-                  {startTimeArray.map((time, index) => {
-                    return (
-                      <option key={index} value={time}>
-                        {time.toString().substring(0, 2) +
-                          ":" +
-                          time.toString().substring(2)}
-                      </option>
-                    );
-                  })}
-                </Form.Control>
-                <Form.Label>종료시간</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => {
-                    setEndTime(Number.parseInt(e.target.value));
-                  }}
-                >
-                  {endTimeArray.map((time, index) => {
-                    return (
-                      <option key={index} value={time}>
-                        {time.toString().substring(0, 2) +
-                          ":" +
-                          time.toString().substring(2)}
-                      </option>
-                    );
-                  })}
-                </Form.Control>
-              </Form.Group>
+              <Card body>
+                <Card.Title>
+                  수업은 일주일에 몇번, 몇시부터 몇시까지를 골라주세요!!{"👍"}
+                </Card.Title>
+                <Form.Group>
+                  <Form.Label style={{ display: "block" }}>
+                    수업 요일을 골라주세요!(하나 이상 골라주세요)
+                  </Form.Label>
+                  <ToggleButtonGroup
+                    style={{ display: "flex" }}
+                    type="checkbox"
+                    className="mb-2"
+                    onChange={(e) => {
+                      setDate(e);
+                    }}
+                  >
+                    {weeks.map((week, index) => {
+                      return (
+                        <ToggleButton key={index} value={index}>
+                          {week}
+                        </ToggleButton>
+                      );
+                    })}
+                  </ToggleButtonGroup>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>수업시간을 골라주세요!</Form.Label>
+                  <Form.Control
+                    as="select"
+                    onChange={(e) => setStartTime(e.target.value)}
+                  >
+                    {startTime === "" && (
+                      <option>수업 시작시간을 골라주세요</option>
+                    )}
+                    {startTimeArray.map((time, index) => {
+                      return (
+                        <option key={index} value={time}>
+                          {time.toString().substring(0, 2) +
+                            ":" +
+                            time.toString().substring(2)}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                  <Form.Label>종료시간</Form.Label>
+                  <Form.Control
+                    as="select"
+                    onChange={(e) => setEndTime(e.target.value)}
+                  >
+                    {endTime === "" && (
+                      <option>수업 종료시간을 골라주세요</option>
+                    )}
+                    {endTimeArray.map((time, index) => {
+                      return (
+                        <option key={index} value={time}>
+                          {time.toString().substring(0, 2) +
+                            ":" +
+                            time.toString().substring(2)}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                </Form.Group>
+                <h4 className="text-center">
+                  {date.length === 0
+                    ? "수업요일을 골라주세요!"
+                    : date
+                        .sort()
+                        .map(
+                          (dt, index) =>
+                            weeks[dt] +
+                            "요일" +
+                            (index === date.length - 1 ? "" : ", ")
+                        )}
+                </h4>
+                <h5 className="text-center">
+                  {startTime !== "" &&
+                    startTime.toString().substring(0, 2) +
+                      "시 " +
+                      startTime.toString().substring(2) +
+                      "분부터 "}
+                  {endTime !== "" &&
+                    endTime.toString().substring(0, 2) +
+                      "시 " +
+                      endTime.toString().substring(2) +
+                      "분까지 수업하겠습니다!!👏👏👏"}
+                </h5>
+              </Card>
             </>
           )}
 
