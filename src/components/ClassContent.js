@@ -123,19 +123,23 @@ function SkypeLink({ skypeLink }) {
 function LectureNote({ LectureNotes }) {
   //강의 노트
   return LectureNotes.length === 0 ? (
-    <h4>아직 수업노트가 없네요!!</h4>
+    <h4 className="text-center">아직 수업노트가 없습니다.</h4>
   ) : (
     // 수업노트가 존재할 경우
-    <ol>
-      {LectureNotes.map((lectureNote) => {
+    <div className="text-center">
+      {LectureNotes.map((lectureNote, index) => {
         return (
-          <li key={lectureNote._id}>
-            <h4>{lectureNote.title}</h4>
-            <p>{lectureNote.content}</p>
-          </li>
+          <Card body>
+            <Card.Title>
+              {index + 1}
+              {" : "}
+              {lectureNote.title}
+            </Card.Title>
+            <Card.Text>{lectureNote.content}</Card.Text>
+          </Card>
         );
       })}
-    </ol>
+    </div>
   );
 }
 

@@ -96,7 +96,7 @@ function QnA({ classInfo, amITutor }) {
           })}
         </>
       ) : (
-        <h1>아직 등록된 질문이 없습니다.</h1>
+        <h5 className="text-center">아직 등록된 질문이 없습니다.</h5>
       )}
     </>
   );

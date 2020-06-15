@@ -68,7 +68,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
               <Tab eventKey="lectureNote" title="수업 노트">
                 <EditClass
                   classInfo={classInfo}
-                  tabName="강의 노트"
+                  tabName="수업 노트"
                   amITutor={amITutor}
                 />
                 <LectureNote LectureNotes={classInfo.lectureNotes} />
