@@ -55,7 +55,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 courses={classInfo.courses}
               />
             </Tab>
-            {[0, 3].includes(classType) ? (
+            {[0, 3].includes(classType) && (
               <Tab eventKey="attendance" title="출석">
                 <Attendance
                   classType={classType}
@@ -63,8 +63,8 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                   classID={classInfo._id}
                 />
               </Tab>
-            ) : null}
-            {[0, 2, 3].includes(classType) ? (
+            )}
+            {[0, 2, 3].includes(classType) && (
               <Tab eventKey="lectureNote" title="수업 노트">
                 <EditClass
                   classInfo={classInfo}
@@ -73,11 +73,11 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 />
                 <LectureNote LectureNotes={classInfo.lectureNotes} />
               </Tab>
-            ) : null}
+            )}
             <Tab eventKey="QnA" title="Q&A">
               <QnA classInfo={classInfo} amITutor={amITutor} />
             </Tab>
-            {[0].includes(classType) ? (
+            {[0].includes(classType) && (
               <Tab
                 eventKey="skypeLink"
                 title="스카이프링크"
@@ -93,8 +93,8 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                   skypeLink={classInfo.skypeLink}
                 />
               </Tab>
-            ) : null}
-            {[1].includes(classType) ? (
+            )}
+            {[1].includes(classType) && (
               //온라인 동영상에 한해서 비디오 링크 생성
               <Tab eventKey="videoLink" title="비디오 링크">
                 <EditClass
@@ -109,8 +109,8 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                   userID={userInfo._id}
                 />
               </Tab>
-            ) : null}
-            {[2].includes(classType) ? (
+            )}
+            {[2].includes(classType) && (
               //온라인 질의응답에 한해서 채팅방 생성
               <Tab eventKey="realTimeChat" title="실시간 채팅방">
                 {classInfo.chattingRoom === undefined ? (
@@ -138,7 +138,7 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                   <NewChat classInfo={classInfo} userInfo={userInfo} />
                 )}
               </Tab>
-            ) : null}
+            )}
           </Tabs>
         </>
       )}
