@@ -10,6 +10,7 @@ import {
 import QnA from "./QnA";
 import Axios from "axios";
 import NewChat from "./newChat";
+import Rating from "./Rating";
 
 const EditClass = ({ classInfo, tabName, amITutor }) => {
   return (
@@ -139,6 +140,9 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                 )}
               </Tab>
             )}
+            <Tab eventKey="rating" title="평가하기">
+              <Rating classInfo={classInfo} amITutor={amITutor} />
+            </Tab>
           </Tabs>
         </>
       )}
