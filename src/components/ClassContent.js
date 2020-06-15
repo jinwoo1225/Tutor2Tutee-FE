@@ -29,8 +29,8 @@ function Attendance({ amITutor, classID, classType }) {
   function postAttendance() {
     Axios.post(URL + "class/" + classID + "/attendance", {
       auth: attenCode,
-    }).then((response) => {
-      alert(response.data);
+    }).then(({ data }) => {
+      alert(data);
       setAttenDances(undefined);
     });
   }
@@ -38,7 +38,11 @@ function Attendance({ amITutor, classID, classType }) {
   function startAttendance() {
     Axios.get(URL + "class/" + classID + "/attendance").then(({ data }) => {
       setAuthCode(data);
-      alert("출석이 시작되었습니다! 인증번호 : " + data);
+      alert(
+        data === "fail"
+          ? "출석에 실패했습니다. 수업시간을 확인해주세요."
+          : "출석이 시작되었습니다! 인증번호 : " + data
+      );
     });
   }
 
@@ -54,7 +58,13 @@ function Attendance({ amITutor, classID, classType }) {
           출석시작
         </Button>
       )}
-      {authenticationCode && (
+      {authenticationCode === undefined ? null : authenticationCode ===
+        "fail" ? (
+        <Card body bg="light" className="text-center mt-3">
+          <Card.Title>출석에 실패했어요!</Card.Title>
+          <Card.Text>현재 강의 시간이 맞는지 확인해주세요!</Card.Text>
+        </Card>
+      ) : (
         <Card body bg="light" className="text-center mt-3">
           <Card.Title>출석 번호 : {authenticationCode}</Card.Title>
           <Card.Text>출석번호는 튜티들에게 알려주세요!</Card.Text>
