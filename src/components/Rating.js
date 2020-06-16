@@ -9,11 +9,11 @@ function Rating({ classInfo, userInfo, amITutor }) {
   const [tutees, setTutees] = useState(undefined);
   const [tuteeRate, setTuteeRate] = useState(undefined);
 
-  console.log(tuteeRate);
   useEffect(() => {
-    Axios.get(URL + "class/" + classInfo._id + "/tutees").then(({ data }) => {
-      setTutees(() => data);
-    });
+    classInfo !== undefined &&
+      Axios.get(URL + "class/" + classInfo._id + "/tutees").then(({ data }) => {
+        setTutees(() => data);
+      });
   }, [classInfo]);
 
   const submitRate = (uID) => {
