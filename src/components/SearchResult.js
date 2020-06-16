@@ -33,8 +33,8 @@ function SearchResult({
           : searchResult.recommend.categoryID,
     };
     Axios.post(URL + "search/feedback", feedback)
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
+        alert("의견 감사합니다!");
       })
       .catch(({ error }) => console.log(error));
   }
@@ -54,9 +54,10 @@ function SearchResult({
             에 대한 검색 정보입니다.
           </h3>
           {searchResult.recommend === null ? null : (
-            <div>
+            <div className="mb-3">
               <h5>아래와 같은 것들을 찾고 계신가요?</h5>
               <Button
+                className="mx-auto"
                 onClick={() =>
                   history.push(
                     "/search/result/" + searchResult.recommend.representation
@@ -69,12 +70,28 @@ function SearchResult({
           )}
 
           {searchResult.matched === null ? (
-            <h5>추천 검색어에 대해 평가해 주세요!</h5>
+            <h5>
+              추천 검색어가{" "}
+              <Button size="sm" onClick={() => sendFeedback(true)}>
+                정확해요!
+              </Button>
+              {"  "}
+              <Button size="sm" onClick={() => sendFeedback(false)}>
+                부정확해요!
+              </Button>
+            </h5>
           ) : (
-            <h5>검색어 보정 기능에 대해 평가해 주세요!</h5>
+            <h5>
+              검색어 보정 기능이{" "}
+              <Button size="sm" onClick={() => sendFeedback(true)}>
+                정확해요!
+              </Button>
+              {"  "}
+              <Button size="sm" onClick={() => sendFeedback(false)}>
+                부정확해요!
+              </Button>
+            </h5>
           )}
-          <Button onClick={() => sendFeedback(true)}>정확해요</Button>
-          <Button onClick={() => sendFeedback(false)}>부정확해요</Button>
 
           <h5>
             {searchResult.classes.length === 0
@@ -84,8 +101,13 @@ function SearchResult({
 
           {searchResult.classes.map((_class) => {
             return (
-              <Card body key={_class._id}>
-                {_class.className}
+              <Card
+                className="mt-3"
+                style={{ maxWidth: "400px", margin: "auto" }}
+                body
+                key={_class._id}
+              >
+                <a href={"/#/class/id/" + _class._id}>{_class.className}</a>
               </Card>
             );
           })}
