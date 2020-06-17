@@ -3,7 +3,7 @@ import Axios from "axios";
 import { URL } from "./App";
 import { useState } from "react";
 import CardForTutor from "./CardClass/CardForTutor";
-import { Card } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import CardForTutee from "./CardClass/CardForTutee";
 
 function CurrentClass({ nickname }) {
@@ -28,9 +28,11 @@ function CurrentClass({ nickname }) {
           <h5 className="text-center">
             지금 수강중인 강의 {clAsTutee.length}개
           </h5>
-          {clAsTutee.map((_class) => {
-            return <CardForTutee key={_class._id} _class={_class} />;
-          })}
+          <Row>
+            {clAsTutee.map((_class) => {
+              return <CardForTutee key={_class._id} _class={_class} />;
+            })}
+          </Row>
         </Card>
       )}
       <hr></hr>
@@ -43,9 +45,11 @@ function CurrentClass({ nickname }) {
       ) : (
         <Card body>
           <h5>지금 가르치는 강의 {clAsTutor.length}개</h5>
-          {clAsTutor.map((_class) => {
-            return <CardForTutor key={_class._id} _class={_class} />;
-          })}
+          <Row>
+            {clAsTutor.map((_class) => {
+              return <CardForTutor key={_class._id} _class={_class} />;
+            })}
+          </Row>
         </Card>
       )}
     </Card>

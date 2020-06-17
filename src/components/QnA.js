@@ -27,7 +27,7 @@ function QnA({ classInfo, amITutor }) {
   getCurrentClasses.bind(this);
 
   return questionBox ? (
-    <>
+    <div className="text-center" style={{ maxWidth: "600px", margin: "auto" }}>
       <h3 className="text-center">질문 작성</h3>
       <Form.Control
         as="textarea"
@@ -36,9 +36,9 @@ function QnA({ classInfo, amITutor }) {
       <Button onClick={sendQuestion} block>
         제출하기
       </Button>
-    </>
+    </div>
   ) : (
-    <>
+    <div className="text-center" style={{ maxWidth: "600px", margin: "auto" }}>
       {amITutor ? null : (
         <Button
           className="my-3"
@@ -98,7 +98,7 @@ function QnA({ classInfo, amITutor }) {
       ) : (
         <h5 className="text-center">아직 등록된 질문이 없습니다.</h5>
       )}
-    </>
+    </div>
   );
 }
 

@@ -8,7 +8,8 @@ function ClassInfo({ ClassInfo, classTypeString }) {
       <h5>{ClassInfo.basicInfo.description}</h5>
       <hr></hr>
       <p>
-        강의타입 : {classTypeString} | 분야 : {ClassInfo.category}
+        강의타입 : {classTypeString} | 분야 : {ClassInfo.category} | 강의 포인트
+        : {ClassInfo.price}포인트
       </p>
       <p>
         현재 수강 중 {ClassInfo.maxTutee && " / 최대 튜티수 "}:

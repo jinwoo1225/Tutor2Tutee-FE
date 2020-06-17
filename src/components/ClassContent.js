@@ -126,10 +126,10 @@ function LectureNote({ LectureNotes }) {
     <h4 className="text-center">아직 수업노트가 없습니다.</h4>
   ) : (
     // 수업노트가 존재할 경우
-    <div className="text-center">
+    <div className="text-center" style={{ maxWidth: "600px", margin: "auto" }}>
       {LectureNotes.map((lectureNote, index) => {
         return (
-          <Card body>
+          <Card body className="mt-3">
             <Card.Title>
               {index + 1}
               {" : "}
