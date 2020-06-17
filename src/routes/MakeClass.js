@@ -34,7 +34,7 @@ function MakeClass({ history }) {
   const [maxTutee, setMaxTutee] = useState(tuteeMaxArray[0]);
 
   const [place, setPlace] = useState("");
-  const [grade, setGrade] = useState("");
+  const [grade, setGrade] = useState();
   let startTimeArray = [];
   let endTimeArray = [];
 
@@ -89,15 +89,13 @@ function MakeClass({ history }) {
 
   const submitToDB = () => {
     //서버에 전송하는 객체
-    let data = {
-      classType: classTypesRaw[classTypeSelect],
-      category,
-      studyAbout,
-      className: classname,
-      price,
-      grade,
-      class_description: classDesc,
-    };
+    const formData = new FormData();
+    formData.append("classType", classTypesRaw[classTypeSelect]);
+    formData.append("category", category);
+    formData.append("studyAbout", studyAbout);
+    formData.append("classname", classname);
+    formData.append("price", price);
+    formData.append("gradeInfo", grade);
 
     let lectureTimes = date.map((date) => {
       return { day: weeksRaw[date], start: startTime, finish: endTime };
@@ -106,12 +104,10 @@ function MakeClass({ history }) {
     switch (classTypeSelect) {
       case 0:
         //실시간 온라인 강의형을 위한 시간정보, 강의 설명, 최대 튜티수
-        data = {
-          ...data,
-          lectureTimes,
-          course_description: courseDesc,
-          maxTutee,
-        };
+
+        formData.append("lectureTimes", lectureTimes);
+        formData.append("course_description", courseDesc);
+        formData.append("maxTutee", maxTutee);
         break;
 
       case 1:
@@ -120,27 +116,21 @@ function MakeClass({ history }) {
 
       case 2:
         //온라인 질의 응답형을 위한 시간 정보
-        data = {
-          ...data,
-          lectureTimes,
-        };
+        formData.append("lectureTimes", lectureTimes);
         break;
 
       case 3:
         // 오프라인 질의 응답형을 위한 시간, 장소정보, 최대 튜티수
-        data = {
-          ...data,
-          lectureTimes,
-          place,
-          maxTutee,
-        };
+        formData.append("lectureTimes", lectureTimes);
+        formData.append("place", place);
+        formData.append("maxTutee", maxTutee);
         break;
 
       default:
         break;
     }
-    console.log(data);
-    Axios.post(URL + "class", data).then((res) => {
+    console.log(formData);
+    fetch(URL + "class", { method: "post", body: formData }).then((res) => {
       if (res.data === "fail") {
         alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
       } else {
@@ -231,9 +221,14 @@ function MakeClass({ history }) {
           </Form.Group>
           <Form.Group>
             <Form.Label>성적인증</Form.Label>
-            <Form.Control
-              onChange={(e) => setGrade(e.target.value)}
-              placeholder="성적을 인증할수있는 링크를 주세요!(추후 이미지 저장으로 바뀔예정입니다 😀 )"
+            <input
+              type="file"
+              name="gradeInfo"
+              formEncType="multipart/form-data"
+              onChange={(e) => {
+                setGrade(e.target.files[0]);
+                console.log(grade);
+              }}
             />
           </Form.Group>
 
