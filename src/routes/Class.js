@@ -49,6 +49,12 @@ function Class({
     });
   }
 
+  function endClass(){
+    Axios.get(URL + "class/" + id + "/end").then((response) => {
+      setClass({ classLoaded: false });
+    });
+  }
+
   function joinClass() {
     Axios.get(URL + "class/" + id + "/join").then((response) => {
       if (response.data === "fail") {
@@ -91,6 +97,7 @@ function Class({
               amITutor={_class.tutor === user._id}
               amIGuest={user._id === ""}
               startClass={startClass}
+              endClass={endClass}
               joinClass={joinClass}
               quitClass={quitClass}
             />
