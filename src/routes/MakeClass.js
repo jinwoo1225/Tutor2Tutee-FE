@@ -93,14 +93,21 @@ function MakeClass({ history }) {
     formData.append("classType", classTypesRaw[classTypeSelect]);
     formData.append("category", category);
     formData.append("studyAbout", studyAbout);
-    formData.append("classname", classname);
+    formData.append("className", classname);
     formData.append("price", price);
     formData.append("gradeInfo", grade);
     formData.append("class_description", classDesc);
 
-    let lectureTimes = date.map((date) => {
-      return { day: weeksRaw[date], start: startTime, finish: endTime };
+    let lectureTimes = [];
+    date.map((date) => {
+      lectureTimes.push({
+        day: weeksRaw[date],
+        start: startTime,
+        finish: endTime,
+      });
+      return null;
     });
+    lectureTimes = JSON.stringify(lectureTimes);
 
     switch (classTypeSelect) {
       case 0:
@@ -130,7 +137,7 @@ function MakeClass({ history }) {
       default:
         break;
     }
-    console.log(formData);
+
     fetch(URL + "class", { method: "post", body: formData }).then((res) => {
       if (res.data === "fail") {
         alert("등록에 실패했어요.. 잘못된게 있나 확인해주세요!");
@@ -228,7 +235,6 @@ function MakeClass({ history }) {
               formEncType="multipart/form-data"
               onChange={(e) => {
                 setGrade(e.target.files[0]);
-                console.log(grade);
               }}
             />
           </Form.Group>
