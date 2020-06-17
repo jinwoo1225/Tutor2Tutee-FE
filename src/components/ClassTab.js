@@ -11,29 +11,22 @@ import QnA from "./QnA";
 import Axios from "axios";
 import NewChat from "./newChat";
 import Rating from "./Rating";
+import { URL } from "./App";
 
-const EditClass = ({ classInfo, tabName, amITutor }) => {
-  return (
-    amITutor && (
-      <Button
-        block
-        href={"/#/class/id/" + classInfo._id + "/edit"}
-        className="mb-3"
-        style={{ maxWidth: "400px", margin: "auto" }}
-      >
-        {tabName} 추가하기
-      </Button>
-    )
-  );
-};
-
-function ClassTab({ classInfo, userInfo, classType, amITutor }) {
+function ClassTab({ classInfo, userInfo, classType, amITutor, setClass }) {
   //클래스의 탭부분 컴포넌트
   const [key, setKey] = useState("overview");
+
   return (
     <Card body>
       {userInfo._id === "" ||
-      (classInfo.state !== "InProgress" && [0, 1, 3].includes(classType)) ? (
+      (classInfo.state !== "InProgress" &&
+        [0, 1, 3].includes(classType) &&
+        !(amITutor && [1].includes(classType)) &&
+        !(
+          userInfo.classesAsTutee.includes(classInfo._id) &&
+          [1].includes(classType)
+        )) ? (
         //유저가 로그인 되어있지 않다면 || 수강하지 않았다면 ||
         //강의가 시작되지 않았다면 && 온라인실시간 또는 오프라인 질의응답 && 내가 튜터가 아니라면
         <Overview
@@ -122,11 +115,14 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
                         Axios.get(
                           URL + "class/" + classInfo._id + "/attendance"
                         ).then(({ data }) => {
-                          data !== "fail"
-                            ? alert("채팅방 개설에 성공했어요!")
-                            : alert(
-                                "채팅방 개설에 실패했어요, 출석시간이나, 수업을 마감했는지 확인해주세요."
-                              );
+                          if (data !== "fail") {
+                            alert("채팅방 개설에 성공했어요!");
+                            setClass({ classLoaded: false });
+                          } else {
+                            alert(
+                              "채팅방 개설에 실패했어요, 출석시간이나, 수업을 마감했는지 확인해주세요."
+                            );
+                          }
                         });
                       }}
                     >
@@ -149,5 +145,18 @@ function ClassTab({ classInfo, userInfo, classType, amITutor }) {
     </Card>
   );
 }
-
+const EditClass = ({ classInfo, userInfo, tabName, amITutor }) => {
+  return (
+    amITutor && (
+      <Button
+        block
+        href={"/#/class/id/" + classInfo._id + "/edit"}
+        className="mb-3"
+        style={{ maxWidth: "400px", margin: "auto" }}
+      >
+        {tabName} 추가하기
+      </Button>
+    )
+  );
+};
 export default ClassTab;

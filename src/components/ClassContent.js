@@ -163,7 +163,6 @@ function VideoLinks({ VideoLinks, participations, classID, userID }) {
 
 function VideoLink({ link, course, classID, userID, index }) {
   const [_course, setCourse] = useState(course);
-  console.log(_course);
   function getAttendance() {
     Axios.post(URL + "class/" + classID + "/attendance", {
       auth: _course.courseID,

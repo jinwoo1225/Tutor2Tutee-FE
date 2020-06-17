@@ -24,7 +24,7 @@ export const classTypes = [
   "온라인 실시간",
   "온라인 동영상",
   "온라인 질의응답",
-  "오프라인 질의응답",
+  "오프라인",
 ];
 export const classTypesRaw = [
   "RealtimeOnlineCourseType",

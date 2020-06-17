@@ -106,7 +106,13 @@ function NewChat({ classInfo, userInfo }) {
       </div>
     </div>
   ) : (
-    <Button onClick={startChat}>채팅방 입장</Button>
+    <Button
+      block
+      style={{ maxWidth: "400px", margin: "auto" }}
+      onClick={startChat}
+    >
+      채팅방 입장
+    </Button>
   );
 }
 

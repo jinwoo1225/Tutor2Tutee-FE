@@ -49,7 +49,7 @@ function Class({
     });
   }
 
-  function endClass(){
+  function endClass() {
     Axios.get(URL + "class/" + id + "/end").then((response) => {
       setClass({ classLoaded: false });
     });
@@ -106,6 +106,7 @@ function Class({
               userInfo={user}
               classType={classTypeNum}
               amITutor={_class.tutor === user._id}
+              setClass={setClass}
             />
           </>
         )}
