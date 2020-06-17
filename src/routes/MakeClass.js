@@ -96,6 +96,7 @@ function MakeClass({ history }) {
     formData.append("classname", classname);
     formData.append("price", price);
     formData.append("gradeInfo", grade);
+    formData.append("class_description", classDesc);
 
     let lectureTimes = date.map((date) => {
       return { day: weeksRaw[date], start: startTime, finish: endTime };
